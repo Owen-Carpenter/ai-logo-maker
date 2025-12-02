@@ -1,68 +1,99 @@
-# AI Logo Maker
+# 🎨 AI Logo Maker
 
 **[https://ai-logo-maker.com](https://ai-logo-maker.com)**
 
-Make something iconic. AI Logo Maker is the premier tool for creating stunning, professional-grade logos using advanced AI technology. Perfect for designers, developers, indie hackers, and creative professionals who need high-quality branding assets instantly.
+**Make something iconic.** AI Logo Maker is the premier AI-powered logo generation platform for creating stunning, professional-grade brand identities in seconds. Perfect for designers, developers, founders, and creative professionals who need high-quality logos instantly.
 
-![Next.js](https://img.shields.io/badge/Next.js-15.3-black?style=for-the-badge&logo=next.js)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue?style=for-the-badge&logo=typescript)
-![React](https://img.shields.io/badge/React-19.1-61DAFB?style=for-the-badge&logo=react)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.3-38B2AC?style=for-the-badge&logo=tailwind-css)
+![Next.js](https://img.shields.io/badge/Next.js-15.3-000000?style=for-the-badge&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3B82F6?style=for-the-badge&logo=typescript)
+![React](https://img.shields.io/badge/React-19.1-0EA5E9?style=for-the-badge&logo=react)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.3-60A5FA?style=for-the-badge&logo=tailwind-css)
+![Supabase](https://img.shields.io/badge/Supabase-Auth-3B82F6?style=for-the-badge&logo=supabase)
+![Stripe](https://img.shields.io/badge/Stripe-Payments-60A5FA?style=for-the-badge&logo=stripe)
 
 ---
 
 ## 🚀 Why AI Logo Maker?
 
-Stop wasting hours scrolling through generic stock libraries or fighting with complex design tools. Just describe what you want, and let our AI generate unique, professional logos in seconds.
+Stop wasting hours with generic logo templates or expensive designers. Just describe your vision, and watch our AI create unique, professional brand identities in seconds. From concept to production-ready logo in one conversation.
 
 ### ✨ Key Features
 
-- **🤖 Intelligent Generation** - Powered by state-of-the-art AI models (GPT Image 1) tuned specifically for professional logo design.
-- **💬 Conversational Design** - Iterate naturally. "Make the blue darker," "Add a shadow," or "Simplify the lines" – just talk to refine your design.
-- **🎨 Diverse Styles** - From modern flat and minimalist to 3D, neon, and vintage. Get the exact look your brand needs.
-- **📚 Personal Library** - Every logo you generate is saved to your secure cloud library. Organize, download, and manage your assets anytime.
-- **⚡ Instant Production** - Get production-ready PNGs in seconds. No more waiting for designers or struggling with vectors.
-- **💼 Commercial Rights** - You own the IP. Use your generated logos for any commercial project, app, or website without licensing headaches.
+- **🤖 AI-Powered Generation** - Built on GPT Image 1, the most advanced AI model for professional logo design. Generate multiple variations instantly.
+- **💬 Conversational Refinement** - Iterate naturally through chat. "Make it more modern," "Change to blue," or "Add a tech feel" – just describe what you want.
+- **🎨 Multiple Styles** - Modern, flat, minimalist, 3D, vintage, neon, line art, and hand-drawn. Perfect for any brand aesthetic.
+- **📚 Cloud Library** - Every logo is automatically saved to your personal library. Access, organize, and download your assets anytime, anywhere.
+- **⚡ Instant Export** - Production-ready PNG files with transparent backgrounds. Download and use immediately.
+- **💼 Full Commercial Rights** - You own everything you create. Use your logos for any commercial project, app, website, or client work without restrictions.
 
 ---
 
 ## 🎯 Perfect For
 
-- **SaaS Founders** - Create professional logos and brand identities for your MVP in minutes.
-- **Web Developers** - Generate consistent branding assets without leaving your workflow.
-- **Content Creators** - Make unique brand logos and channel art that stand out.
-- **Agencies** - Rapidly prototype brand concepts and deliver client logos faster than ever.
+- **🚀 Startup Founders** - Launch with a professional brand identity. Create logos for your MVP, pitch decks, and marketing materials in minutes.
+- **💻 Developers & Designers** - Generate consistent brand assets without context switching. Perfect for side projects and client work.
+- **🎥 Content Creators** - Stand out with unique brand logos, channel art, and social media assets that capture your style.
+- **🏢 Agencies & Freelancers** - Rapidly prototype brand concepts, iterate with clients in real-time, and deliver professional logos faster than ever.
 
 ---
 
-## 💎 Premium Plans
+## 💎 Flexible Pricing
 
-We offer flexible pricing to suit every need:
+Choose the plan that fits your needs:
 
-- **Base** - Perfect for hobbyists and one-off projects.
-- **Pro** - The most popular choice for professionals and freelancers.
-- **Pro+** - For power users and teams needing high-volume generation.
+- **Base** - 20 credits/month - Perfect for personal projects and experimentation.
+- **Pro** - 100 credits/month - Most popular for professionals and freelancers. Generate up to 100 logos monthly.
+- **Pro+** - 200 credits/month - For agencies, teams, and high-volume users who need maximum generation capacity.
 
-Check out our [pricing page](https://ai-icon-maker.com/#pricing) for full details.
+Each logo generation costs 1 credit. Logo improvements cost 3 credits.
 
----
-
-## 🔒 Enterprise-Grade Security
-
-Your data and creations are safe with us.
-
-- **Secure Authentication** - Powered by Supabase Auth.
-- **Private Cloud Storage** - Your assets are yours alone.
-- **Encrypted Payments** - Processed securely via Stripe.
+Check out our [pricing page](https://ai-logo-maker.com/#pricing) for full details and features.
 
 ---
 
-## 🌐 Try It Now
+## 🔒 Enterprise-Grade Security & Privacy
 
-Ready to transform your ideas into professional logos?
+Your data, creations, and payments are protected with industry-leading security:
 
-**[Start Generating for Free →](https://ai-logo-maker.com)**
+- **🔐 Secure Authentication** - Powered by Supabase Auth with email verification and secure session management.
+- **☁️ Private Cloud Storage** - Your logos and library are stored securely. Only you have access to your creations.
+- **💳 Encrypted Payments** - All transactions processed securely through Stripe. We never store your payment information.
+- **🛡️ Data Protection** - HTTPS encryption, secure API endpoints, and regular security audits.
 
 ---
 
-**Built with ❤️ for the creator community.**
+## 🛠️ Tech Stack
+
+Built with modern, production-ready technologies:
+
+- **Frontend**: Next.js 15.3, React 19, TypeScript, Tailwind CSS
+- **Backend**: Supabase (Auth, Database, Storage)
+- **AI**: OpenAI GPT Image 1 for logo generation
+- **Payments**: Stripe for subscription management
+- **Deployment**: Vercel for seamless CI/CD
+
+---
+
+## 🌐 Get Started
+
+Ready to create your next iconic logo?
+
+**[Start Creating Free →](https://ai-logo-maker.com)**
+
+No credit card required to try. Sign up and start generating professional logos in seconds.
+
+---
+
+## 📞 Support & Contact
+
+Have questions or need help?
+
+- **Email**: support@ailogomaker.com
+- **Documentation**: Check our [FAQ](https://ai-logo-maker.com/#faq)
+- **Pricing**: View [pricing details](https://ai-logo-maker.com/#pricing)
+
+---
+
+**Built with ❤️ for designers, developers, and creators worldwide.**
+
+*Transform your ideas into professional logos. Make something iconic.*
