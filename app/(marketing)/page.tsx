@@ -188,7 +188,7 @@ export default function HomePage() {
       <Navbar variant="marketing" />
 
       {/* Hero Section */}
-      <div className="w-full h-screen px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-gradient-to-br from-white via-blue-50 to-blue-100 relative overflow-visible animate-fade-in flex items-center">
+      <div className="w-full h-screen px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-gradient-to-b from-white via-blue-50 to-blue-100 relative overflow-visible animate-fade-in flex items-center">
 
         
         {/* Floating Emoji Icons - Organic motion with depth animation */}
@@ -230,14 +230,14 @@ export default function HomePage() {
               <div className="relative">
                 <textarea
                   id="ai-prompt"
-                  className="w-full bg-midnight-800/90 border border-midnight-700 rounded-2xl p-4 sm:p-6 pr-12 sm:pr-16 text-neutral-900 placeholder-transparent focus:outline-none focus:border-sunset-400 focus:ring-2 focus:ring-sunset-400/20 transition-all duration-300 resize-none text-base sm:text-lg backdrop-blur-sm min-h-[100px] sm:min-h-[120px] max-h-[200px]"
+                  className="w-full bg-white border-2 border-neutral-200 rounded-2xl p-4 sm:p-6 pr-12 sm:pr-16 text-neutral-900 placeholder-transparent focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-300 resize-none text-base sm:text-lg shadow-lg min-h-[100px] sm:min-h-[120px] max-h-[200px]"
                   rows={4}
                   placeholder=""
                   disabled
                 />
                 <div 
                   id="typing-placeholder" 
-                  className="absolute top-4 left-4 sm:top-6 sm:left-6 text-sunset-300/70 pointer-events-none text-base sm:text-lg"
+                  className="absolute top-4 left-4 sm:top-6 sm:left-6 text-neutral-400 pointer-events-none text-base sm:text-lg"
                 >
                   <span id="typed-text"></span>
                   <span id="cursor" className="animate-pulse text-primary-600">|</span>
@@ -246,7 +246,7 @@ export default function HomePage() {
                 {/* Interactive Elements at Bottom */}
                 <div className="absolute bottom-3 left-4 sm:bottom-4 sm:left-6 flex items-center space-x-2 sm:space-x-4">
                   <select 
-                    className="bg-midnight-700/50 hover:bg-midnight-600/50 border border-white/20 rounded-lg px-2 py-1 text-sunset-300 text-xs focus:outline-none focus:border-sunset-500 transition-colors [&>option]:bg-midnight-800 [&>option]:text-neutral-900 [&>option]:border-none"
+                    className="bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 rounded-lg px-2 py-1 text-neutral-700 text-xs focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-200 transition-colors [&>option]:bg-white [&>option]:text-neutral-900 [&>option]:border-none"
                   >
                     <option value="modern">Modern</option>
                     <option value="flat">Flat</option>
@@ -260,7 +260,7 @@ export default function HomePage() {
                 </div>
                 
                 {/* Send Button */}
-                <button className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 bg-gradient-to-br from-primary-600 to-primary-700 hover:scale-105 text-neutral-900 p-2 sm:p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-sunset-500/30">
+                <button className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 bg-gradient-to-r from-primary-600 to-accent-500 hover:from-primary-700 hover:to-accent-600 hover:scale-105 text-white p-2 sm:p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-primary-500/30">
                   <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
                   </svg>
@@ -303,7 +303,7 @@ export default function HomePage() {
       </div>
 
       {/* Demo Section - Now with title/subtitle below the video */}
-      <div className="pt-[32rem] pb-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-gradient-to-b from-blue-50 to-white">
+      <div className="pt-[40rem] pb-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-gradient-to-b from-blue-100 via-blue-50 to-white">
         <div className="container mx-auto text-center">
           {/* Title and subtitle positioned below the video */}
           <ScrollAnimation delay={300}>
