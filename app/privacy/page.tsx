@@ -3,20 +3,20 @@ import Footer from '../../components/Footer';
 
 export default function PrivacyPolicy() {
   return (
-    <div className="min-h-screen bg-dark-gradient">
+    <div className="min-h-screen bg-gradient-to-b from-white via-blue-50 to-blue-100">
       <Navbar variant="marketing" />
       
       <div className="container mx-auto px-4 py-20 pt-32">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold text-white mb-6">Privacy Policy</h1>
-          <p className="text-sunset-200 mb-8">Last updated: {new Date().toLocaleDateString()}</p>
+          <h1 className="text-4xl font-bold text-neutral-900 mb-6">Privacy Policy</h1>
+          <p className="text-neutral-600 mb-8">Last updated: {new Date().toLocaleDateString()}</p>
           
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8 text-white space-y-6">
+          <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl border border-blue-200/50 p-8 text-neutral-900 space-y-6">
             
             <section>
               <h2 className="text-2xl font-semibold mb-4">1. Information We Collect</h2>
-              <div className="space-y-4 text-gray-300">
-                <h3 className="text-lg font-medium text-white">Personal Information</h3>
+              <div className="space-y-4 text-neutral-700">
+                <h3 className="text-lg font-medium text-neutral-900">Personal Information</h3>
                 <p>When you create an account or use our services, we may collect:</p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
                   <li>Email address and account credentials</li>
@@ -24,10 +24,10 @@ export default function PrivacyPolicy() {
                   <li>Profile information you choose to provide</li>
                 </ul>
                 
-                <h3 className="text-lg font-medium text-white">Usage Data</h3>
+                <h3 className="text-lg font-medium text-neutral-900">Usage Data</h3>
                 <p>We automatically collect information about how you use our service:</p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>Icons you generate and prompts you submit</li>
+                  <li>Logos you generate and prompts you submit</li>
                   <li>Features you use and preferences you set</li>
                   <li>Technical information about your device and connection</li>
                   <li>Log data including IP address, browser type, and usage patterns</li>
@@ -37,12 +37,12 @@ export default function PrivacyPolicy() {
 
             <section>
               <h2 className="text-2xl font-semibold mb-4">2. How We Use Your Information</h2>
-              <div className="text-gray-300 space-y-2">
+              <div className="text-neutral-700 space-y-2">
                 <p>We use the information we collect to:</p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>Provide and maintain our AI icon generation service</li>
+                  <li>Provide and maintain our AI logo generation service</li>
                   <li>Process your payments and manage your subscription</li>
-                  <li>Generate icons based on your prompts and preferences</li>
+                  <li>Generate logos based on your prompts and preferences</li>
                   <li>Improve our AI models and service quality</li>
                   <li>Send you important updates about your account and our service</li>
                   <li>Provide customer support and respond to your inquiries</li>
@@ -53,7 +53,7 @@ export default function PrivacyPolicy() {
 
             <section>
               <h2 className="text-2xl font-semibold mb-4">3. Information Sharing</h2>
-              <div className="text-gray-300 space-y-4">
+              <div className="text-neutral-700 space-y-4">
                 <p>We do not sell your personal information. We may share your information only in the following circumstances:</p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
                   <li><strong>Service Providers:</strong> With trusted third-party services like Stripe for payment processing and Supabase for data storage</li>
@@ -66,7 +66,7 @@ export default function PrivacyPolicy() {
 
             <section>
               <h2 className="text-2xl font-semibold mb-4">4. Data Security</h2>
-              <div className="text-gray-300 space-y-2">
+              <div className="text-neutral-700 space-y-2">
                 <p>We implement industry-standard security measures to protect your information:</p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
                   <li>Encryption of data in transit and at rest</li>
@@ -79,7 +79,7 @@ export default function PrivacyPolicy() {
 
             <section>
               <h2 className="text-2xl font-semibold mb-4">5. Your Rights</h2>
-              <div className="text-gray-300 space-y-2">
+              <div className="text-neutral-700 space-y-2">
                 <p>You have the right to:</p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
                   <li>Access and review your personal information</li>
@@ -93,7 +93,7 @@ export default function PrivacyPolicy() {
 
             <section>
               <h2 className="text-2xl font-semibold mb-4">6. Cookies and Tracking</h2>
-              <div className="text-gray-300 space-y-2">
+              <div className="text-neutral-700 space-y-2">
                 <p>We use cookies and similar technologies to:</p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
                   <li>Keep you signed in to your account</li>
@@ -107,32 +107,32 @@ export default function PrivacyPolicy() {
 
             <section>
               <h2 className="text-2xl font-semibold mb-4">7. Children's Privacy</h2>
-              <div className="text-gray-300">
+              <div className="text-neutral-700">
                 <p>Our service is not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13. If we become aware that we have collected such information, we will take steps to delete it promptly.</p>
               </div>
             </section>
 
             <section>
               <h2 className="text-2xl font-semibold mb-4">8. International Users</h2>
-              <div className="text-gray-300">
+              <div className="text-neutral-700">
                 <p>Our service is operated from the United States. If you are accessing our service from outside the US, please be aware that your information may be transferred to, stored, and processed in the United States where our servers and central database are located.</p>
               </div>
             </section>
 
             <section>
               <h2 className="text-2xl font-semibold mb-4">9. Changes to This Policy</h2>
-              <div className="text-gray-300">
+              <div className="text-neutral-700">
                 <p>We may update this privacy policy from time to time. We will notify you of any material changes by posting the new policy on this page and updating the "last updated" date. Your continued use of our service after such changes constitutes acceptance of the updated policy.</p>
               </div>
             </section>
 
             <section>
               <h2 className="text-2xl font-semibold mb-4">10. Contact Us</h2>
-              <div className="text-gray-300">
+              <div className="text-neutral-700">
                 <p>If you have any questions about this Privacy Policy or our data practices, please contact us at:</p>
                 <ul className="list-none space-y-2 ml-4 mt-4">
-                  <li><strong>Email:</strong> privacy@aiiconmaker.com</li>
-                  <li><strong>Address:</strong> AI Icon Maker, Privacy Department</li>
+                  <li><strong>Email:</strong> privacy@ailogomaker.com</li>
+                  <li><strong>Address:</strong> AI Logo Maker, Privacy Department</li>
                 </ul>
               </div>
             </section>

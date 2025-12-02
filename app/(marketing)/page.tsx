@@ -968,8 +968,8 @@ export default function HomePage() {
       </div>
 
       {/* Testimonials Section */}
-      <div className="py-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-        <div className="container mx-auto">
+      <div className="py-20 bg-gradient-to-b from-blue-100 via-blue-50 to-white">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
           <div className="text-center mb-16">
             <ScrollAnimation>
               <div className="flex justify-center items-center mb-6">
@@ -990,14 +990,16 @@ export default function HomePage() {
               </h2>
             </ScrollAnimation>
           </div>
-          
-          {/* Testimonials Carousel */}
+        </div>
+        
+        {/* Testimonials Carousel - Full Width */}
+        <div className="w-full overflow-hidden">
           <TestimonialCarousel />
         </div>
       </div>
 
       {/* Contact Section */}
-      <div id="contact" className="py-20 bg-neutral-50 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+      <div id="contact" className="py-20 bg-gradient-to-b from-white via-blue-50 to-blue-100 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <ScrollAnimation>
@@ -1015,7 +1017,7 @@ export default function HomePage() {
           <div className="max-w-2xl mx-auto">
             {/* Contact Form */}
             <ScrollAnimation delay={200}>
-              <div className="bg-gradient-to-br from-midnight-900/50 to-midnight-950/70 backdrop-blur-md rounded-2xl p-8 border border-neutral-200 shadow-xl">
+              <div className="bg-white/80 backdrop-blur-xl rounded-2xl p-8 border border-blue-200/50 shadow-xl">
                 <h3 className="text-2xl font-bold text-neutral-900 mb-6">Send us a message</h3>
                 <form ref={contactFormRef} className="space-y-6" onSubmit={handleContactSubmit}>
                   <div>
@@ -1026,7 +1028,7 @@ export default function HomePage() {
                       type="text"
                       id="name"
                       name="name"
-                      className="w-full bg-midnight-800/50 border border-midnight-700 rounded-lg p-3 text-neutral-900 placeholder-sunset-300/50 focus:outline-none focus:border-sunset-400 focus:ring-2 focus:ring-sunset-400/20 transition-all duration-300"
+                      className="w-full bg-white/90 border border-neutral-200 rounded-lg p-3 text-neutral-900 placeholder-neutral-400 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-300"
                       placeholder="Your name"
                     />
                   </div>
@@ -1038,7 +1040,7 @@ export default function HomePage() {
                       type="email"
                       id="email"
                       name="email"
-                      className="w-full bg-midnight-800/50 border border-midnight-700 rounded-lg p-3 text-neutral-900 placeholder-sunset-300/50 focus:outline-none focus:border-sunset-400 focus:ring-2 focus:ring-sunset-400/20 transition-all duration-300"
+                      className="w-full bg-white/90 border border-neutral-200 rounded-lg p-3 text-neutral-900 placeholder-neutral-400 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-300"
                       placeholder="your@email.com"
                     />
                   </div>
@@ -1049,7 +1051,7 @@ export default function HomePage() {
                     <select
                       id="subject"
                       name="subject"
-                      className="w-full bg-midnight-800/50 border border-midnight-700 rounded-lg p-3 text-neutral-900 focus:outline-none focus:border-sunset-400 focus:ring-2 focus:ring-sunset-400/20 transition-all duration-300"
+                      className="w-full bg-white/90 border border-neutral-200 rounded-lg p-3 text-neutral-900 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-300"
                     >
                       <option value="">Select a topic</option>
                       <option value="general">General Question</option>
@@ -1067,13 +1069,13 @@ export default function HomePage() {
                       id="message"
                       name="message"
                       rows={5}
-                      className="w-full bg-midnight-800/50 border border-midnight-700 rounded-lg p-3 text-neutral-900 placeholder-sunset-300/50 focus:outline-none focus:border-sunset-400 focus:ring-2 focus:ring-sunset-400/20 transition-all duration-300 resize-none"
+                      className="w-full bg-white/90 border border-neutral-200 rounded-lg p-3 text-neutral-900 placeholder-neutral-400 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-300 resize-none"
                       placeholder="Tell us how we can help you..."
                     ></textarea>
                   </div>
                   {/* Success/Error Messages */}
                   {submitStatus === 'success' && (
-                    <div className="bg-green-500/20 border border-green-500/50 rounded-lg p-4 text-green-300">
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-green-700">
                       <div className="flex items-center">
                         <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -1084,7 +1086,7 @@ export default function HomePage() {
                   )}
                   
                   {submitStatus === 'error' && (
-                    <div className="bg-red-500/20 border border-red-500/50 rounded-lg p-4 text-red-300">
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">
                       <div className="flex items-center">
                         <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -1097,7 +1099,7 @@ export default function HomePage() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-gradient-to-r from-primary-600 to-accent-500 text-neutral-900 py-3 px-6 rounded-lg font-semibold hover:from-sunset-600 hover:to-primary-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                    className="w-full bg-gradient-to-r from-primary-600 to-accent-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-primary-700 hover:to-accent-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                   >
                     {isSubmitting ? (
                       <div className="flex items-center justify-center">

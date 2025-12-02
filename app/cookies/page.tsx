@@ -3,27 +3,27 @@ import Footer from '../../components/Footer';
 
 export default function CookiePolicy() {
   return (
-    <div className="min-h-screen bg-dark-gradient">
+    <div className="min-h-screen bg-gradient-to-b from-white via-blue-50 to-blue-100">
       <Navbar variant="marketing" />
       
       <div className="container mx-auto px-4 py-20 pt-32">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold text-white mb-6">Cookie Policy</h1>
-          <p className="text-sunset-200 mb-8">Last updated: {new Date().toLocaleDateString()}</p>
+          <h1 className="text-4xl font-bold text-neutral-900 mb-6">Cookie Policy</h1>
+          <p className="text-neutral-600 mb-8">Last updated: {new Date().toLocaleDateString()}</p>
           
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8 text-white space-y-6">
+          <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl border border-blue-200/50 p-8 text-neutral-900 space-y-6">
             
             <section>
               <h2 className="text-2xl font-semibold mb-4">1. What Are Cookies</h2>
-              <div className="text-gray-300">
+              <div className="text-neutral-700">
                 <p>Cookies are small text files that are placed on your computer or mobile device when you visit a website. They are widely used to make websites work more efficiently and provide information to website owners about how users interact with their sites.</p>
               </div>
             </section>
 
             <section>
               <h2 className="text-2xl font-semibold mb-4">2. How We Use Cookies</h2>
-              <div className="text-gray-300 space-y-2">
-                <p>AI Icon Maker uses cookies and similar technologies to:</p>
+              <div className="text-neutral-700 space-y-2">
+                <p>AI Logo Maker uses cookies and similar technologies to:</p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
                   <li>Keep you signed in to your account</li>
                   <li>Remember your preferences and settings</li>
@@ -37,39 +37,39 @@ export default function CookiePolicy() {
 
             <section>
               <h2 className="text-2xl font-semibold mb-4">3. Types of Cookies We Use</h2>
-              <div className="text-gray-300 space-y-6">
+              <div className="text-neutral-700 space-y-6">
                 
                 <div>
-                  <h3 className="text-lg font-medium text-white mb-2">Essential Cookies</h3>
+                  <h3 className="text-lg font-medium text-neutral-900 mb-2">Essential Cookies</h3>
                   <p>These cookies are necessary for our website to function properly. They enable basic functions like page navigation, access to secure areas, and authentication. The website cannot function properly without these cookies.</p>
-                  <div className="mt-2 bg-gray-800/50 rounded-lg p-3">
+                  <div className="mt-2 bg-blue-50 rounded-lg p-3">
                     <p><strong>Examples:</strong> Session cookies, authentication tokens, security cookies</p>
                     <p><strong>Duration:</strong> Session or up to 30 days</p>
                   </div>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-medium text-white mb-2">Functionality Cookies</h3>
+                  <h3 className="text-lg font-medium text-neutral-900 mb-2">Functionality Cookies</h3>
                   <p>These cookies allow us to remember choices you make (such as your username, language preferences, or region) and provide enhanced, more personal features.</p>
-                  <div className="mt-2 bg-gray-800/50 rounded-lg p-3">
+                  <div className="mt-2 bg-blue-50 rounded-lg p-3">
                     <p><strong>Examples:</strong> Language settings, user preferences, theme choices</p>
                     <p><strong>Duration:</strong> Up to 1 year</p>
                   </div>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-medium text-white mb-2">Analytics Cookies</h3>
+                  <h3 className="text-lg font-medium text-neutral-900 mb-2">Analytics Cookies</h3>
                   <p>These cookies help us understand how visitors interact with our website by collecting and reporting information anonymously. This helps us improve our service.</p>
-                  <div className="mt-2 bg-gray-800/50 rounded-lg p-3">
+                  <div className="mt-2 bg-blue-50 rounded-lg p-3">
                     <p><strong>Examples:</strong> Google Analytics, usage statistics, performance monitoring</p>
                     <p><strong>Duration:</strong> Up to 2 years</p>
                   </div>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-medium text-white mb-2">Marketing Cookies</h3>
+                  <h3 className="text-lg font-medium text-neutral-900 mb-2">Marketing Cookies</h3>
                   <p>These cookies are used to track visitors across websites. They are used to display ads that are relevant and engaging for individual users.</p>
-                  <div className="mt-2 bg-gray-800/50 rounded-lg p-3">
+                  <div className="mt-2 bg-blue-50 rounded-lg p-3">
                     <p><strong>Examples:</strong> Advertising cookies, social media pixels, conversion tracking</p>
                     <p><strong>Duration:</strong> Up to 1 year</p>
                   </div>
@@ -80,27 +80,27 @@ export default function CookiePolicy() {
 
             <section>
               <h2 className="text-2xl font-semibold mb-4">4. Third-Party Cookies</h2>
-              <div className="text-gray-300 space-y-4">
+              <div className="text-neutral-700 space-y-4">
                 <p>We may also use third-party services that set cookies on your device. These include:</p>
                 
                 <div className="space-y-4">
                   <div>
-                    <h3 className="text-lg font-medium text-white">Stripe</h3>
+                    <h3 className="text-lg font-medium text-neutral-900">Stripe</h3>
                     <p>Our payment processor uses cookies to ensure secure payment processing and fraud prevention.</p>
                   </div>
                   
                   <div>
-                    <h3 className="text-lg font-medium text-white">Supabase</h3>
+                    <h3 className="text-lg font-medium text-neutral-900">Supabase</h3>
                     <p>Our backend service provider uses cookies for authentication and session management.</p>
                   </div>
                   
                   <div>
-                    <h3 className="text-lg font-medium text-white">Google Analytics</h3>
+                    <h3 className="text-lg font-medium text-neutral-900">Google Analytics</h3>
                     <p>We use Google Analytics to understand how users interact with our website and improve our service.</p>
                   </div>
                   
                   <div>
-                    <h3 className="text-lg font-medium text-white">Social Media Platforms</h3>
+                    <h3 className="text-lg font-medium text-neutral-900">Social Media Platforms</h3>
                     <p>Social media plugins and sharing buttons may set cookies from their respective platforms.</p>
                   </div>
                 </div>
@@ -109,10 +109,10 @@ export default function CookiePolicy() {
 
             <section>
               <h2 className="text-2xl font-semibold mb-4">5. How to Control Cookies</h2>
-              <div className="text-gray-300 space-y-4">
+              <div className="text-neutral-700 space-y-4">
                 
                 <div>
-                  <h3 className="text-lg font-medium text-white">Browser Settings</h3>
+                  <h3 className="text-lg font-medium text-neutral-900">Browser Settings</h3>
                   <p>Most web browsers allow you to control cookies through their settings. You can:</p>
                   <ul className="list-disc list-inside space-y-2 ml-4 mt-2">
                     <li>Block all cookies</li>
@@ -123,7 +123,7 @@ export default function CookiePolicy() {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-medium text-white">Browser-Specific Instructions</h3>
+                  <h3 className="text-lg font-medium text-neutral-900">Browser-Specific Instructions</h3>
                   <div className="space-y-2 ml-4">
                     <p><strong>Chrome:</strong> Settings → Privacy and security → Cookies and other site data</p>
                     <p><strong>Firefox:</strong> Settings → Privacy & Security → Cookies and Site Data</p>
@@ -133,12 +133,12 @@ export default function CookiePolicy() {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-medium text-white">Opt-Out Tools</h3>
+                  <h3 className="text-lg font-medium text-neutral-900">Opt-Out Tools</h3>
                   <p>You can also opt out of specific tracking services:</p>
                   <ul className="list-disc list-inside space-y-2 ml-4 mt-2">
-                    <li>Google Analytics: <a href="https://tools.google.com/dlpage/gaoptout" className="text-sunset-400 hover:text-sunset-300 underline">Google Analytics Opt-out</a></li>
-                    <li>Digital Advertising Alliance: <a href="http://optout.aboutads.info/" className="text-sunset-400 hover:text-sunset-300 underline">DAA Opt-out</a></li>
-                    <li>Network Advertising Initiative: <a href="http://optout.networkadvertising.org/" className="text-sunset-400 hover:text-sunset-300 underline">NAI Opt-out</a></li>
+                    <li>Google Analytics: <a href="https://tools.google.com/dlpage/gaoptout" className="text-primary-600 hover:text-primary-700 underline">Google Analytics Opt-out</a></li>
+                    <li>Digital Advertising Alliance: <a href="http://optout.aboutads.info/" className="text-primary-600 hover:text-primary-700 underline">DAA Opt-out</a></li>
+                    <li>Network Advertising Initiative: <a href="http://optout.networkadvertising.org/" className="text-primary-600 hover:text-primary-700 underline">NAI Opt-out</a></li>
                   </ul>
                 </div>
 
@@ -147,7 +147,7 @@ export default function CookiePolicy() {
 
             <section>
               <h2 className="text-2xl font-semibold mb-4">6. Impact of Disabling Cookies</h2>
-              <div className="text-gray-300 space-y-2">
+              <div className="text-neutral-700 space-y-2">
                 <p>Please note that disabling certain cookies may impact your experience on our website:</p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
                   <li>You may need to re-enter information more frequently</li>
@@ -160,27 +160,27 @@ export default function CookiePolicy() {
 
             <section>
               <h2 className="text-2xl font-semibold mb-4">7. Mobile Devices</h2>
-              <div className="text-gray-300">
+              <div className="text-neutral-700">
                 <p>Mobile devices may use technologies similar to cookies, such as local storage and mobile advertising identifiers. You can control these through your device settings or by opting out through industry opt-out tools.</p>
               </div>
             </section>
 
             <section>
               <h2 className="text-2xl font-semibold mb-4">8. Updates to This Policy</h2>
-              <div className="text-gray-300">
+              <div className="text-neutral-700">
                 <p>We may update this Cookie Policy from time to time to reflect changes in our practices or applicable laws. We will post any updates on this page and indicate when they were last updated. We encourage you to review this policy periodically.</p>
               </div>
             </section>
 
             <section>
               <h2 className="text-2xl font-semibold mb-4">9. Contact Us</h2>
-              <div className="text-gray-300">
+              <div className="text-neutral-700">
                 <p>If you have any questions about our use of cookies or this Cookie Policy, please contact us at:</p>
                 <ul className="list-none space-y-2 ml-4 mt-4">
-                  <li><strong>Email:</strong> privacy@aiiconmaker.com</li>
-                  <li><strong>Address:</strong> AI Icon Maker, Privacy Department</li>
+                  <li><strong>Email:</strong> privacy@ailogomaker.com</li>
+                  <li><strong>Address:</strong> AI Logo Maker, Privacy Department</li>
                 </ul>
-                <p className="mt-4">For more information about our data practices, please see our <a href="/privacy" className="text-sunset-400 hover:text-sunset-300 underline">Privacy Policy</a>.</p>
+                <p className="mt-4">For more information about our data practices, please see our <a href="/privacy" className="text-primary-600 hover:text-primary-700 underline">Privacy Policy</a>.</p>
               </div>
             </section>
 

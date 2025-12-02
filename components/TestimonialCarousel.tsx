@@ -100,6 +100,10 @@ export default function TestimonialCarousel() {
     <div className="space-y-8 overflow-hidden">
       {/* Top Row - Moving Right to Left */}
       <div className="relative">
+        {/* Left fade overlay */}
+        <div className="absolute left-0 top-0 bottom-0 w-20 sm:w-32 lg:w-40 bg-gradient-to-r from-blue-100 via-blue-50/90 to-transparent z-10 pointer-events-none"></div>
+        {/* Right fade overlay */}
+        <div className="absolute right-0 top-0 bottom-0 w-20 sm:w-32 lg:w-40 bg-gradient-to-l from-blue-100 via-blue-50/90 to-transparent z-10 pointer-events-none"></div>
         <div className="flex animate-scroll-rtl hover:animate-pause">
           <div className="flex space-x-2 sm:space-x-3 lg:space-x-6 shrink-0">
             {topRowTestimonials.map((testimonial) => (
@@ -146,6 +150,10 @@ export default function TestimonialCarousel() {
 
       {/* Bottom Row - Moving Left to Right */}
       <div className="relative">
+        {/* Left fade overlay */}
+        <div className="absolute left-0 top-0 bottom-0 w-20 sm:w-32 lg:w-40 bg-gradient-to-r from-blue-50 via-white/90 to-transparent z-10 pointer-events-none"></div>
+        {/* Right fade overlay */}
+        <div className="absolute right-0 top-0 bottom-0 w-20 sm:w-32 lg:w-40 bg-gradient-to-l from-blue-50 via-white/90 to-transparent z-10 pointer-events-none"></div>
         <div className="flex animate-scroll-ltr hover:animate-pause">
           <div className="flex space-x-2 sm:space-x-3 lg:space-x-6 shrink-0">
             {bottomRowTestimonials.map((testimonial) => (
