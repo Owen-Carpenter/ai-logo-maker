@@ -749,7 +749,7 @@ export default function HomePage() {
               <div className="bg-gradient-to-br from-sunset-500/20 to-coral-500/20 backdrop-blur-md rounded-2xl p-8 border-2 border-sunset-500/50 shadow-2xl hover:shadow-3xl hover:shadow-sunset-500/30 transition-all duration-500 hover:scale-105 relative h-full flex flex-col">
                 {/* Popular Badge */}
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <div className="bg-[#ff7e5f] text-neutral-900 px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
+                  <div className="bg-sunset-500 text-neutral-900 px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
                     Most Popular
                   </div>
                 </div>
