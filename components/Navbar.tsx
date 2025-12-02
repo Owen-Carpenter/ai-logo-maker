@@ -158,7 +158,7 @@ export default function Navbar({ variant = 'marketing' }: NavbarProps) {
       <div className="w-full px-6 py-4">
         <div className="flex items-center justify-center">
           {/* Centered Navigation Container */}
-          <div className="flex items-center bg-white/95 backdrop-blur-xl rounded-3xl shadow-lg border border-neutral-200 px-8 py-4">
+          <div className="flex items-center bg-white/70 backdrop-blur-2xl rounded-3xl shadow-xl border border-blue-200/50 px-8 py-4">
             {/* Logo - Clickable to go home */}
             <Link href="/" className="flex items-center space-x-2 group mr-8">
               <Logo width={32} height={32} className="group-hover:scale-105 transition-transform duration-200" />
@@ -204,7 +204,7 @@ export default function Navbar({ variant = 'marketing' }: NavbarProps) {
                   </button>
                   
                   {isDropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white backdrop-blur-xl rounded-2xl shadow-xl border border-neutral-200 py-1 px-2 z-50">
+                    <div className="absolute right-0 mt-2 w-48 bg-white/80 backdrop-blur-2xl rounded-2xl shadow-xl border border-blue-200/50 py-1 px-2 z-50">
                       <Link 
                         href="/account" 
                         className="block px-4 py-3 text-neutral-700 hover:text-primary-600 hover:bg-primary-50 transition-all duration-300 rounded-xl"
@@ -256,7 +256,7 @@ export default function Navbar({ variant = 'marketing' }: NavbarProps) {
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="md:hidden mt-4 flex justify-center">
-            <div className="bg-white backdrop-blur-xl rounded-3xl shadow-xl border border-neutral-200 p-6 w-full max-w-sm">
+            <div className="bg-white/80 backdrop-blur-2xl rounded-3xl shadow-xl border border-blue-200/50 p-6 w-full max-w-sm">
               <div className="flex flex-col space-y-3">
                 {navigationLinks.map((link) => (
                   link.isSmartLink ? (

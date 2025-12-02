@@ -1,7 +1,7 @@
 /**
- * Logo Generation Prompts
+ * Icon Generation Prompts
  * 
- * Centralized prompt templates for initial logo generation and improvements
+ * Centralized prompt templates for initial icon generation and improvements
  */
 
 export interface PromptContext {
@@ -13,31 +13,30 @@ export interface PromptContext {
 }
 
 /**
- * Generate reasoning prompt for initial logo creation
+ * Generate reasoning prompt for initial icon creation
  */
 export function getInitialReasoningPrompt(context: PromptContext): string {
   const { prompt, style, count } = context;
   
-  return `You are an expert logo designer using GPT Image 1. A user wants to create ${count} professional-grade logos for "${prompt}" in ${style} style.
+  return `You are an expert icon designer using GPT Image 1. A user wants to create ${count} clean, minimal icons for "${prompt}" in ${style} style.
 
 CRITICAL REQUIREMENTS:
-- PROFESSIONAL LOGO DESIGN - create a complete, polished logo suitable for business use
 - TRANSPARENT PNG BACKGROUND - completely transparent, no background elements
-- SCALABLE DESIGN - works well at both large and small sizes
-- BRAND-READY - professional quality suitable for company branding
-- VISUALLY STRIKING - memorable and distinctive design
+- MINIMAL DESIGN - just the essential icon shape, no extra details
+- SOLID COLORS ONLY - no gradients, shadows, or effects
+- HIGH CONTRAST - clear visibility at small sizes
 
 Please provide a brief reasoning process explaining:
-1. How you'll create a professional logo for "${prompt}"
-2. Your approach to ensuring the logo is brand-ready and scalable
-3. Design choices that make it memorable and professional
-4. How you'll ensure it works across different applications
+1. How you'll create a clean, minimal version of "${prompt}"
+2. Your approach to ensuring completely transparent backgrounds
+3. Color choices for maximum contrast and clarity
+4. How you'll keep the design simple and recognizable
 
-Keep this concise and focused on professional logo design principles.`;
+Keep this concise and focused on transparency and minimalism.`;
 }
 
 /**
- * Generate reasoning prompt for logo improvement
+ * Generate reasoning prompt for icon improvement
  */
 export function getImprovementReasoningPrompt(context: PromptContext): string {
   const { prompt, style, improvementInstruction = 'general improvement', basePrompt = prompt } = context;
@@ -55,42 +54,42 @@ export function getImprovementReasoningPrompt(context: PromptContext): string {
     ? 'IMPORTANT: The color change must be visually obvious and match exactly what was requested.'
     : '';
   
-  return `You are an expert logo designer using GPT Image 1. A user wants to refine an existing logo based on their cumulative feedback: "${prompt}" in ${style} style.
+  return `You are an expert icon designer using GPT Image 1. A user wants to restyle an existing icon based on their cumulative feedback: "${prompt}" in ${style} style.
 
 CRITICAL REQUIREMENTS:
-- PROFESSIONAL LOGO DESIGN - maintain professional quality throughout improvements
 - TRANSPARENT PNG BACKGROUND - completely transparent, no background elements
-- SCALABLE DESIGN - ensure improvements maintain scalability
-- BRAND-READY - keep the logo suitable for business use
+- MINIMAL DESIGN - just the essential icon shape, no extra details
+- SOLID COLORS ONLY - no gradients, shadows, or effects
+- HIGH CONTRAST - clear visibility at small sizes
 
 Please provide a brief reasoning process explaining:
-1. How you'll refine the existing logo based on ALL the feedback: "${allImprovements}"
-2. Your approach to maintaining professional quality while applying changes
-3. Color choices and design adjustments - ${colorNote}
-4. How you'll preserve the core brand identity while applying ALL the requested modifications cumulatively
+1. How you'll modify the existing icon based on ALL the feedback: "${allImprovements}"
+2. Your approach to ensuring completely transparent backgrounds
+3. Color choices for maximum contrast and clarity - ${colorNote}
+4. How you'll keep the same basic concept and recognizable shape while applying ALL the requested changes cumulatively
 
-IMPORTANT: You are REFINING an existing logo with CUMULATIVE improvements, not creating a new one. Keep the same core brand concept and recognizable identity, but apply ALL the requested modifications together (color, style adjustments, etc.). ${colorImportance}`;
+IMPORTANT: You are RESTYLING an existing icon with CUMULATIVE improvements, not creating a new one. Keep the same core concept and recognizable shape, but apply ALL the requested modifications together (color, style adjustments, etc.). ${colorImportance}`;
 }
 
 /**
- * Generate system prompt for logo design reasoning
+ * Generate system prompt for icon design reasoning
  */
 export function getSystemPrompt(): string {
-  return "You are an expert logo designer specializing in professional-grade logos with transparent PNG backgrounds. You create memorable, brand-ready logos suitable for business use. Focus on creating distinctive, scalable designs that work well across different applications and sizes.";
+  return "You are an expert icon designer specializing in clean, minimal icons with transparent PNG backgrounds. You create simple, recognizable icons with no background elements, shadows, or extra details. Focus on essential shapes and solid colors for maximum clarity.";
 }
 
 /**
- * Generate image generation prompt for initial logos
+ * Generate image generation prompt for initial icons
  */
 export function getInitialImagePrompt(context: PromptContext, variationIndex: number): string {
   const { prompt, style } = context;
   const variation = variationIndex === 0 ? "first" : variationIndex === 1 ? "second" : "third";
   
-  return `Professional ${prompt} logo, ${style} style, ${variation} version. TRANSPARENT PNG BACKGROUND. Brand-ready design, scalable, memorable, distinctive. Clean design suitable for business use.`;
+  return `Minimal ${prompt} icon, ${style} style, ${variation} version. TRANSPARENT PNG BACKGROUND. Simple solid color shape, no details, no background, no shadows, no effects. Clean edges, high contrast.`;
 }
 
 /**
- * Generate image generation prompt for logo improvements
+ * Generate image generation prompt for icon improvements
  */
 export function getImprovementImagePrompt(context: PromptContext): string {
   const { prompt, improvementInstruction = '', basePrompt = prompt } = context;
@@ -105,15 +104,15 @@ export function getImprovementImagePrompt(context: PromptContext): string {
   
   if (allImprovements) {
     if (isColorChange) {
-      // For color changes, modify the existing logo with all cumulative changes
-      return `Refine the existing ${basePrompt} logo with ALL these cumulative changes: ${allImprovements}. Keep the same basic brand identity and structure, but apply ALL the requested modifications together. TRANSPARENT PNG BACKGROUND. Professional design, scalable, brand-ready.`;
+      // For color changes, modify the existing icon with all cumulative changes
+      return `Modify the existing ${basePrompt} icon with ALL these cumulative changes: ${allImprovements}. Keep the same basic shape and structure, but apply ALL the requested modifications together. TRANSPARENT PNG BACKGROUND. Simple solid color shape, no details, no background, no shadows, no effects. Clean edges, high contrast.`;
     } else {
-      // For other improvements, modify the existing logo with all cumulative changes
-      return `Refine the existing ${basePrompt} logo with ALL these cumulative changes: ${allImprovements}. Keep the same core brand concept and recognizable identity, but apply ALL the requested changes together: ${allImprovements}. TRANSPARENT PNG BACKGROUND. Professional design, scalable, brand-ready.`;
+      // For other improvements, modify the existing icon with all cumulative changes
+      return `Modify the existing ${basePrompt} icon with ALL these cumulative changes: ${allImprovements}. Keep the same basic concept and recognizable shape, but apply ALL the requested changes together: ${allImprovements}. TRANSPARENT PNG BACKGROUND. Simple solid color shape, no details, no background, no shadows, no effects. Clean edges, high contrast.`;
     }
   } else {
     // Fallback for general improvements
-    return `Refine the existing ${basePrompt} logo with improvements. Keep the same core brand concept. TRANSPARENT PNG BACKGROUND. Professional design, scalable, brand-ready.`;
+    return `Modify the existing ${basePrompt} icon with improvements. Keep the same basic concept. TRANSPARENT PNG BACKGROUND. Simple solid color shape, no details, no background, no shadows, no effects. Clean edges, high contrast.`;
   }
 }
 
