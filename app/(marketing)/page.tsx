@@ -39,7 +39,7 @@ export default function HomePage() {
   // Typing animation effect
   useEffect(() => {
     const examples = [
-      "Ask AI Logo Maker to create a logo for my...",
+      "Ask AI Logo Generator to create a logo for my...",
       "Create a professional tech startup logo with modern design",
       "Design a bold restaurant logo with vintage style", 
       "Generate a minimalist consulting firm logo",
@@ -110,7 +110,7 @@ export default function HomePage() {
     },
     {
       question: "Do I own the generated logos?",
-      answer: "Yes! All logos generated with AI Logo Maker can be used for commercial purposes without any additional licensing fees."
+      answer: "Yes! All logos generated with AI Logo Generator can be used for commercial purposes without any additional licensing fees."
     }
   ];
 
@@ -222,7 +222,7 @@ export default function HomePage() {
           </h1>
           
           <h2 className="text-base sm:text-lg lg:text-xl text-neutral-700 mb-8 max-w-2xl px-4">
-            Create professional-grade logos, brand identities, and business assets in seconds with our advanced AI Logo Maker.
+            Create professional-grade logos, brand identities, and business assets in seconds with our advanced AI Logo Generator.
           </h2>
           
           {/* Main Input Field */}
@@ -524,7 +524,7 @@ export default function HomePage() {
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <ScrollAnimation>
-            <h2 className="text-4xl font-bold text-neutral-900 mb-4">Why Creators Choose AI Logo Maker</h2>
+            <h2 className="text-4xl font-bold text-neutral-900 mb-4">Why Creators Choose AI Logo Generator</h2>
             </ScrollAnimation>
             <ScrollAnimation delay={100}>
               <p className="text-neutral-600 max-w-2xl mx-auto">
@@ -947,7 +947,7 @@ export default function HomePage() {
                 </ScrollAnimation>
                 <ScrollAnimation delay={200}>
                   <p className="text-neutral-600 mb-8 max-w-2xl mx-auto">
-                    Join professionals who are already using AI Logo Maker to create stunning logos for their projects.
+                    Join professionals who are already using AI Logo Generator to create stunning logos for their projects.
                   </p>
                 </ScrollAnimation>
                 <ScrollAnimation delay={300}>
@@ -983,7 +983,7 @@ export default function HomePage() {
                   <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-red-500 rounded-full flex items-center justify-center text-neutral-900 font-bold border-2 border-white shadow-lg">T</div>
                 </div>
               </div>
-              <p className="text-neutral-600 mb-4">500+ Designers & developers trust AI Logo Maker</p>
+              <p className="text-neutral-600 mb-4">500+ Designers & developers trust AI Logo Generator</p>
               <h2 className="text-4xl lg:text-5xl font-bold text-neutral-900 mb-6">
                 Helping creators streamline their<br />
                 workflow and deliver faster
@@ -1009,7 +1009,7 @@ export default function HomePage() {
             </ScrollAnimation>
             <ScrollAnimation delay={100}>
               <p className="text-xl text-neutral-600 mb-8 max-w-3xl mx-auto">
-                Have questions about AI Logo Maker? Need help with your subscription? We're here to help you create amazing logos.
+                Have questions about AI Logo Generator? Need help with your subscription? We're here to help you create amazing logos.
               </p>
             </ScrollAnimation>
           </div>

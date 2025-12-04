@@ -13,7 +13,7 @@ export default function Logo({
   className = '', 
   width = 24, 
   height = 24, 
-  alt = 'AI Logo Maker Logo' 
+  alt = 'AI Logo Generator Logo' 
 }: LogoProps) {
   // Check if the className contains text-white to apply filter
   const isWhite = className.includes('text-white');

@@ -41,7 +41,7 @@ export default function ForgotPasswordPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <span className="text-2xl font-bold text-neutral-900">AI Logo Maker</span>
+            <span className="text-2xl font-bold text-neutral-900">AI Logo Generator</span>
           </Link>
           <h2 className="text-3xl font-bold text-neutral-900">
             Forgot your password?

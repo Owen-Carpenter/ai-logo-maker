@@ -162,7 +162,7 @@ export default function Navbar({ variant = 'marketing' }: NavbarProps) {
             {/* Logo - Clickable to go home */}
             <Link href="/" className="flex items-center space-x-2 group mr-8">
               <Logo width={32} height={32} className="group-hover:scale-105 transition-transform duration-200" />
-              <span className="text-lg font-semibold text-neutral-900">AI Logo Maker</span>
+              <span className="text-lg font-semibold text-neutral-900">AI Logo Generator</span>
             </Link>
 
             {/* Desktop Navigation */}

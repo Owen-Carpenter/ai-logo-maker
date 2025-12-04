@@ -97,7 +97,7 @@ export default function Sidebar({ currentPage = 'generate', onStartWalkthrough, 
               alt="AI Icon Maker" 
               className="w-8 h-8 lg:w-10 lg:h-10 object-contain lg:mr-0 mr-3"
             />
-            <span className="text-primary-600 font-semibold lg:hidden drop-shadow-md">AI Logo Maker</span>
+            <span className="text-primary-600 font-semibold lg:hidden drop-shadow-md">AI Logo Generator</span>
             {/* Desktop Tooltip */}
             <div className="hidden lg:block absolute left-full ml-3 px-3 py-2 bg-midnight-800 border border-white/20 rounded-lg text-neutral-900 text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-[99999]">
               Go to Homepage
