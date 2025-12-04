@@ -49,7 +49,7 @@ export default function StructuredData() {
     '@type': 'Organization',
     name: 'AI Icon Maker',
     url: 'https://ai-icon-maker.com',
-    logo: 'https://ai-icon-maker.com/images/AIIconMakerLogo.png',
+    logo: 'https://ai-icon-maker.com/images/AI-Logo-Generator-Logo.png',
     description: 'Professional AI-powered icon generation platform for designers and developers',
     sameAs: [],
   }

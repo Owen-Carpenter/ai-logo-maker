@@ -93,7 +93,7 @@ export default function Sidebar({ currentPage = 'generate', onStartWalkthrough, 
             className="lg:w-10 lg:h-10 w-full flex items-center lg:justify-center justify-start lg:px-0 px-3 py-2 lg:py-0 cursor-pointer hover:opacity-80 transition-opacity group relative"
           >
             <img 
-              src="/images/AIIconMakerLogo.png" 
+              src="/images/AI-Logo-Generator-Logo.png" 
               alt="AI Icon Maker" 
               className="w-8 h-8 lg:w-10 lg:h-10 object-contain lg:mr-0 mr-3"
             />

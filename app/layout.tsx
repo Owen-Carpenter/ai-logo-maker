@@ -93,9 +93,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/images/AIIconMakerLogo.png',
-    shortcut: '/images/AIIconMakerLogo.png',
-    apple: '/images/AIIconMakerLogo.png',
+    icon: '/images/AI-Logo-Generator-Logo.png',
+    shortcut: '/images/AI-Logo-Generator-Logo.png',
+    apple: '/images/AI-Logo-Generator-Logo.png',
   },
   openGraph: {
     type: 'website',
@@ -106,7 +106,7 @@ export const metadata: Metadata = {
     siteName: 'AI Logo Generator',
     images: [
       {
-        url: '/images/AIIconMakerLogo.png',
+        url: '/images/AI-Logo-Generator-Logo.png',
         width: 1200,
         height: 630,
         alt: 'AI Logo Generator - Professional AI Logo Generation',

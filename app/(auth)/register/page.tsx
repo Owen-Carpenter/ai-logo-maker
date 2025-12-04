@@ -72,7 +72,7 @@ export default function RegisterPage() {
           <Link href="/" className="flex items-center justify-center space-x-2 group mb-8">
             <div className="w-12 h-12 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
               <img 
-                src="/images/AIIconMakerLogo.png" 
+                src="/images/AI-Logo-Generator-Logo.png" 
                 alt="AI Icon Maker" 
                 className="w-full h-full object-contain"
                 onError={(e) => {

@@ -214,7 +214,7 @@ export default function IconDisplayPanel({
               <>
                 <div className="w-10 h-10 animate-spin mt-4">
                   <img 
-                    src="/images/AIIconMakerLogo.png" 
+                    src="/images/AI-Logo-Generator-Logo.png" 
                     alt="AI Icon Maker" 
                     className="w-full h-full object-contain"
                   />

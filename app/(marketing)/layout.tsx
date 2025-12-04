@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/images/AIIconMakerLogo.png',
+        url: '/images/AI-Logo-Generator-Logo.png',
         width: 1200,
         height: 630,
         alt: 'AI Icon Maker - Create Professional Icons',
