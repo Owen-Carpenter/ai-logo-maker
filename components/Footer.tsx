@@ -25,18 +25,18 @@ export default function Footer() {
             <h3 className="text-neutral-900 font-semibold mb-4">Tools</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/ai-icon-generator" className="text-neutral-600 hover:text-primary-600 transition-colors duration-300">
-                  AI Icon Generator
+                <Link href="/ai-logo-generator" className="text-neutral-600 hover:text-primary-600 transition-colors duration-300">
+                  AI Logo Generator
                 </Link>
               </li>
               <li>
-                <Link href="/app-icon-maker" className="text-neutral-600 hover:text-primary-600 transition-colors duration-300">
-                  App Icon Maker
+                <Link href="/app-logo-maker" className="text-neutral-600 hover:text-primary-600 transition-colors duration-300">
+                  App Logo Maker
                 </Link>
               </li>
               <li>
-                <Link href="/png-icon-generator" className="text-neutral-600 hover:text-primary-600 transition-colors duration-300">
-                  PNG Icon Generator
+                <Link href="/png-logo-generator" className="text-neutral-600 hover:text-primary-600 transition-colors duration-300">
+                  PNG Logo Generator
                 </Link>
               </li>
               <li>
@@ -45,8 +45,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/icon-set-generator" className="text-neutral-600 hover:text-primary-600 transition-colors duration-300">
-                  Icon Set Generator
+                <Link href="/brand-logo-maker" className="text-neutral-600 hover:text-primary-600 transition-colors duration-300">
+                  Brand Logo Maker
                 </Link>
               </li>
             </ul>

@@ -14,19 +14,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     // SEO Landing Pages - high priority for organic traffic
     {
-      url: `${baseUrl}/ai-icon-generator`,
+      url: `${baseUrl}/ai-logo-generator`,
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/app-icon-maker`,
+      url: `${baseUrl}/app-logo-maker`,
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/png-icon-generator`,
+      url: `${baseUrl}/png-logo-generator`,
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.9,
@@ -38,7 +38,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/icon-set-generator`,
+      url: `${baseUrl}/brand-logo-maker`,
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.9,

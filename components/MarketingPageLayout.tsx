@@ -41,12 +41,12 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
   // Typing animation effect
   useEffect(() => {
     const examples = [
-      "Ask AI Icon Maker to create an icon for my...",
-      "Create a shopping cart icon with modern flat design",
-      "Design an AI icon maker logo for a productivity app", 
-      "Generate a heart icon with gradient colors",
-      "Build a settings gear icon with minimal style",
-      "Make a star rating icon with golden color"
+      "Ask AI Logo Generator to create a logo for my...",
+      "Create a professional tech startup logo with modern design",
+      "Design a bold restaurant logo with vintage style", 
+      "Generate a minimalist consulting firm logo",
+      "Build a creative agency logo with geometric shapes",
+      "Make a luxury brand logo with elegant typography"
     ];
     
     let currentExample = 0;
@@ -103,7 +103,7 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
       answer: "We use GPT Image 1 for generating high-quality AI images and advanced prompt-to-icon technology to convert your descriptions into precise icons. This ensures professional-grade, visually stunning icons with the latest AI technology."
     },
     {
-      question: "What if I need more icons?",
+      question: "What if I need more logos?",
       answer: "Our Pro plan (100 credits/month) covers most professional needs. For agencies and high-volume users, our Profession Plus plan offers 200 credits/month plus advanced features."
     },
     {
@@ -111,8 +111,8 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
       answer: "Yes! You can cancel your subscription at any time. Your access continues until the end of your current billing period."
     },
     {
-      question: "Do I own the generated icons?",
-      answer: "Yes! All icons generated with AI Icon Maker can be used for commercial purposes without any additional licensing fees."
+      question: "Do I own the generated logos?",
+      answer: "Yes! All logos generated with AI Logo Generator can be used for commercial purposes without any additional licensing fees."
     }
   ];
 
@@ -186,12 +186,12 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
   };
 
   return (
-    <div className="min-h-screen bg-dark-gradient">
+    <div className="min-h-screen bg-gradient-to-b from-white via-blue-50 to-blue-100">
       {/* Navigation */}
       <Navbar variant="marketing" />
 
       {/* Hero Section */}
-      <div className="w-full h-screen px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-gradient-radial from-sunset-800 via-midnight-700 to-midnight-800 relative overflow-visible animate-fade-in flex items-center">
+      <div className="w-full h-screen px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-gradient-to-b from-white via-blue-50 to-blue-100 relative overflow-visible animate-fade-in flex items-center">
 
         
         {/* Floating Emoji Icons - Organic motion with depth animation */}
@@ -219,11 +219,11 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
           🔥
         </div>
         <div className="flex flex-col items-center justify-center text-center w-full relative z-10">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-900 mb-4 leading-tight">
             {h1Title}
           </h1>
           
-          <h2 className="text-base sm:text-lg lg:text-xl text-sunset-200 mb-8 max-w-2xl px-4">
+          <h2 className="text-base sm:text-lg lg:text-xl text-neutral-700 mb-8 max-w-2xl px-4">
             {h2Subtitle}
           </h2>
           
@@ -232,23 +232,23 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
               <div className="relative">
                 <textarea
                   id="ai-prompt"
-                  className="w-full bg-midnight-800/90 border border-midnight-700 rounded-2xl p-4 sm:p-6 pr-12 sm:pr-16 text-white placeholder-transparent focus:outline-none focus:border-sunset-400 focus:ring-2 focus:ring-sunset-400/20 transition-all duration-300 resize-none text-base sm:text-lg backdrop-blur-sm min-h-[100px] sm:min-h-[120px] max-h-[200px]"
+                  className="w-full bg-white/80 backdrop-blur-xl border border-blue-200/50 rounded-2xl p-4 sm:p-6 pr-12 sm:pr-16 text-neutral-900 placeholder-transparent focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-300 resize-none text-base sm:text-lg min-h-[100px] sm:min-h-[120px] max-h-[200px]"
                   rows={4}
                   placeholder=""
                   disabled
                 />
                 <div 
                   id="typing-placeholder" 
-                  className="absolute top-4 left-4 sm:top-6 sm:left-6 text-sunset-300/70 pointer-events-none text-base sm:text-lg"
+                  className="absolute top-4 left-4 sm:top-6 sm:left-6 text-neutral-600 pointer-events-none text-base sm:text-lg"
                 >
                   <span id="typed-text"></span>
-                  <span id="cursor" className="animate-pulse text-sunset-400">|</span>
+                  <span id="cursor" className="animate-pulse text-primary-600">|</span>
                 </div>
                 
                 {/* Interactive Elements at Bottom */}
                 <div className="absolute bottom-3 left-4 sm:bottom-4 sm:left-6 flex items-center space-x-2 sm:space-x-4">
                   <select 
-                    className="bg-midnight-700/50 hover:bg-midnight-600/50 border border-white/20 rounded-lg px-2 py-1 text-sunset-300 text-xs focus:outline-none focus:border-sunset-500 transition-colors [&>option]:bg-midnight-800 [&>option]:text-white [&>option]:border-none"
+                    className="bg-white/50 hover:bg-white/70 backdrop-blur-sm border border-blue-200/50 rounded-lg px-2 py-1 text-neutral-700 text-xs focus:outline-none focus:border-primary-500 transition-colors [&>option]:bg-white [&>option]:text-neutral-900 [&>option]:border-none"
                   >
                     <option value="modern">Modern</option>
                     <option value="flat">Flat</option>
@@ -262,7 +262,7 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
                 </div>
                 
                 {/* Send Button */}
-                <button className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 bg-sunset-gradient hover:scale-105 text-white p-2 sm:p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-sunset-500/30">
+                <button className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 bg-gradient-to-r from-primary-600 to-accent-500 hover:scale-105 text-white p-2 sm:p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-primary-500/30">
                   <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
                   </svg>
@@ -271,12 +271,12 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
             </div>
           
           {/* CTA Button */}
-          <div className="inline-block [background:linear-gradient(45deg,#111827,theme(colors.midnight.800)_50%,#111827)_padding-box,conic-gradient(from_var(--border-angle),#FF8A65,#CE93D8,#FFF7ED,#FF8A65)_border-box] rounded-lg border-4 border-transparent animate-border shadow-lg shadow-sunset-500/50 hover:shadow-xl hover:shadow-sunset-500/70 transition-all duration-300">
+          <div className="inline-block [background:linear-gradient(45deg,theme(colors.white),theme(colors.blue.50)_50%,theme(colors.white))_padding-box,conic-gradient(from_var(--border-angle),theme(colors.primary.500),theme(colors.accent.400),theme(colors.primary.300),theme(colors.primary.500))_border-box] rounded-lg border-4 border-transparent animate-border shadow-lg shadow-primary-500/50 hover:shadow-xl hover:shadow-primary-500/70 transition-all duration-300">
             <SmartGenerateLink 
-              className="bg-transparent text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300 block"
+              className="bg-transparent text-neutral-900 px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300 block"
               fallbackHref="/#pricing"
             >
-              Create Your First Icon
+              Create Your First Logo
             </SmartGenerateLink>
           </div>
         </div>
@@ -285,8 +285,8 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
         <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-3/4 z-20">
           <ScrollAnimation delay={200}>
             <div className="w-full max-w-[95vw] mx-auto px-2">
-              <div className="bg-midnight-900/50 backdrop-blur-sm rounded-lg p-3 shadow-2xl border border-midnight-800 hover:shadow-3xl transition-all duration-500 hover:scale-105">
-                <div className="bg-coral-gradient rounded-lg aspect-video w-full h-[70vh] sm:min-h-[60vh] overflow-hidden">
+              <div className="bg-white/80 backdrop-blur-xl rounded-lg p-3 shadow-2xl border border-blue-200/50 hover:shadow-3xl transition-all duration-500 hover:scale-105">
+                <div className="bg-gradient-to-br from-primary-500 to-accent-400 rounded-lg aspect-video w-full h-[70vh] sm:min-h-[60vh] overflow-hidden">
                   <video
                     className="w-full h-full object-cover rounded-lg"
                     autoPlay
@@ -305,16 +305,16 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
       </div>
 
       {/* Demo Section - Now with title/subtitle below the video */}
-      <div className="pt-[32rem] pb-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16" style={{background: 'radial-gradient(ellipse at top, rgb(154, 52, 18), rgb(55, 65, 81), rgb(31, 41, 55))'}}>
+      <div className="pt-[40rem] pb-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-gradient-to-b from-blue-100 via-blue-50 to-white">
         <div className="container mx-auto text-center">
           {/* Title and subtitle positioned below the video */}
           <ScrollAnimation delay={300}>
-            <h2 className="text-4xl font-bold text-white mb-4">From Words to Wonders in Seconds</h2>
+            <h2 className="text-4xl font-bold text-neutral-900 mb-4">From Words to Wonders in Seconds</h2>
           </ScrollAnimation>
           <ScrollAnimation delay={400}>
-            <p className="text-sunset-200 mb-12 max-w-2xl mx-auto">
-              Experience the future of icon creation. Watch real users transform simple descriptions into professional-grade icons that would take hours to design manually.<br />
-              <span className="text-coral-300 font-medium">No design skills required. Just pure creative freedom.</span>
+            <p className="text-neutral-700 mb-12 max-w-2xl mx-auto">
+              Experience the future of logo creation. Watch real users transform simple descriptions into professional-grade logos that would take hours to design manually.<br />
+              <span className="text-primary-600 font-medium">No design skills required. Just pure creative freedom.</span>
             </p>
           </ScrollAnimation>
           
@@ -322,33 +322,33 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
           <ScrollAnimation delay={500}>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
               <div className="text-center">
-                <div className="w-12 h-12 bg-sunset-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-sunset-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 bg-primary-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">Instant Generation</h3>
-                <p className="text-sunset-200 text-sm">Generate multiple icon variations in seconds</p>
+                <h3 className="text-lg font-semibold text-neutral-900 mb-2">Instant Generation</h3>
+                <p className="text-neutral-700 text-sm">Generate multiple logo variations in seconds</p>
               </div>
               
               <div className="text-center">
-                <div className="w-12 h-12 bg-sunset-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-sunset-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 bg-primary-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">AI-Powered Refinement</h3>
-                <p className="text-sunset-200 text-sm">Improve and iterate on your icons with natural language</p>
+                <h3 className="text-lg font-semibold text-neutral-900 mb-2">AI-Powered Refinement</h3>
+                <p className="text-neutral-700 text-sm">Improve and iterate on your logos with natural language</p>
               </div>
               
               <div className="text-center">
-                <div className="w-12 h-12 bg-sunset-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-sunset-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 bg-primary-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">Professional Export</h3>
-                <p className="text-sunset-200 text-sm">Download your AI generated icons as a PNG file</p>
+                <h3 className="text-lg font-semibold text-neutral-900 mb-2">Professional Export</h3>
+                <p className="text-neutral-700 text-sm">Download your AI generated logos as PNG files</p>
               </div>
             </div>
           </ScrollAnimation>
@@ -356,11 +356,11 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
       </div>
 
       {/* How It Works Section */}
-      <div id="how-it-works" className="bg-midnight-900/30 py-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+      <div id="how-it-works" className="bg-white py-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <ScrollAnimation>
-            <h2 className="text-4xl font-bold text-white mb-4">How It Works</h2>
+            <h2 className="text-4xl font-bold text-neutral-900 mb-4">How It Works</h2>
             </ScrollAnimation>
           </div>
           
@@ -526,16 +526,16 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <ScrollAnimation>
-            <h2 className="text-4xl font-bold text-white mb-4">Why Creators Choose AI Icon Maker</h2>
+            <h2 className="text-4xl font-bold text-neutral-900 mb-4">Why Creators Choose AI Logo Generator</h2>
             </ScrollAnimation>
             <ScrollAnimation delay={100}>
-              <p className="text-sunset-200 max-w-2xl mx-auto">
-              Everything you need to create stunning, professional icons without the learning curve of traditional design tools.
+              <p className="text-neutral-700 max-w-2xl mx-auto">
+              Everything you need to create stunning, professional logos without the learning curve of traditional design tools.
             </p>
             </ScrollAnimation>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 bg-gradient-to-b from-blue-50 to-white py-12 px-4 rounded-3xl">
             {/* AI-Powered Icon Generation */}
             <ScrollAnimation delay={150}>
               <div className="glass-swipe bg-gradient-to-br from-midnight-900/30 to-midnight-950/50 backdrop-blur-md rounded-lg p-8 border border-white/10 shadow-xl hover:shadow-2xl hover:shadow-sunset-500/20 transition-all duration-500 hover:scale-105 group relative overflow-hidden h-full flex flex-col">
