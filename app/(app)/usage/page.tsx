@@ -82,7 +82,7 @@ function UsagePageContent() {
                 <span className="text-2xl sm:text-3xl lg:text-4xl">📊</span>
               </span>
               Usage & 
-              <parameter name="bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">Limits</span>
+              <span className="bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">Limits</span>
             </h1>
             <p className="text-base sm:text-lg lg:text-xl text-neutral-700 mb-8 max-w-2xl mx-auto px-4">
               Track your logo generation usage and monitor your subscription limits
