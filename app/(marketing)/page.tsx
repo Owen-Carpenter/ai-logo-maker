@@ -101,16 +101,16 @@ export default function HomePage() {
       answer: "We use GPT Image 1 for generating high-quality AI images and advanced prompt-to-logo technology to convert your descriptions into professional logos. This ensures professional-grade, visually stunning logos with the latest AI technology."
     },
     {
-      question: "What if I need more logos?",
-      answer: "Our Pro plan (100 credits/month) covers most professional needs. For agencies and high-volume users, our Profession Plus plan offers 200 credits/month plus advanced features."
+      question: "How do credits work?",
+      answer: "Each logo generation uses 1 credit and creates multiple variations. Logo improvements use 3 credits. The Starter Pack gives you 25 credits to try the service. Monthly gives you 50 credits/month, and Yearly gives you 700 credits/year (100 bonus credits included!)."
     },
     {
-      question: "Can I cancel anytime?",
-      answer: "Yes! You can cancel your subscription at any time. Your access continues until the end of your current billing period."
+      question: "Can I cancel my subscription anytime?",
+      answer: "Yes! Monthly subscriptions can be cancelled anytime and you keep access until the end of your billing period. The Starter Pack is a one-time purchase with no recurring charges. Yearly subscriptions can also be cancelled but are non-refundable."
     },
     {
       question: "Do I own the generated logos?",
-      answer: "Yes! All logos generated with AI Logo Generator can be used for commercial purposes without any additional licensing fees."
+      answer: "Yes! All logos generated with AI Logo Generator can be used for commercial purposes without any additional licensing fees. You have full ownership and commercial rights."
     }
   ];
 
@@ -676,7 +676,7 @@ export default function HomePage() {
             </ScrollAnimation>
             <ScrollAnimation delay={150}>
               <p className="text-xl text-neutral-600 mb-8 max-w-3xl mx-auto">
-                High-quality AI-powered logo creation using GPT Image 1 and advanced prompt-to-logo technology. Professional tools deserve professional pricing.
+                Start with just $5 to test the waters, or save 20% with our yearly plan. High-quality AI-powered logo creation using GPT Image 1 technology.
             </p>
             </ScrollAnimation>
           </div>
@@ -684,15 +684,15 @@ export default function HomePage() {
           {/* Pricing Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
             
-            {/* Base Plan */}
+            {/* Starter Pack - One-time payment */}
             <ScrollAnimation delay={200}>
               <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 backdrop-blur-md rounded-2xl p-8 border border-neutral-200 shadow-xl hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500 hover:scale-105 relative h-full flex flex-col">
                 <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-neutral-900 mb-2">Base</h3>
+                  <h3 className="text-2xl font-bold text-neutral-900 mb-2">Starter Pack</h3>
                   <div className="text-4xl font-bold text-neutral-900 mb-4">
-                    $5<span className="text-lg font-normal text-neutral-600">/month</span>
+                    $5<span className="text-lg font-normal text-neutral-600"> one-time</span>
                   </div>
-                  <p className="text-neutral-600">Perfect for getting started</p>
+                  <p className="text-neutral-600">Try it out, no commitment</p>
                 </div>
 
                 <ul className="space-y-4 mb-8 flex-1">
@@ -700,7 +700,7 @@ export default function HomePage() {
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    25 credits per month
+                    25 credits (one-time)
                   </li>
                   <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -712,7 +712,7 @@ export default function HomePage() {
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Multiple style options
+                    All style options
                   </li>
                   <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -724,7 +724,7 @@ export default function HomePage() {
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Save logos to your library
+                    Save logos to library
                   </li>
                   <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -735,16 +735,16 @@ export default function HomePage() {
               </ul>
                 
                 <button 
-                  onClick={() => handleCheckout('base')}
-                  disabled={loadingPlan !== null || isPlanDisabled('base')}
+                  onClick={() => handleCheckout('starter')}
+                  disabled={loadingPlan !== null || isPlanDisabled('starter')}
                   className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-neutral-900 py-3 px-6 rounded-full font-semibold hover:from-green-600 hover:to-emerald-600 transition-all duration-300 text-center block shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {loadingPlan === 'base' ? 'Processing...' : getPlanButtonLabel('base', 'Start with Base')}
+                  {loadingPlan === 'starter' ? 'Processing...' : getPlanButtonLabel('starter', 'Get Started')}
                 </button>
               </div>
             </ScrollAnimation>
 
-            {/* Pro Plan */}
+            {/* Pro Monthly Plan */}
             <ScrollAnimation delay={250}>
               <div className="bg-gradient-to-br from-sunset-500/20 to-coral-500/20 backdrop-blur-md rounded-2xl p-8 border-2 border-sunset-500/50 shadow-2xl hover:shadow-3xl hover:shadow-sunset-500/30 transition-all duration-500 hover:scale-105 relative h-full flex flex-col">
                 {/* Popular Badge */}
@@ -755,11 +755,11 @@ export default function HomePage() {
                 </div>
                 
                 <div className="text-center mb-8 mt-4">
-                  <h3 className="text-2xl font-bold text-neutral-900 mb-2">Pro</h3>
+                  <h3 className="text-2xl font-bold text-neutral-900 mb-2">Pro Monthly</h3>
                   <div className="text-4xl font-bold text-neutral-900 mb-4">
                     $10<span className="text-lg font-normal text-neutral-600">/month</span>
                   </div>
-                  <p className="text-neutral-600">Perfect for professionals</p>
+                  <p className="text-neutral-600">For regular creators</p>
                 </div>
 
                 <ul className="space-y-4 mb-8 flex-1">
@@ -767,7 +767,7 @@ export default function HomePage() {
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    100 credits per month
+                    50 credits per month
                   </li>
                   <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -779,7 +779,7 @@ export default function HomePage() {
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Multiple style options
+                    All style options
                   </li>
                   <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -791,7 +791,7 @@ export default function HomePage() {
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Save logos to your library
+                    Save logos to library
                   </li>
                   <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -814,77 +814,85 @@ export default function HomePage() {
               </ul>
                 
                 <button 
-                  onClick={() => handleCheckout('pro')}
-                  disabled={loadingPlan !== null || isPlanDisabled('pro')}
+                  onClick={() => handleCheckout('proMonthly')}
+                  disabled={loadingPlan !== null || isPlanDisabled('proMonthly')}
                   className="w-full bg-gradient-to-r from-primary-600 to-accent-500 text-neutral-900 py-3 px-6 rounded-full font-semibold hover:from-sunset-600 hover:to-primary-700 transition-all duration-300 text-center block shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {loadingPlan === 'pro' ? 'Processing...' : getPlanButtonLabel('pro', 'Start with Pro')}
+                  {loadingPlan === 'proMonthly' ? 'Processing...' : getPlanButtonLabel('proMonthly', 'Subscribe Monthly')}
                 </button>
               </div>
             </ScrollAnimation>
 
-            {/* Pro+ Plan */}
+            {/* Pro Yearly Plan - Best Value */}
             <ScrollAnimation delay={300}>
-              <div className="bg-gradient-to-br from-white to-neutral-50 backdrop-blur-md rounded-2xl p-8 border border-neutral-200 shadow-xl hover:shadow-2xl hover:shadow-primary-500/20 transition-all duration-500 hover:scale-105 relative h-full flex flex-col">
-                <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-neutral-900 mb-2">Pro+</h3>
-                  <div className="text-4xl font-bold text-neutral-900 mb-4">
-                    $15<span className="text-lg font-normal text-neutral-600">/month</span>
+              <div className="bg-gradient-to-br from-purple-500/20 to-indigo-500/20 backdrop-blur-md rounded-2xl p-8 border-2 border-purple-500/50 shadow-xl hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-500 hover:scale-105 relative h-full flex flex-col">
+                {/* Best Value Badge */}
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-5 py-1.5 rounded-full text-xs font-bold shadow-lg whitespace-nowrap">
+                    Save 20% 🎉
                   </div>
-                  <p className="text-neutral-600">For power users and teams</p>
+                </div>
+                
+                <div className="text-center mb-8 mt-4">
+                  <h3 className="text-2xl font-bold text-neutral-900 mb-2">Pro Yearly</h3>
+                  <div className="text-4xl font-bold text-neutral-900 mb-2">
+                    $96<span className="text-lg font-normal text-neutral-600">/year</span>
+                  </div>
+                  <div className="text-sm text-neutral-500 line-through mb-2">$120/year at monthly rate</div>
+                  <p className="text-neutral-600">Save $24 + get bonus credits!</p>
                 </div>
 
                 <ul className="space-y-4 mb-8 flex-1">
                   <li className="flex items-center text-neutral-600">
-                    <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    200 credits per month
+                    <span className="font-semibold">700 credits per year</span>
                   </li>
                   <li className="flex items-center text-neutral-600">
-                    <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Everything in Pro plan
+                    100 bonus credits included 🎁
                   </li>
                   <li className="flex items-center text-neutral-600">
-                    <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Extended logo library storage
+                    GPT Image 1 powered generation
                   </li>
                   <li className="flex items-center text-neutral-600">
-                    <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Priority processing
+                    All style options
                   </li>
                   <li className="flex items-center text-neutral-600">
-                    <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    PNG export options
+                    Logo improvement & iteration
                   </li>
                   <li className="flex items-center text-neutral-600">
-                    <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Priority support
+                  </li>
+                  <li className="flex items-center text-neutral-600">
+                    <svg className="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     Commercial usage rights
                   </li>
-                  <li className="flex items-center text-neutral-600">
-                    <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    Premium support
-                  </li>
               </ul>
                 
                 <button 
-                  onClick={() => handleCheckout('proPlus')}
-                  disabled={loadingPlan !== null || isPlanDisabled('proPlus')}
-                  className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-neutral-900 py-3 px-6 rounded-full font-semibold hover:from-purple-500 hover:to-indigo-500 transition-all duration-300 text-center block shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                  onClick={() => handleCheckout('proYearly')}
+                  disabled={loadingPlan !== null || isPlanDisabled('proYearly')}
+                  className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 px-6 rounded-full font-semibold hover:from-purple-500 hover:to-indigo-500 transition-all duration-300 text-center block shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {loadingPlan === 'proPlus' ? 'Processing...' : getPlanButtonLabel('proPlus', 'Start with Pro+')}
+                  {loadingPlan === 'proYearly' ? 'Processing...' : getPlanButtonLabel('proYearly', 'Subscribe Yearly')}
                 </button>
               </div>
             </ScrollAnimation>
@@ -953,11 +961,11 @@ export default function HomePage() {
                 <ScrollAnimation delay={300}>
                   <div className="flex justify-center">
                     <button 
-                      onClick={() => handleCheckout('pro')}
+                      onClick={() => handleCheckout('proMonthly')}
                       disabled={loadingPlan !== null}
                       className="bg-gradient-to-r from-primary-600 to-accent-500 text-neutral-900 px-8 py-3 rounded-full font-semibold hover:from-sunset-600 hover:to-primary-700 transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      {loadingPlan === 'pro' ? 'Processing...' : 'Start Your Subscription'}
+                      {loadingPlan === 'proMonthly' ? 'Processing...' : 'Start Your Subscription'}
                     </button>
                   </div>
                 </ScrollAnimation>

@@ -75,11 +75,50 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
     return
   }
 
-  if (!subscriptionId) {
-    console.error('No subscription_id in session')
-    return
+  // Handle one-time payments (like starter pack)
+  if (!subscriptionId || planType === 'starter') {
+    console.log('Processing one-time payment for starter pack')
+    try {
+      // Add credits directly to user's account
+      const creditsToAdd = 25 // Starter pack credits
+      
+      // Get current user data
+      const { data: userData, error: fetchError } = await supabase
+        .from('users')
+        .select('remaining_tokens')
+        .eq('id', userId)
+        .single()
+      
+      if (fetchError) {
+        console.error('Error fetching user data:', fetchError)
+        throw fetchError
+      }
+
+      const currentTokens = userData?.remaining_tokens || 0
+      
+      // Update user's tokens
+      const { error: updateError } = await supabase
+        .from('users')
+        .update({
+          remaining_tokens: currentTokens + creditsToAdd,
+          stripe_customer_id: customerId
+        })
+        .eq('id', userId)
+      
+      if (updateError) {
+        console.error('Error updating user tokens:', updateError)
+        throw updateError
+      }
+
+      console.log(`Successfully added ${creditsToAdd} credits to user ${userId}`)
+      return
+    } catch (error) {
+      console.error('Error handling one-time payment:', error)
+      throw error
+    }
   }
 
+  // Handle subscription payments
   try {
     // Get subscription details
     const subscription = await stripe.subscriptions.retrieve(subscriptionId)
@@ -239,15 +278,28 @@ async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
 }
 
 function getPlanTypeFromPriceId(priceId: string): string {
+  // New plan types
+  const starterPriceId = process.env.STRIPE_STARTER_PRICE_ID
+  const proMonthlyPriceId = process.env.STRIPE_PRO_MONTHLY_PRICE_ID
+  const proYearlyPriceId = process.env.STRIPE_PRO_YEARLY_PRICE_ID
+  
+  // Legacy plan types
   const basePriceId = process.env.STRIPE_BASE_PRICE_ID
   const proPriceId = process.env.STRIPE_PRO_PRICE_ID
   const proPlusPriceId = process.env.STRIPE_PRO_PLUS_PRICE_ID
-  const enterprisePriceId = process.env.STRIPE_UNLIMITED_PRICE_ID // Legacy support
+  const enterprisePriceId = process.env.STRIPE_UNLIMITED_PRICE_ID
 
+  // New plans
+  if (priceId === starterPriceId) return 'starter'
+  if (priceId === proMonthlyPriceId) return 'proMonthly'
+  if (priceId === proYearlyPriceId) return 'proYearly'
+  
+  // Legacy plans
   if (priceId === basePriceId) return 'base'
   if (priceId === proPriceId) return 'pro'
   if (priceId === proPlusPriceId) return 'proPlus'
-  if (priceId === enterprisePriceId) return 'proPlus' // Legacy enterprise maps to pro+
+  if (priceId === enterprisePriceId) return 'proPlus'
+  
   return 'free'
 }
 
@@ -255,12 +307,19 @@ function getCreditsForPlan(planType: string): number {
   switch (planType) {
     case 'free':
       return 0 // Free tier has no credits
+    case 'starter':
+      return 25 // Starter pack: $5 one-time for 25 credits
+    case 'proMonthly':
+      return 50 // Pro Monthly: $10/month for 50 credits
+    case 'proYearly':
+      return 700 // Pro Yearly: $96/year for 700 credits (includes 100 bonus)
+    // Legacy plans
     case 'base':
-      return 25 // Base tier: $5 for 25 credits
+      return 25 // Legacy base tier
     case 'pro':
-      return 100 // Pro tier: $10 for 100 credits
+      return 100 // Legacy pro tier
     case 'proPlus':
-      return 200 // Pro+ tier: $15 for 200 credits
+      return 200 // Legacy pro+ tier
     case 'enterprise':
       return 200 // Legacy enterprise maps to pro+
     default:
