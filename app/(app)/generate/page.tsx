@@ -554,11 +554,9 @@ function GeneratePageContent() {
             {/* Centered Hero Content */}
             <div className="w-full max-w-4xl text-center relative z-10">
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-900 mb-4 leading-tight">
-                Make something 
-                <span className="inline-flex items-center mx-1 sm:mx-2">
-                  <span className="text-2xl sm:text-3xl lg:text-4xl">🎨</span>
-                </span>
-                <span className="bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">Iconic</span>
+                Create{' '}
+                <span className="bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">Stunning</span>
+                {' '}Logos
               </h1>
               
               <p className="text-base sm:text-lg lg:text-xl text-neutral-700 mb-8 max-w-2xl mx-auto px-4">
