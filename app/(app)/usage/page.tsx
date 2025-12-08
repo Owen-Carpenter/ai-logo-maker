@@ -2,7 +2,7 @@
 
 import { useAuth } from '../../../contexts/AuthContext';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState, Suspense } from 'react';
 import { CheckCircle, Crown, BarChart3, Calendar, TrendingUp, Zap } from 'lucide-react';
 import Logo from '../../../components/ui/Logo';
@@ -12,6 +12,7 @@ import Loading from '../../../components/ui/Loading';
 
 function UsagePageContent() {
   const { user, userData, hasActiveSubscription, loading } = useAuth();
+  const router = useRouter();
   const [showMessage, setShowMessage] = useState('');
   const [savedIconsCount, setSavedIconsCount] = useState(0);
   const [iconStats, setIconStats] = useState({
@@ -20,6 +21,13 @@ function UsagePageContent() {
     avgPerDay: 0
   });
   const [loadingIconCount, setLoadingIconCount] = useState(true);
+
+  // Authentication check - redirect if not logged in
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/register?redirect=/usage');
+    }
+  }, [user, loading, router]);
 
   // Fetch saved icons count
   useEffect(() => {
@@ -47,7 +55,8 @@ function UsagePageContent() {
     fetchIconCount();
   }, [user]);
 
-  if (loading) {
+  // Show loading while checking authentication
+  if (loading || !user) {
     return <Loading text="Loading usage data..." />;
   }
 

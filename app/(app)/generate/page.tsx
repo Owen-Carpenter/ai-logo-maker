@@ -560,7 +560,7 @@ function GeneratePageContent() {
               </h1>
               
               <p className="text-base sm:text-lg lg:text-xl text-neutral-700 mb-8 max-w-2xl mx-auto px-4">
-                Create stunning logos and designs by chatting with AI
+                Design professional logos in seconds by chatting with AI
               </p>
               
               {/* Main Input Field */}
