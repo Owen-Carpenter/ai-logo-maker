@@ -9,7 +9,11 @@ export const metadata = {
 export default function AiLogoGeneratorPage() {
   return (
     <MarketingPageLayout
-      h1Title="AI Logo Generator for Brands, Apps & Businesses"
+      h1Title={
+        <>
+          Generate <span className="bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">Professional</span> Logos
+        </>
+      }
       h2Subtitle="Create professional custom logos and brand identities in seconds with our advanced AI Logo Generator."
     />
   );

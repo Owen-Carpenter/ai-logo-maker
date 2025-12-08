@@ -9,7 +9,11 @@ export const metadata = {
 export default function PngLogoGeneratorPage() {
   return (
     <MarketingPageLayout
-      h1Title="PNG Logo Generator - Professional Quality Logos"
+      h1Title={
+        <>
+          Create <span className="bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">PNG</span> Logos
+        </>
+      }
       h2Subtitle="Generate crisp, high-resolution PNG logos perfect for modern branding and professional projects."
     />
   );

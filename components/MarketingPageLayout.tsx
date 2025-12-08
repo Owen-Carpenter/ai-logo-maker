@@ -10,7 +10,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { getPlanPriority } from '../lib/subscription-plans';
 
 interface MarketingPageLayoutProps {
-  h1Title: string;
+  h1Title: React.ReactNode;
   h2Subtitle: string;
 }
 

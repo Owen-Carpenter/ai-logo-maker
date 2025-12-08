@@ -9,7 +9,11 @@ export const metadata = {
 export default function BrandLogoMakerPage() {
   return (
     <MarketingPageLayout
-      h1Title="AI Brand Logo Maker - Professional Brand Identity"
+      h1Title={
+        <>
+          Build Your <span className="bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">Brand</span>
+        </>
+      }
       h2Subtitle="Build consistent, cohesive brand identities for your entire business in minutes with AI-powered generation."
     />
   );

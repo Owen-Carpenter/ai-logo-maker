@@ -9,7 +9,11 @@ export const metadata = {
 export default function AppLogoMakerPage() {
   return (
     <MarketingPageLayout
-      h1Title="AI App Logo Maker for iOS & Android"
+      h1Title={
+        <>
+          Design <span className="bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">App</span> Logos
+        </>
+      }
       h2Subtitle="Design the perfect app logo for the App Store and Google Play in seconds with AI-powered generation."
     />
   );

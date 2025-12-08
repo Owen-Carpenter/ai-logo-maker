@@ -217,8 +217,9 @@ export default function HomePage() {
         </div>
         <div className="flex flex-col items-center justify-center text-center w-full relative z-10">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-900 mb-4 leading-tight">
-            AI Logo Generator for
-            <span className="bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent mx-2">Professional Branding</span>
+            Create{' '}
+            <span className="bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">Stunning</span>
+            {' '}Logos
           </h1>
           
           <h2 className="text-base sm:text-lg lg:text-xl text-neutral-700 mb-8 max-w-2xl px-4">
