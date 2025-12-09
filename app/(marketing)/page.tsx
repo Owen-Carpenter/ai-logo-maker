@@ -354,50 +354,99 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* Divider */}
+      <div className="bg-white py-0">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+          <div className="border-t-2 border-neutral-200"></div>
+        </div>
+      </div>
+
       {/* How It Works Section */}
-      <div id="how-it-works" className="bg-neutral-50 py-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+      <div id="how-it-works" className="bg-white py-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <div className="container mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 max-w-3xl mx-auto">
             <ScrollAnimation>
-            <h2 className="text-4xl font-bold text-neutral-900 mb-4">How It Works</h2>
+              <span className="inline-block px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-semibold mb-4">
+                SIMPLE 3-STEP PROCESS
+              </span>
+              <h2 className="text-4xl lg:text-5xl font-bold text-neutral-900 mb-6">
+                From Idea to Logo in Minutes
+              </h2>
+              <p className="text-xl text-neutral-600">
+                Our AI-powered platform makes professional logo design accessible to everyone. No design experience required.
+              </p>
+            </ScrollAnimation>
+            
+            {/* Stats Bar */}
+            <ScrollAnimation delay={100}>
+              <div className="grid grid-cols-3 gap-8 mt-12 pt-12 border-t border-neutral-200">
+                <div>
+                  <div className="text-3xl font-bold text-primary-600 mb-2">30 sec</div>
+                  <div className="text-sm text-neutral-600">Average Generation Time</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-primary-600 mb-2">500+</div>
+                  <div className="text-sm text-neutral-600">Happy Customers</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-primary-600 mb-2">10k+</div>
+                  <div className="text-sm text-neutral-600">Logos Generated</div>
+                </div>
+              </div>
             </ScrollAnimation>
           </div>
           
-          <div className="space-y-32">
+          <div className="space-y-24">
             {/* Step 1 - Left Side */}
             <ScrollAnimation delay={100}>
-              <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+              <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center bg-gradient-to-br from-blue-50 to-white rounded-3xl p-8 lg:p-12 border border-neutral-200">
                 {/* Content - Left */}
                 <div className="order-2 lg:order-1 space-y-6">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 bg-gradient-to-br from-primary-500 to-accent-500 rounded-2xl flex items-center justify-center shadow-lg">
-                      <span className="text-2xl font-bold text-neutral-900">1</span>
+                  <div className="inline-flex items-center gap-3 bg-white px-4 py-2 rounded-full shadow-sm border border-neutral-200">
+                    <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-accent-500 rounded-full flex items-center justify-center">
+                      <span className="text-sm font-bold text-white">1</span>
                     </div>
-                    <div className="h-px bg-gradient-to-r from-coral-500 to-transparent flex-1"></div>
+                    <span className="text-sm font-semibold text-neutral-700 uppercase tracking-wide">Step One</span>
                   </div>
-                  <h3 className="text-4xl lg:text-5xl font-bold text-neutral-900 leading-tight">
-                    Speak Your Vision
+                  
+                  <h3 className="text-3xl lg:text-4xl font-bold text-neutral-900 leading-tight">
+                    Describe Your Vision
                   </h3>
-                  <p className="text-neutral-600 text-xl leading-relaxed max-w-lg">
-                    Simply describe what you envision and watch our AI bring it to life. From "modern tech startup" to "elegant luxury brand" - your words become professional logos.
+                  
+                  <p className="text-lg text-neutral-600 leading-relaxed">
+                    Simply type what you want in plain English. Our AI understands natural language and interprets your creative vision with precision.
                   </p>
-                  <div className="pt-4">
-                    <div className="inline-flex items-center gap-2 text-primary-600 font-medium">
-                      <span>Start creating</span>
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  
+                  {/* Feature List */}
+                  <ul className="space-y-3 pt-4">
+                    <li className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                    </div>
-                  </div>
+                      <span className="text-neutral-600">No design experience needed</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-neutral-600">8+ style options to choose from</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-neutral-600">Real-time AI interpretation</span>
+                    </li>
+                  </ul>
                 </div>
                 
                 {/* Visual - Right */}
                 <div className="order-1 lg:order-2">
-                  <div className="relative">
-                    <div className="bg-gradient-to-br from-primary-500 to-accent-500 rounded-3xl p-4 shadow-2xl">
-                      <div className="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden h-[400px] sm:h-[350px] md:h-[400px]">
+                  <div className="relative group">
+                    <div className="bg-gradient-to-br from-primary-500 to-accent-500 rounded-2xl p-1 shadow-xl">
+                      <div className="bg-white rounded-xl overflow-hidden">
                         <video
-                          className="w-full h-full object-cover rounded-2xl"
+                          className="w-full h-full object-cover rounded-xl"
                           autoPlay
                           muted
                           loop
@@ -408,8 +457,10 @@ export default function HomePage() {
                         </video>
                       </div>
                     </div>
-                    <div className="absolute -top-4 -right-4 w-8 h-8 bg-primary-500 rounded-full"></div>
-                    <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-primary-400 rounded-full"></div>
+                    {/* Floating badge */}
+                    <div className="absolute -top-4 -right-4 bg-white rounded-full px-4 py-2 shadow-lg border border-neutral-200">
+                      <span className="text-sm font-bold text-primary-600">✨ AI Powered</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -417,14 +468,14 @@ export default function HomePage() {
 
             {/* Step 2 - Right Side */}
             <ScrollAnimation delay={200}>
-              <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+              <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center bg-gradient-to-br from-purple-50 to-white rounded-3xl p-8 lg:p-12 border border-neutral-200">
                 {/* Visual - Left */}
                 <div className="order-1">
-                  <div className="relative">
-                    <div className="bg-gradient-to-br from-primary-600 to-primary-700 rounded-3xl p-4 shadow-2xl">
-                      <div className="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden h-[400px] sm:h-[350px] md:h-[400px]">
+                  <div className="relative group">
+                    <div className="bg-gradient-to-br from-primary-600 to-purple-600 rounded-2xl p-1 shadow-xl">
+                      <div className="bg-white rounded-xl overflow-hidden">
                         <video
-                          className="w-full h-full object-cover rounded-2xl"
+                          className="w-full h-full object-cover rounded-xl"
                           autoPlay
                           muted
                           loop
@@ -435,71 +486,105 @@ export default function HomePage() {
                         </video>
                       </div>
                     </div>
-                    <div className="absolute -top-4 -left-4 w-8 h-8 bg-accent-500 rounded-full"></div>
-                    <div className="absolute -bottom-4 -right-4 w-6 h-6 bg-accent-400 rounded-full"></div>
+                    {/* Floating badge */}
+                    <div className="absolute -top-4 -right-4 bg-white rounded-full px-4 py-2 shadow-lg border border-neutral-200">
+                      <span className="text-sm font-bold text-purple-600">⚡ Instant</span>
+                    </div>
                   </div>
                 </div>
                 
                 {/* Content - Right */}
                 <div className="order-2 space-y-6">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 bg-gradient-to-br from-primary-600 to-primary-700 rounded-2xl flex items-center justify-center shadow-lg">
-                      <span className="text-2xl font-bold text-neutral-900">2</span>
+                  <div className="inline-flex items-center gap-3 bg-white px-4 py-2 rounded-full shadow-sm border border-neutral-200">
+                    <div className="w-8 h-8 bg-gradient-to-br from-primary-600 to-purple-600 rounded-full flex items-center justify-center">
+                      <span className="text-sm font-bold text-white">2</span>
                     </div>
-                    <div className="h-px bg-gradient-to-r from-sunset-500 to-transparent flex-1"></div>
+                    <span className="text-sm font-semibold text-neutral-700 uppercase tracking-wide">Step Two</span>
                   </div>
-                  <h3 className="text-4xl lg:text-5xl font-bold text-neutral-900 leading-tight">
-                    Watch Ideas Transform
+                  
+                  <h3 className="text-3xl lg:text-4xl font-bold text-neutral-900 leading-tight">
+                    AI Generates Multiple Options
                   </h3>
-                  <p className="text-neutral-600 text-xl leading-relaxed max-w-lg">
-                    GPT Image 1 works its magic, analyzing every word and crafting multiple professional-grade variations. Each logo is brand-ready and perfect for your business.
+                  
+                  <p className="text-lg text-neutral-600 leading-relaxed">
+                    Our GPT Image 1 technology analyzes your description and creates multiple professional logo variations in seconds.
                   </p>
-                  <div className="pt-4">
-                    <div className="inline-flex items-center gap-2 text-primary-600 font-medium">
-                      <span>Watch the magic</span>
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  
+                  {/* Feature List */}
+                  <ul className="space-y-3 pt-4">
+                    <li className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                    </div>
-                  </div>
+                      <span className="text-neutral-600">Multiple variations per generation</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-neutral-600">Professional-grade quality</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-neutral-600">Generated in under 30 seconds</span>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </ScrollAnimation>
 
             {/* Step 3 - Left Side */}
             <ScrollAnimation delay={300}>
-              <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+              <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center bg-gradient-to-br from-green-50 to-white rounded-3xl p-8 lg:p-12 border border-neutral-200">
                 {/* Content - Left */}
                 <div className="order-2 lg:order-1 space-y-6">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 bg-gradient-to-br from-accent-400 to-primary-600 rounded-2xl flex items-center justify-center shadow-lg">
-                      <span className="text-2xl font-bold text-neutral-900">3</span>
+                  <div className="inline-flex items-center gap-3 bg-white px-4 py-2 rounded-full shadow-sm border border-neutral-200">
+                    <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center">
+                      <span className="text-sm font-bold text-white">3</span>
                     </div>
-                    <div className="h-px bg-gradient-to-r from-purple-400 to-transparent flex-1"></div>
+                    <span className="text-sm font-semibold text-neutral-700 uppercase tracking-wide">Step Three</span>
                   </div>
-                  <h3 className="text-4xl lg:text-5xl font-bold text-neutral-900 leading-tight">
-                    Perfect & Deploy
+                  
+                  <h3 className="text-3xl lg:text-4xl font-bold text-neutral-900 leading-tight">
+                    Download & Deploy
                   </h3>
-                  <p className="text-neutral-600 text-xl leading-relaxed max-w-lg">
-                    Select your favorite from multiple stunning variations, download instantly as high-quality PNG, or save to your organized library. Your perfect logo is ready in seconds.
+                  
+                  <p className="text-lg text-neutral-600 leading-relaxed">
+                    Choose your favorite design, download in high-quality PNG format, and start using it immediately. It's that simple.
                   </p>
-                  <div className="pt-4">
-                    <div className="inline-flex items-center gap-2 text-purple-400 font-medium">
-                      <span>Get your icons</span>
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  
+                  {/* Feature List */}
+                  <ul className="space-y-3 pt-4">
+                    <li className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                    </div>
-                  </div>
+                      <span className="text-neutral-600">High-resolution PNG exports</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-neutral-600">Save to your personal library</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-neutral-600">Full commercial usage rights</span>
+                    </li>
+                  </ul>
                 </div>
                 
                 {/* Visual - Right */}
                 <div className="order-1 lg:order-2">
-                  <div className="relative">
-                    <div className="bg-gradient-to-br from-accent-400 to-primary-600 rounded-3xl p-4 shadow-2xl">
-                      <div className="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden h-[400px] sm:h-[350px] md:h-[400px]">
+                  <div className="relative group">
+                    <div className="bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl p-1 shadow-xl">
+                      <div className="bg-white rounded-xl overflow-hidden">
                         <video
-                          className="w-full h-full object-cover rounded-2xl"
+                          className="w-full h-full object-cover rounded-xl"
                           autoPlay
                           muted
                           loop
@@ -510,8 +595,10 @@ export default function HomePage() {
                         </video>
                       </div>
                     </div>
-                    <div className="absolute -top-4 -right-4 w-8 h-8 bg-purple-400 rounded-full"></div>
-                    <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-purple-300 rounded-full"></div>
+                    {/* Floating badge */}
+                    <div className="absolute -top-4 -right-4 bg-white rounded-full px-4 py-2 shadow-lg border border-neutral-200">
+                      <span className="text-sm font-bold text-green-600">✓ Ready to Use</span>
+                    </div>
                   </div>
                 </div>
               </div>
