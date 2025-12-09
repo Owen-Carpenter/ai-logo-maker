@@ -35,11 +35,21 @@ export default function TestimonialCard({ quote, name, title, avatar, avatarBg, 
       {/* Author Info */}
       <div className="flex items-center space-x-3 pt-4 border-t border-neutral-200">
         {avatarImage ? (
-          <img 
-            src={avatarImage} 
-            alt={name}
-            className="w-12 h-12 rounded-full object-cover shadow-lg ring-2 ring-primary-200"
-          />
+          avatarImage.endsWith('.svg') ? (
+            <div className="w-12 h-12 rounded-full bg-white shadow-lg ring-2 ring-primary-200 flex items-center justify-center p-2">
+              <img 
+                src={avatarImage} 
+                alt={name}
+                className="w-full h-full object-contain"
+              />
+            </div>
+          ) : (
+            <img 
+              src={avatarImage} 
+              alt={name}
+              className="w-12 h-12 rounded-full object-cover shadow-lg ring-2 ring-primary-200"
+            />
+          )
         ) : (
           <div className={`w-12 h-12 ${avatarBg} rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md`}>
             {avatar}
@@ -49,7 +59,7 @@ export default function TestimonialCard({ quote, name, title, avatar, avatarBg, 
           <p className="text-neutral-900 font-bold text-sm">{name}</p>
           <p className="text-primary-600 text-xs font-semibold">{title}</p>
           {company && (
-            <p className="text-neutral-500 text-xs">at {company}</p>
+            <p className="text-neutral-500 text-xs">{company}</p>
           )}
         </div>
       </div>

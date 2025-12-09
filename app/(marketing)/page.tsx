@@ -984,12 +984,18 @@ export default function HomePage() {
               <div className="flex justify-center items-center mb-6">
                 <div className="flex -space-x-2">
                   <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=faces" alt="David Richardson" className="w-10 h-10 rounded-full border-2 border-white shadow-lg object-cover" />
-                  <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=faces" alt="Sarah Chen" className="w-10 h-10 rounded-full border-2 border-white shadow-lg object-cover" />
+                  <div className="w-10 h-10 rounded-full bg-white border-2 border-white shadow-lg flex items-center justify-center p-1.5">
+                    <img src="/logos/logoipsum-280.svg" alt="TechFlow Studios" className="w-full h-full object-contain" />
+                  </div>
                   <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=faces" alt="Michael Torres" className="w-10 h-10 rounded-full border-2 border-white shadow-lg object-cover" />
                   <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=faces" alt="Alex Martinez" className="w-10 h-10 rounded-full border-2 border-white shadow-lg object-cover" />
+                  <div className="w-10 h-10 rounded-full bg-white border-2 border-white shadow-lg flex items-center justify-center p-1.5">
+                    <img src="/logos/logoipsum-381.svg" alt="CloudVault" className="w-full h-full object-contain" />
+                  </div>
                   <img src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=150&h=150&fit=crop&crop=faces" alt="Kyle Anderson" className="w-10 h-10 rounded-full border-2 border-white shadow-lg object-cover" />
-                  <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=faces" alt="Lisa Patel" className="w-10 h-10 rounded-full border-2 border-white shadow-lg object-cover" />
-                  <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=faces" alt="Thomas Greene" className="w-10 h-10 rounded-full border-2 border-white shadow-lg object-cover" />
+                  <div className="w-10 h-10 rounded-full bg-white border-2 border-white shadow-lg flex items-center justify-center p-1.5">
+                    <img src="/logos/logoipsum-339.svg" alt="Pixel & Co" className="w-full h-full object-contain" />
+                  </div>
                 </div>
               </div>
               <p className="text-neutral-600 mb-4">500+ Designers & developers trust AI Logo Generator</p>
