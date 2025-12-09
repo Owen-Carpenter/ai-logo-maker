@@ -191,29 +191,29 @@ export default function HomePage() {
       <div className="w-full h-screen px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-gradient-to-b from-white via-blue-50 to-blue-100 relative overflow-visible animate-fade-in flex items-center">
 
         
-        {/* Floating Emoji Icons - Organic motion with depth animation */}
-        <div className="absolute top-24 left-16 text-3xl animate-float-organic-1 hover:scale-125 hover:rotate-12 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '0s'}}>
-          🎨
+        {/* Floating Logo Icons - Organic motion with depth animation */}
+        <div className="absolute top-24 left-16 w-16 h-16 bg-white rounded-2xl p-3 shadow-lg animate-float-organic-1 hover:scale-125 hover:rotate-12 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '0s'}}>
+          <img src="/logos/logoipsum-280.svg" alt="Logo" className="w-full h-full object-contain" />
         </div>
         
-        <div className="absolute top-48 right-32 text-xl animate-float-organic-3 hover:scale-125 hover:-rotate-12 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '2.3s'}}>
-          ⭐
+        <div className="absolute top-48 right-32 w-12 h-12 bg-white rounded-xl p-2 shadow-lg animate-float-organic-3 hover:scale-125 hover:-rotate-12 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '2.3s'}}>
+          <img src="/logos/logoipsum-381.svg" alt="Logo" className="w-full h-full object-contain" />
         </div>
         
-        <div className="absolute top-36 left-1/3 text-2xl animate-float-organic-2 hover:scale-125 hover:rotate-6 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '1.2s'}}>
-          ✨
+        <div className="absolute top-36 left-1/3 w-14 h-14 bg-white rounded-xl p-2.5 shadow-lg animate-float-organic-2 hover:scale-125 hover:rotate-6 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '1.2s'}}>
+          <img src="/logos/logoipsum-339.svg" alt="Logo" className="w-full h-full object-contain" />
         </div>
         
-        <div className="absolute bottom-48 left-24 text-xl animate-float-organic-1 hover:scale-125 hover:-rotate-6 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '3.8s'}}>
-          🚀
+        <div className="absolute bottom-48 left-24 w-12 h-12 bg-white rounded-xl p-2 shadow-lg animate-float-organic-1 hover:scale-125 hover:-rotate-6 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '3.8s'}}>
+          <img src="/logos/logoipsum-413.svg" alt="Logo" className="w-full h-full object-contain" />
         </div>
         
-        <div className="absolute bottom-36 right-1/4 text-2xl animate-float-organic-3 hover:scale-125 hover:rotate-12 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '1.7s'}}>
-          💡
+        <div className="absolute bottom-36 right-1/4 w-14 h-14 bg-white rounded-xl p-2.5 shadow-lg animate-float-organic-3 hover:scale-125 hover:rotate-12 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '1.7s'}}>
+          <img src="/logos/logoipsum-405.svg" alt="Logo" className="w-full h-full object-contain" />
         </div>
         
-        <div className="absolute top-1/3 right-20 text-xl animate-float-organic-2 hover:scale-125 hover:-rotate-12 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '0.6s'}}>
-          🔥
+        <div className="absolute top-1/3 right-20 w-12 h-12 bg-white rounded-xl p-2 shadow-lg animate-float-organic-2 hover:scale-125 hover:-rotate-12 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '0.6s'}}>
+          <img src="/logos/logoipsum-340.svg" alt="Logo" className="w-full h-full object-contain" />
         </div>
         <div className="flex flex-col items-center justify-center text-center w-full relative z-10">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-900 mb-4 leading-tight">
