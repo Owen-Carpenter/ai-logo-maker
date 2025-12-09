@@ -7,97 +7,141 @@ interface Testimonial {
   title: string;
   avatar: string;
   avatarBg: string;
+  avatarImage?: string;
+  company?: string;
+  verified?: boolean;
+  rating?: number;
 }
 
 const topRowTestimonials: Testimonial[] = [
   {
     id: '1',
-    quote: "Just typed 'shopping cart icon' and got 3 perfect variations in seconds. The PNG downloads are crystal clear and the transparent backgrounds work perfectly in my app!",
-    name: "@designerdave",
-    title: "Mobile App Developer",
-    avatar: "D",
-    avatarBg: "bg-gradient-to-br from-sunset-500 to-coral-500"
+    quote: "AI Logo Generator completely transformed our branding workflow. We generated our entire logo suite in under an hour - something that would have taken weeks with traditional designers. The quality is outstanding and our clients love the results.",
+    name: "David Richardson",
+    title: "Lead Designer",
+    company: "TechFlow Studios",
+    avatar: "DR",
+    avatarBg: "bg-gradient-to-br from-blue-500 to-indigo-600",
+    avatarImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=faces",
+    verified: true,
+    rating: 5
   },
   {
     id: '2',
-    quote: "The improvement feature is insane! I generated an icon, asked it to 'make it blue', and it kept the same design but changed just the color. Exactly what I needed.",
-    name: "@sarahcreates",
-    title: "UI/UX Designer",
-    avatar: "S",
-    avatarBg: "bg-gradient-to-br from-purple-500 to-pink-500"
+    quote: "This is hands down the best AI design tool I've used. The iterative improvement feature is incredible - I can refine logos in real-time just by describing changes. It's like having a professional designer who perfectly understands my vision.",
+    name: "Sarah Chen",
+    title: "Creative Director",
+    company: "Pixel Perfect Agency",
+    avatar: "SC",
+    avatarBg: "bg-gradient-to-br from-purple-500 to-pink-500",
+    avatarImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=faces",
+    verified: true,
+    rating: 5
   },
   {
     id: '3',
-    quote: "GPT Image 1 quality is no joke. Generated a logo icon for my startup in 3 different styles, picked one, refined it twice, and now it's our official brand icon!",
-    name: "@mikepixel",
-    title: "Startup Founder",
-    avatar: "M",
-    avatarBg: "bg-gradient-to-br from-blue-500 to-cyan-500"
+    quote: "We use AI Logo Generator for all our client projects now. The PNG exports are pristine, the turnaround is instant, and the AI consistently delivers professional-grade results. ROI has been phenomenal - we've saved over $50K in design costs this year alone.",
+    name: "Michael Torres",
+    title: "Founder & CEO",
+    company: "StartupLaunch",
+    avatar: "MT",
+    avatarBg: "bg-gradient-to-br from-cyan-500 to-blue-600",
+    avatarImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=faces",
+    verified: true,
+    rating: 5
   },
   {
     id: '4',
-    quote: "The library feature saves me so much time. I generate icons for client projects, save them, and can access them later. No more hunting through folders!",
-    name: "@jenna_ui",
-    title: "Freelance Designer",
-    avatar: "J",
-    avatarBg: "bg-gradient-to-br from-green-500 to-emerald-500"
+    quote: "As a freelancer, this tool is a game-changer. I can deliver multiple logo concepts to clients in minutes, not days. The library feature keeps all my work organized, and clients are consistently impressed with the quality. My productivity has tripled.",
+    name: "Jennifer Parker",
+    title: "Senior Brand Designer",
+    company: "Independent",
+    avatar: "JP",
+    avatarBg: "bg-gradient-to-br from-emerald-500 to-green-600",
+    avatarImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=faces",
+    verified: true,
+    rating: 5
   },
   {
     id: '5',
-    quote: "I love how I can iterate on icons just by chatting. 'Make it rounder', 'add more detail', 'make it minimalist' - it understands everything and the results are professional.",
-    name: "@ryan_freelance",
+    quote: "The conversational interface is brilliant. I describe what I want, the AI shows its reasoning, then creates exactly what I envisioned. No more back-and-forth revisions. It's like having a mind-reading designer on my team 24/7.",
+    name: "Ryan McKenzie",
     title: "Product Designer",
-    avatar: "R",
-    avatarBg: "bg-gradient-to-br from-yellow-500 to-orange-500"
+    company: "InnovateCo",
+    avatar: "RM",
+    avatarBg: "bg-gradient-to-br from-orange-500 to-red-600",
+    avatarImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=faces",
+    verified: true,
+    rating: 5
   }
 ];
 
 const bottomRowTestimonials: Testimonial[] = [
   {
     id: '6',
-    quote: "Needed icons for 12 different app features. Described each one, got multiple options, saved my favorites to the library. Entire icon set done in under an hour. 🤯",
-    name: "@alexbrand",
-    title: "App Developer",
-    avatar: "A",
-    avatarBg: "bg-gradient-to-br from-red-500 to-pink-500"
+    quote: "We needed a complete icon set for our mobile app - 18 unique icons in total. With AI Logo Generator, we had everything designed, refined, and export-ready in 2 hours. Traditional design would've taken 2 weeks minimum. Absolutely incredible.",
+    name: "Alex Martinez",
+    title: "Head of Product",
+    company: "CloudSync",
+    avatar: "AM",
+    avatarBg: "bg-gradient-to-br from-red-500 to-rose-600",
+    avatarImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=faces",
+    verified: true,
+    rating: 5
   },
   {
     id: '7',
-    quote: "The style options are perfect. I can generate the same icon in modern, flat, 3D, and minimalist styles instantly. Client presentations have never looked better!",
-    name: "@kyle_dev",
-    title: "Design Consultant",
-    avatar: "K",
-    avatarBg: "bg-gradient-to-br from-indigo-500 to-purple-500"
+    quote: "The multi-style generation is a killer feature. I show clients the same logo in 4 different styles instantly. They're always blown away by the variety and quality. This tool has legitimately transformed how we present to clients.",
+    name: "Kyle Anderson",
+    title: "Brand Consultant",
+    company: "BrandForge",
+    avatar: "KA",
+    avatarBg: "bg-gradient-to-br from-indigo-500 to-purple-600",
+    avatarImage: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=150&h=150&fit=crop&crop=faces",
+    verified: true,
+    rating: 5
   },
   {
     id: '8',
-    quote: "Best part? The AI reasoning before generation. It explains its design choices, then creates exactly what I envisioned. It's like having a designer that reads your mind.",
-    name: "@lisadesigns",
-    title: "Senior Product Designer",
-    avatar: "L",
-    avatarBg: "bg-gradient-to-br from-teal-500 to-cyan-500"
+    quote: "I was skeptical about AI design tools until I tried this. The attention to detail, the design reasoning, the iteration speed - it's all exceptional. We've integrated it into our entire design workflow and couldn't be happier with the results.",
+    name: "Lisa Patel",
+    title: "VP of Design",
+    company: "DesignHub",
+    avatar: "LP",
+    avatarBg: "bg-gradient-to-br from-teal-500 to-cyan-600",
+    avatarImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=faces",
+    verified: true,
+    rating: 5
   },
   {
     id: '9',
-    quote: "PNG exports with transparent backgrounds saved me countless hours. No more manual background removal or dealing with file conversions. Just download and use!",
-    name: "@emma_designs",
-    title: "Web Designer",
-    avatar: "E",
-    avatarBg: "bg-gradient-to-br from-fuchsia-500 to-pink-500"
+    quote: "The export quality is perfect every time - crisp PNGs with transparent backgrounds. No cleanup needed, no file conversion headaches. Just professional-grade assets ready to use immediately. This alone is worth the subscription.",
+    name: "Emma Watson",
+    title: "Lead UI Designer",
+    company: "WebFlow Pro",
+    avatar: "EW",
+    avatarBg: "bg-gradient-to-br from-fuchsia-500 to-pink-600",
+    avatarImage: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop&crop=faces",
+    verified: true,
+    rating: 5
   },
   {
     id: '10',
-    quote: "I can create, iterate, and refine icons all through natural conversation. It's the most intuitive design tool I've ever used. My team is obsessed with it.",
-    name: "@tomcreative",
+    quote: "My entire creative team now uses AI Logo Generator exclusively. The natural language interface makes iteration effortless, and the results consistently exceed our expectations. Best design investment we've made this year, hands down.",
+    name: "Thomas Greene",
     title: "Creative Director",
-    avatar: "T",
-    avatarBg: "bg-gradient-to-br from-amber-500 to-red-500"
+    company: "Creative Minds Co",
+    avatar: "TG",
+    avatarBg: "bg-gradient-to-br from-amber-500 to-orange-600",
+    avatarImage: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=faces",
+    verified: true,
+    rating: 5
   }
 ];
 
 export default function TestimonialCarousel() {
   return (
-    <div className="space-y-8 overflow-hidden">
+    <div className="space-y-8 overflow-hidden py-8">
       {/* Top Row - Moving Right to Left */}
       <div className="relative">
         {/* Left fade overlay */}

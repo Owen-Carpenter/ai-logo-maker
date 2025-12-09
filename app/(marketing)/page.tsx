@@ -983,13 +983,13 @@ export default function HomePage() {
             <ScrollAnimation>
               <div className="flex justify-center items-center mb-6">
                 <div className="flex -space-x-2">
-                  <div className="w-10 h-10 bg-gradient-to-br from-primary-600 to-accent-500 rounded-full flex items-center justify-center text-neutral-900 font-bold border-2 border-white shadow-lg">D</div>
-                  <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-neutral-900 font-bold border-2 border-white shadow-lg">S</div>
-                  <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center text-neutral-900 font-bold border-2 border-white shadow-lg">M</div>
-                  <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-pink-500 rounded-full flex items-center justify-center text-neutral-900 font-bold border-2 border-white shadow-lg">A</div>
-                  <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-neutral-900 font-bold border-2 border-white shadow-lg">K</div>
-                  <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-full flex items-center justify-center text-neutral-900 font-bold border-2 border-white shadow-lg">L</div>
-                  <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-red-500 rounded-full flex items-center justify-center text-neutral-900 font-bold border-2 border-white shadow-lg">T</div>
+                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=faces" alt="David Richardson" className="w-10 h-10 rounded-full border-2 border-white shadow-lg object-cover" />
+                  <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=faces" alt="Sarah Chen" className="w-10 h-10 rounded-full border-2 border-white shadow-lg object-cover" />
+                  <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=faces" alt="Michael Torres" className="w-10 h-10 rounded-full border-2 border-white shadow-lg object-cover" />
+                  <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=faces" alt="Alex Martinez" className="w-10 h-10 rounded-full border-2 border-white shadow-lg object-cover" />
+                  <img src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=150&h=150&fit=crop&crop=faces" alt="Kyle Anderson" className="w-10 h-10 rounded-full border-2 border-white shadow-lg object-cover" />
+                  <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=faces" alt="Lisa Patel" className="w-10 h-10 rounded-full border-2 border-white shadow-lg object-cover" />
+                  <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=faces" alt="Thomas Greene" className="w-10 h-10 rounded-full border-2 border-white shadow-lg object-cover" />
                 </div>
               </div>
               <p className="text-neutral-600 mb-4">500+ Designers & developers trust AI Logo Generator</p>
