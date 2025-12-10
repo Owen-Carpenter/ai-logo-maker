@@ -125,7 +125,7 @@ module.exports = {
         'gradient-radial': 'radial-gradient(ellipse at center bottom, var(--tw-gradient-stops))',
       },
       
-      // Custom animations for scroll effects
+      // Custom animations for scroll effects - Webflow-style professional animations
       keyframes: {
         'fade-in-up': {
           '0%': {
@@ -204,7 +204,69 @@ module.exports = {
           '100%': {
             transform: 'translateY(0px) translateX(0px)'
           }
-        }
+        },
+        'float-organic-1': {
+          '0%, 100%': { 
+            transform: 'translateY(0px) translateX(0px) rotate(0deg)',
+            opacity: '0.6'
+          },
+          '25%': { 
+            transform: 'translateY(-20px) translateX(15px) rotate(5deg)',
+            opacity: '0.8'
+          },
+          '50%': { 
+            transform: 'translateY(-35px) translateX(-10px) rotate(-3deg)',
+            opacity: '1'
+          },
+          '75%': { 
+            transform: 'translateY(-15px) translateX(-20px) rotate(8deg)',
+            opacity: '0.7'
+          },
+        },
+        'float-organic-2': {
+          '0%, 100%': { 
+            transform: 'translateY(0px) translateX(0px) rotate(0deg)',
+            opacity: '0.7'
+          },
+          '30%': { 
+            transform: 'translateY(-25px) translateX(-15px) rotate(-7deg)',
+            opacity: '0.9'
+          },
+          '60%': { 
+            transform: 'translateY(-40px) translateX(10px) rotate(4deg)',
+            opacity: '1'
+          },
+          '85%': { 
+            transform: 'translateY(-10px) translateX(20px) rotate(-5deg)',
+            opacity: '0.8'
+          },
+        },
+        'float-organic-3': {
+          '0%, 100%': { 
+            transform: 'translateY(0px) translateX(0px) rotate(0deg)',
+            opacity: '0.65'
+          },
+          '20%': { 
+            transform: 'translateY(-30px) translateX(20px) rotate(6deg)',
+            opacity: '0.85'
+          },
+          '55%': { 
+            transform: 'translateY(-45px) translateX(-15px) rotate(-4deg)',
+            opacity: '1'
+          },
+          '80%': { 
+            transform: 'translateY(-20px) translateX(15px) rotate(7deg)',
+            opacity: '0.75'
+          },
+        },
+        'scroll-rtl': {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-100%)' }
+        },
+        'scroll-ltr': {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(0)' }
+        },
       },
       
       animation: {
@@ -216,6 +278,12 @@ module.exports = {
         'border': 'border 4s linear infinite',
         'float': 'float 6s ease-in-out infinite',
         'fade-in': 'fade-in 1.2s ease-out forwards',
+        'float-organic-1': 'float-organic-1 8s ease-in-out infinite',
+        'float-organic-2': 'float-organic-2 9s ease-in-out infinite',
+        'float-organic-3': 'float-organic-3 10s ease-in-out infinite',
+        'scroll-rtl': 'scroll-rtl 60s linear infinite',
+        'scroll-ltr': 'scroll-ltr 60s linear infinite',
+        'pause': 'none',
       }
     },
   },

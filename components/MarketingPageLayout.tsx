@@ -194,29 +194,29 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
       <div className="w-full h-screen px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-gradient-radial from-sunset-800 via-midnight-700 to-midnight-800 relative overflow-visible animate-fade-in flex items-center">
 
         
-        {/* Floating Logo Icons - Organic motion with depth animation */}
-        <div className="absolute top-24 left-16 w-16 h-16 bg-white rounded-2xl p-3 shadow-lg animate-float-organic-1 hover:scale-125 hover:rotate-12 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '0s'}}>
-          <img src="/logos/logoipsum-280.svg" alt="Logo" className="w-full h-full object-contain" />
+        {/* Floating Emoji Icons - Organic motion with depth animation */}
+        <div className="absolute top-24 left-16 text-3xl animate-float-organic-1 hover:scale-125 hover:rotate-12 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '0s'}}>
+          🎨
         </div>
         
-        <div className="absolute top-48 right-32 w-12 h-12 bg-white rounded-xl p-2 shadow-lg animate-float-organic-3 hover:scale-125 hover:-rotate-12 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '2.3s'}}>
-          <img src="/logos/logoipsum-381.svg" alt="Logo" className="w-full h-full object-contain" />
+        <div className="absolute top-48 right-32 text-xl animate-float-organic-3 hover:scale-125 hover:-rotate-12 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '2.3s'}}>
+          ⭐
         </div>
         
-        <div className="absolute top-36 left-1/3 w-14 h-14 bg-white rounded-xl p-2.5 shadow-lg animate-float-organic-2 hover:scale-125 hover:rotate-6 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '1.2s'}}>
-          <img src="/logos/logoipsum-339.svg" alt="Logo" className="w-full h-full object-contain" />
+        <div className="absolute top-36 left-1/3 text-2xl animate-float-organic-2 hover:scale-125 hover:rotate-6 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '1.2s'}}>
+          ✨
         </div>
         
-        <div className="absolute bottom-48 left-24 w-12 h-12 bg-white rounded-xl p-2 shadow-lg animate-float-organic-1 hover:scale-125 hover:-rotate-6 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '3.8s'}}>
-          <img src="/logos/logoipsum-413.svg" alt="Logo" className="w-full h-full object-contain" />
+        <div className="absolute bottom-48 left-24 text-xl animate-float-organic-1 hover:scale-125 hover:-rotate-6 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '3.8s'}}>
+          🚀
         </div>
         
-        <div className="absolute bottom-36 right-1/4 w-14 h-14 bg-white rounded-xl p-2.5 shadow-lg animate-float-organic-3 hover:scale-125 hover:rotate-12 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '1.7s'}}>
-          <img src="/logos/logoipsum-405.svg" alt="Logo" className="w-full h-full object-contain" />
+        <div className="absolute bottom-36 right-1/4 text-2xl animate-float-organic-3 hover:scale-125 hover:rotate-12 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '1.7s'}}>
+          💡
         </div>
         
-        <div className="absolute top-1/3 right-20 w-12 h-12 bg-white rounded-xl p-2 shadow-lg animate-float-organic-2 hover:scale-125 hover:-rotate-12 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '0.6s'}}>
-          <img src="/logos/logoipsum-340.svg" alt="Logo" className="w-full h-full object-contain" />
+        <div className="absolute top-1/3 right-20 text-xl animate-float-organic-2 hover:scale-125 hover:-rotate-12 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '0.6s'}}>
+          🔥
         </div>
         <div className="flex flex-col items-center justify-center text-center w-full relative z-10">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
@@ -308,10 +308,10 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
       <div className="pt-[32rem] pb-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16" style={{background: 'radial-gradient(ellipse at top, rgb(154, 52, 18), rgb(55, 65, 81), rgb(31, 41, 55))'}}>
         <div className="container mx-auto text-center">
           {/* Title and subtitle positioned below the video */}
-          <ScrollAnimation delay={300}>
+          <ScrollAnimation delay={300} type="scale" duration={1200}>
             <h2 className="text-4xl font-bold text-white mb-4">From Words to Wonders in Seconds</h2>
           </ScrollAnimation>
-          <ScrollAnimation delay={400}>
+          <ScrollAnimation delay={500} type="fade-up" duration={1000}>
             <p className="text-sunset-200 mb-12 max-w-2xl mx-auto">
               Experience the future of icon creation. Watch real users transform simple descriptions into professional-grade icons that would take hours to design manually.<br />
               <span className="text-coral-300 font-medium">No design skills required. Just pure creative freedom.</span>
@@ -468,7 +468,7 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
             </ScrollAnimation>
 
             {/* Step 3 - Left Side */}
-            <ScrollAnimation delay={300}>
+            <ScrollAnimation delay={200} type="slide-up" duration={1200}>
               <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
                 {/* Content - Left */}
                 <div className="order-2 lg:order-1 space-y-6">
@@ -525,10 +525,10 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
       <div id="features" className="py-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <ScrollAnimation>
+            <ScrollAnimation type="scale" duration={1000}>
             <h2 className="text-4xl font-bold text-white mb-4">Why Creators Choose AI Icon Maker</h2>
             </ScrollAnimation>
-            <ScrollAnimation delay={100}>
+            <ScrollAnimation delay={200} type="fade-up" duration={1000}>
               <p className="text-sunset-200 max-w-2xl mx-auto">
               Everything you need to create stunning, professional icons without the learning curve of traditional design tools.
             </p>
@@ -537,7 +537,7 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* AI-Powered Icon Generation */}
-            <ScrollAnimation delay={150}>
+            <ScrollAnimation delay={300} type="fade-up" duration={900}>
               <div className="glass-swipe bg-gradient-to-br from-midnight-900/30 to-midnight-950/50 backdrop-blur-md rounded-lg p-8 border border-white/10 shadow-xl hover:shadow-2xl hover:shadow-sunset-500/20 transition-all duration-500 hover:scale-105 group relative overflow-hidden h-full flex flex-col">
                 <div className="absolute inset-0 bg-gradient-to-br from-coral-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative z-10 flex flex-col h-full">
@@ -553,7 +553,7 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
             </ScrollAnimation>
 
             {/* No Design Skills Needed */}
-            <ScrollAnimation delay={200}>
+            <ScrollAnimation delay={400} type="fade-up" duration={900}>
               <div className="glass-swipe bg-gradient-to-br from-midnight-900/30 to-midnight-950/50 backdrop-blur-md rounded-lg p-8 border border-white/10 shadow-xl hover:shadow-2xl hover:shadow-sunset-500/20 transition-all duration-500 hover:scale-105 group relative overflow-hidden h-full flex flex-col">
                 <div className="absolute inset-0 bg-gradient-to-br from-sunset-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative z-10 flex flex-col h-full">
@@ -570,7 +570,7 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
             </ScrollAnimation>
 
             {/* Professional Quality */}
-            <ScrollAnimation delay={250}>
+            <ScrollAnimation delay={500} type="fade-up" duration={900}>
               <div className="glass-swipe bg-gradient-to-br from-midnight-900/30 to-midnight-950/50 backdrop-blur-md rounded-lg p-8 border border-white/10 shadow-xl hover:shadow-2xl hover:shadow-sunset-500/20 transition-all duration-500 hover:scale-105 group relative overflow-hidden h-full flex flex-col">
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative z-10 flex flex-col h-full">
@@ -586,7 +586,7 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
             </ScrollAnimation>
 
             {/* Endless Style Options */}
-            <ScrollAnimation delay={300}>
+            <ScrollAnimation delay={600} type="fade-up" duration={900}>
               <div className="glass-swipe bg-gradient-to-br from-midnight-900/30 to-midnight-950/50 backdrop-blur-md rounded-lg p-8 border border-white/10 shadow-xl hover:shadow-2xl hover:shadow-sunset-500/20 transition-all duration-500 hover:scale-105 group relative overflow-hidden h-full flex flex-col">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative z-10 flex flex-col h-full">
@@ -826,7 +826,7 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
             </ScrollAnimation>
 
             {/* Pro+ Plan */}
-            <ScrollAnimation delay={300}>
+            <ScrollAnimation delay={400} type="fade-up" duration={900}>
               <div className="bg-gradient-to-br from-midnight-900/30 to-midnight-950/50 backdrop-blur-md rounded-2xl p-8 border border-white/10 shadow-xl hover:shadow-2xl hover:shadow-sunset-500/20 transition-all duration-500 hover:scale-105 relative h-full flex flex-col">
                 <div className="text-center mb-8">
                   <h3 className="text-2xl font-bold text-white mb-2">Pro+</h3>
@@ -976,19 +976,13 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
             <ScrollAnimation>
               <div className="flex justify-center items-center mb-6">
                 <div className="flex -space-x-2">
-                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=faces" alt="David Richardson" className="w-10 h-10 rounded-full border-2 border-white shadow-lg object-cover" />
-                  <div className="w-10 h-10 rounded-full bg-white border-2 border-white shadow-lg flex items-center justify-center p-1.5">
-                    <img src="/logos/logoipsum-280.svg" alt="TechFlow Studios" className="w-full h-full object-contain" />
-                  </div>
-                  <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=faces" alt="Michael Torres" className="w-10 h-10 rounded-full border-2 border-white shadow-lg object-cover" />
-                  <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=faces" alt="Alex Martinez" className="w-10 h-10 rounded-full border-2 border-white shadow-lg object-cover" />
-                  <div className="w-10 h-10 rounded-full bg-white border-2 border-white shadow-lg flex items-center justify-center p-1.5">
-                    <img src="/logos/logoipsum-381.svg" alt="CloudVault" className="w-full h-full object-contain" />
-                  </div>
-                  <img src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=150&h=150&fit=crop&crop=faces" alt="Kyle Anderson" className="w-10 h-10 rounded-full border-2 border-white shadow-lg object-cover" />
-                  <div className="w-10 h-10 rounded-full bg-white border-2 border-white shadow-lg flex items-center justify-center p-1.5">
-                    <img src="/logos/logoipsum-339.svg" alt="Pixel & Co" className="w-full h-full object-contain" />
-                  </div>
+                  <div className="w-10 h-10 bg-gradient-to-br from-sunset-500 to-coral-500 rounded-full flex items-center justify-center text-white font-bold border-2 border-white shadow-lg">D</div>
+                  <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold border-2 border-white shadow-lg">S</div>
+                  <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold border-2 border-white shadow-lg">M</div>
+                  <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold border-2 border-white shadow-lg">A</div>
+                  <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold border-2 border-white shadow-lg">K</div>
+                  <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold border-2 border-white shadow-lg">L</div>
+                  <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-red-500 rounded-full flex items-center justify-center text-white font-bold border-2 border-white shadow-lg">T</div>
                 </div>
               </div>
               <p className="text-sunset-200 mb-4">500+ Designers & developers trust AI Icon Maker</p>

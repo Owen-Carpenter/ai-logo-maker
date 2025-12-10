@@ -52,8 +52,8 @@ export default function TestimonialCard({ quote, name, title, avatar, avatarBg, 
           )
         ) : (
           <div className={`w-12 h-12 ${avatarBg} rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md`}>
-            {avatar}
-          </div>
+          {avatar}
+        </div>
         )}
         <div className="flex-1">
           <p className="text-neutral-900 font-bold text-sm">{name}</p>

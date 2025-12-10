@@ -307,10 +307,10 @@ export default function HomePage() {
       <div className="pt-[40rem] pb-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-gradient-to-b from-blue-100 via-blue-50 to-white">
         <div className="container mx-auto text-center">
           {/* Title and subtitle positioned below the video */}
-          <ScrollAnimation delay={300}>
+          <ScrollAnimation delay={300} type="scale" duration={1200}>
             <h2 className="text-4xl font-bold text-neutral-900 mb-4">From Words to Wonders in Seconds</h2>
           </ScrollAnimation>
-          <ScrollAnimation delay={400}>
+          <ScrollAnimation delay={500} type="fade-up" duration={1000}>
             <p className="text-neutral-700 mb-12 max-w-2xl mx-auto">
               Experience the future of logo creation. Watch real users transform simple descriptions into professional-grade logos that would take hours to design manually.<br />
               <span className="text-primary-600 font-medium">No design skills required. Just pure creative freedom.</span>
@@ -318,8 +318,8 @@ export default function HomePage() {
           </ScrollAnimation>
           
           {/* Additional demo content or features can go here */}
-          <ScrollAnimation delay={500}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <ScrollAnimation delay={600} type="fade-up" duration={800}>
               <div className="text-center">
                 <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -329,7 +329,9 @@ export default function HomePage() {
                 <h3 className="text-lg font-semibold text-neutral-900 mb-2">Instant Generation</h3>
                 <p className="text-neutral-600 text-sm">Generate multiple logo variations in seconds</p>
               </div>
+            </ScrollAnimation>
               
+            <ScrollAnimation delay={700} type="fade-up" duration={800}>
               <div className="text-center">
                 <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -339,7 +341,9 @@ export default function HomePage() {
                 <h3 className="text-lg font-semibold text-neutral-900 mb-2">AI-Powered Refinement</h3>
                 <p className="text-neutral-600 text-sm">Improve and iterate on your logos with natural language</p>
               </div>
+            </ScrollAnimation>
               
+            <ScrollAnimation delay={800} type="fade-up" duration={800}>
               <div className="text-center">
                 <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -349,8 +353,8 @@ export default function HomePage() {
                 <h3 className="text-lg font-semibold text-neutral-900 mb-2">Professional Export</h3>
                 <p className="text-neutral-600 text-sm">Download your AI generated logos as a PNG file</p>
               </div>
-            </div>
-          </ScrollAnimation>
+            </ScrollAnimation>
+          </div>
         </div>
       </div>
 
@@ -365,20 +369,24 @@ export default function HomePage() {
       <div id="how-it-works" className="bg-white py-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <div className="container mx-auto">
           <div className="text-center mb-16 max-w-3xl mx-auto">
-            <ScrollAnimation>
+            <ScrollAnimation type="fade" duration={800}>
               <span className="inline-block px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-semibold mb-4">
                 SIMPLE 3-STEP PROCESS
               </span>
+            </ScrollAnimation>
+            <ScrollAnimation delay={200} type="scale" duration={1000}>
               <h2 className="text-4xl lg:text-5xl font-bold text-neutral-900 mb-6">
                 From Idea to Logo in Minutes
               </h2>
+            </ScrollAnimation>
+            <ScrollAnimation delay={400} type="fade-up" duration={1000}>
               <p className="text-xl text-neutral-600">
                 Our AI-powered platform makes professional logo design accessible to everyone. No design experience required.
               </p>
             </ScrollAnimation>
             
             {/* Stats Bar */}
-            <ScrollAnimation delay={100}>
+            <ScrollAnimation delay={600} type="fade-up" duration={1200}>
               <div className="grid grid-cols-3 gap-8 mt-12 pt-12 border-t border-neutral-200">
                 <div>
                   <div className="text-3xl font-bold text-primary-600 mb-2">30 sec</div>
@@ -398,7 +406,7 @@ export default function HomePage() {
           
           <div className="space-y-24">
             {/* Step 1 - Left Side */}
-            <ScrollAnimation delay={100}>
+            <ScrollAnimation delay={200} type="slide-up" duration={1200}>
               <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center bg-gradient-to-br from-blue-50 to-white rounded-3xl p-8 lg:p-12 border border-neutral-200">
                 {/* Content - Left */}
                 <div className="order-2 lg:order-1 space-y-6">
@@ -467,7 +475,7 @@ export default function HomePage() {
             </ScrollAnimation>
 
             {/* Step 2 - Right Side */}
-            <ScrollAnimation delay={200}>
+            <ScrollAnimation delay={200} type="slide-up" duration={1200}>
               <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center bg-gradient-to-br from-purple-50 to-white rounded-3xl p-8 lg:p-12 border border-neutral-200">
                 {/* Visual - Left */}
                 <div className="order-1">
@@ -536,7 +544,7 @@ export default function HomePage() {
             </ScrollAnimation>
 
             {/* Step 3 - Left Side */}
-            <ScrollAnimation delay={300}>
+            <ScrollAnimation delay={200} type="slide-up" duration={1200}>
               <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center bg-gradient-to-br from-green-50 to-white rounded-3xl p-8 lg:p-12 border border-neutral-200">
                 {/* Content - Left */}
                 <div className="order-2 lg:order-1 space-y-6">
