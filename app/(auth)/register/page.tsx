@@ -70,7 +70,7 @@ export default function RegisterPage() {
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <Link href="/" className="flex items-center justify-center space-x-2 group mb-8">
-            <div className="w-12 h-12 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+            <div className="w-12 h-12 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
               <img 
                 src="/images/AI-Logo-Generator-Logo.png" 
                 alt="AI Icon Maker" 
