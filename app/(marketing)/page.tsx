@@ -1012,10 +1012,10 @@ export default function HomePage() {
             <div className="max-w-3xl mx-auto space-y-4">
               {faqData.map((faq, index) => (
                 <ScrollAnimation key={index} delay={150 + index * 50}>
-                  <div className="bg-gradient-to-br from-white to-neutral-50 backdrop-blur-md rounded-lg border border-neutral-200 overflow-hidden">
+                  <div className="bg-gradient-to-br from-white to-blue-50/50 backdrop-blur-md rounded-lg border border-primary-200 overflow-hidden shadow-lg hover:shadow-xl hover:border-primary-300 transition-all duration-300">
                     <button
                       onClick={() => toggleFAQ(index)}
-                      className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-midnight-800/30 transition-colors duration-200"
+                      className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-primary-50 transition-colors duration-200"
                     >
                       <h4 className="text-lg font-semibold text-neutral-900">{faq.question}</h4>
                       <svg
