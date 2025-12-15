@@ -689,12 +689,19 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
             {/* Base Plan */}
             <ScrollAnimation delay={200}>
               <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 backdrop-blur-md rounded-2xl p-8 border border-white/10 shadow-xl hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500 hover:scale-105 relative h-full flex flex-col">
-                <div className="text-center mb-8">
+                {/* Credit Refill Badge */}
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
+                    💰 Credit Refill
+                  </div>
+                </div>
+                
+                <div className="text-center mb-8 mt-4">
                   <h3 className="text-2xl font-bold text-white mb-2">Base</h3>
                   <div className="text-4xl font-bold text-white mb-4">
-                    $5<span className="text-lg font-normal text-sunset-200">/month</span>
+                    $5<span className="text-lg font-normal text-sunset-200"></span>
                   </div>
-                  <p className="text-sunset-200">Perfect for getting started</p>
+                  <p className="text-sunset-200">&nbsp;</p>
                 </div>
 
                 <ul className="space-y-4 mb-8 flex-1">
@@ -702,7 +709,7 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    25 credits per month
+                    25 credits per purchase
                   </li>
                   <li className="flex items-center text-sunset-200">
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -741,7 +748,7 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
                   disabled={loadingPlan !== null || isPlanDisabled('base')}
                   className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-3 px-6 rounded-full font-semibold hover:from-green-600 hover:to-emerald-600 transition-all duration-300 text-center block shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {loadingPlan === 'base' ? 'Processing...' : getPlanButtonLabel('base', 'Start with Base')}
+                  {loadingPlan === 'base' ? 'Processing...' : getPlanButtonLabel('base', 'Buy Credits')}
                 </button>
               </div>
             </ScrollAnimation>

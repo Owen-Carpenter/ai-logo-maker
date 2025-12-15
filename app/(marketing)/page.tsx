@@ -106,7 +106,7 @@ export default function HomePage() {
     },
     {
       question: "Can I cancel my subscription anytime?",
-      answer: "Yes! Monthly subscriptions can be cancelled anytime and you keep access until the end of your billing period. The Starter Pack is a one-time purchase with no recurring charges. Yearly subscriptions can also be cancelled but are non-refundable."
+      answer: "Yes! Monthly subscriptions can be cancelled anytime and you keep access until the end of your billing period. The Starter Pack is a credit refill with no recurring charges - buy it as many times as you need! Yearly subscriptions can also be cancelled but are non-refundable."
     },
     {
       question: "Do I own the generated logos?",
@@ -780,15 +780,22 @@ export default function HomePage() {
           {/* Pricing Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
             
-            {/* Starter Pack - One-time payment */}
+            {/* Starter Pack - Credit Refill */}
             <ScrollAnimation delay={200}>
               <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 backdrop-blur-md rounded-2xl p-8 border border-neutral-200 shadow-xl hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500 hover:scale-105 relative h-full flex flex-col">
-                <div className="text-center mb-8">
+                {/* Credit Refill Badge */}
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
+                    💰 Credit Refill
+                  </div>
+                </div>
+                
+                <div className="text-center mb-8 mt-4">
                   <h3 className="text-2xl font-bold text-neutral-900 mb-2">Starter Pack</h3>
                   <div className="text-4xl font-bold text-neutral-900 mb-4">
-                    $5<span className="text-lg font-normal text-neutral-600"> one-time</span>
+                    $5<span className="text-lg font-normal text-neutral-600"></span>
                   </div>
-                  <p className="text-neutral-600">Try it out, no commitment</p>
+                  <p className="text-neutral-600">&nbsp;</p>
                 </div>
 
                 <ul className="space-y-4 mb-8 flex-1">
@@ -796,7 +803,7 @@ export default function HomePage() {
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    25 credits (one-time)
+                    25 credits per purchase
                   </li>
                   <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -835,7 +842,7 @@ export default function HomePage() {
                   disabled={loadingPlan !== null || isPlanDisabled('starter')}
                   className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-neutral-900 py-3 px-6 rounded-full font-semibold hover:from-green-600 hover:to-emerald-600 transition-all duration-300 text-center block shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {loadingPlan === 'starter' ? 'Processing...' : getPlanButtonLabel('starter', 'Get Started')}
+                  {loadingPlan === 'starter' ? 'Processing...' : getPlanButtonLabel('starter', 'Buy Credits')}
                 </button>
               </div>
             </ScrollAnimation>
