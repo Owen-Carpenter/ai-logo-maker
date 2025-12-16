@@ -22,12 +22,19 @@ export default function Loading({ text = 'Loading...', size = 'md' }: LoadingPro
     <div className="min-h-screen w-full bg-dark-gradient flex flex-col items-center justify-center">
       <div className="flex flex-col items-center space-y-4">
         {/* Animated Site Icon */}
-        <div className={`${sizeClasses[size]} flex items-center justify-center shadow-lg animate-pulse`}>
-          <Logo 
-            width={size === 'sm' ? 28 : size === 'md' ? 42 : 56} 
-            height={size === 'sm' ? 28 : size === 'md' ? 42 : 56} 
-            className="animate-spin" 
-          />
+        <div className={`${sizeClasses[size]} flex items-center justify-center`}>
+          <div 
+            className="relative"
+            style={{
+              filter: 'drop-shadow(0 0 20px rgba(255, 138, 101, 0.6)) drop-shadow(0 0 40px rgba(142, 36, 170, 0.4))'
+            }}
+          >
+            <Logo 
+              width={size === 'sm' ? 28 : size === 'md' ? 42 : 56} 
+              height={size === 'sm' ? 28 : size === 'md' ? 42 : 56} 
+              className="animate-spin" 
+            />
+          </div>
         </div>
         
         {/* Site Name */}
