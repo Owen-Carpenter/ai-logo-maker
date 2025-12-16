@@ -11,7 +11,8 @@ import Footer from '../../../components/Footer';
 import Loading from '../../../components/ui/Loading';
 import CancelSubscriptionButton from '../../../components/payment/CancelSubscriptionButton';
 import ReactivateSubscriptionButton from '../../../components/payment/ReactivateSubscriptionButton';
-import PricingSection from '../../../components/payment/PricingSection';
+import SubscriptionButton from '../../../components/payment/SubscriptionButton';
+import { SUBSCRIPTION_PLANS, getPlanPriority } from '../../../lib/subscription-plans';
 
 function AccountPageContent() {
   const { user, userData, hasActiveSubscription, loading, refreshUserData, invalidateCache } = useAuth();
@@ -19,6 +20,21 @@ function AccountPageContent() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showSubscriptionRequired, setShowSubscriptionRequired] = useState(false);
   const [showError, setShowError] = useState('');
+  
+  const currentPlan = userData?.subscription?.plan_type ?? 'free';
+  const currentPlanPriority = getPlanPriority(currentPlan);
+  
+  const isPlanDisabled = (planType: string) => currentPlanPriority >= getPlanPriority(planType);
+  
+  const getPlanButtonLabel = (planType: string, defaultLabel: string) => {
+    if (currentPlan === planType) {
+      return 'Current Plan';
+    }
+    if (currentPlanPriority > getPlanPriority(planType)) {
+      return 'Included in Your Plan';
+    }
+    return defaultLabel;
+  };
 
   useEffect(() => {
     const success = searchParams.get('success');
@@ -229,11 +245,148 @@ function AccountPageContent() {
 
           {/* Pricing Section - Show for users without subscriptions or fully expired subscriptions */}
           {!isPaidPlan && (
-            <PricingSection 
-              currentPlan={userData?.subscription?.plan_type || 'free'}
-              title={userData?.subscription?.status === 'canceled' ? 'Resubscribe to Continue' : 'Upgrade Your Plan'}
-              subtitle={userData?.subscription?.status === 'canceled' ? 'Get back to creating amazing icons with our premium features' : 'Get more credits and unlock premium features'}
-            />
+            <div className="py-20 bg-neutral-50 rounded-2xl px-4 sm:px-6 md:px-8">
+              <div className="container mx-auto">
+                <div className="text-center mb-12">
+                  <h2 className="text-4xl font-bold text-neutral-900 mb-4">
+                    {userData?.subscription?.status === 'canceled' ? 'Resubscribe to Continue' : 'Upgrade Your Plan'}
+                  </h2>
+                  <p className="text-xl text-neutral-600 max-w-2xl mx-auto">
+                    {userData?.subscription?.status === 'canceled' ? 'Get back to creating amazing logos with our premium features' : 'Get more credits and unlock premium features'}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                  {/* Starter Pack - Credit Refill */}
+                  <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 backdrop-blur-md rounded-2xl p-8 border border-neutral-200 shadow-xl hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500 hover:scale-105 relative h-full flex flex-col">
+                    {/* Credit Refill Badge */}
+                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                      <div className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
+                        💰 Credit Refill
+                      </div>
+                    </div>
+                    
+                    <div className="text-center mb-8 mt-4">
+                      <h3 className="text-2xl font-bold text-neutral-900 mb-2">{SUBSCRIPTION_PLANS.starter.name}</h3>
+                      <div className="text-4xl font-bold text-neutral-900 mb-4">
+                        ${SUBSCRIPTION_PLANS.starter.price}<span className="text-lg font-normal text-neutral-600"></span>
+                      </div>
+                      <p className="text-neutral-600">&nbsp;</p>
+                    </div>
+
+                    <ul className="space-y-4 mb-8 flex-1">
+                      {SUBSCRIPTION_PLANS.starter.features.map((feature, index) => (
+                        <li key={index} className="flex items-center text-neutral-600">
+                          <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                    
+                    <SubscriptionButton
+                      priceId={SUBSCRIPTION_PLANS.starter.priceId}
+                      planType="starter"
+                      className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-neutral-900 py-3 px-6 rounded-full font-semibold hover:from-green-600 hover:to-emerald-600 transition-all duration-300 text-center block shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                      loadingClassName="opacity-50 cursor-not-allowed"
+                      disabled={isPlanDisabled('starter')}
+                      disabledClassName="opacity-50 cursor-not-allowed"
+                    >
+                      {getPlanButtonLabel('starter', 'Buy Credits')}
+                    </SubscriptionButton>
+                  </div>
+
+                  {/* Pro Monthly Plan */}
+                  <div className="bg-gradient-to-br from-sunset-500/20 to-coral-500/20 backdrop-blur-md rounded-2xl p-8 border-2 border-sunset-500/50 shadow-2xl hover:shadow-3xl hover:shadow-sunset-500/30 transition-all duration-500 hover:scale-105 relative h-full flex flex-col">
+                    {/* Popular Badge */}
+                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                      <div className="bg-sunset-500 text-neutral-900 px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
+                        Most Popular
+                      </div>
+                    </div>
+                    
+                    <div className="text-center mb-8 mt-4">
+                      <h3 className="text-2xl font-bold text-neutral-900 mb-2">{SUBSCRIPTION_PLANS.proMonthly.name}</h3>
+                      <div className="text-4xl font-bold text-neutral-900 mb-4">
+                        ${SUBSCRIPTION_PLANS.proMonthly.price}<span className="text-lg font-normal text-neutral-600">/month</span>
+                      </div>
+                      <p className="text-neutral-600">For regular creators</p>
+                    </div>
+
+                    <ul className="space-y-4 mb-8 flex-1">
+                      {SUBSCRIPTION_PLANS.proMonthly.features.map((feature, index) => (
+                        <li key={index} className="flex items-center text-neutral-600">
+                          <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                    
+                    <SubscriptionButton
+                      priceId={SUBSCRIPTION_PLANS.proMonthly.priceId}
+                      planType="proMonthly"
+                      className="w-full bg-gradient-to-r from-primary-600 to-accent-500 text-neutral-900 py-3 px-6 rounded-full font-semibold hover:from-sunset-600 hover:to-primary-700 transition-all duration-300 text-center block shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                      loadingClassName="opacity-50 cursor-not-allowed"
+                      disabled={isPlanDisabled('proMonthly')}
+                      disabledClassName="opacity-50 cursor-not-allowed"
+                    >
+                      {getPlanButtonLabel('proMonthly', 'Subscribe Monthly')}
+                    </SubscriptionButton>
+                  </div>
+
+                  {/* Pro Yearly Plan - Best Value */}
+                  <div className="bg-gradient-to-br from-purple-500/20 to-indigo-500/20 backdrop-blur-md rounded-2xl p-8 border-2 border-purple-500/50 shadow-xl hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-500 hover:scale-105 relative h-full flex flex-col">
+                    {/* Best Value Badge */}
+                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                      <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-5 py-1.5 rounded-full text-xs font-bold shadow-lg whitespace-nowrap">
+                        Save 20% 🎉
+                      </div>
+                    </div>
+                    
+                    <div className="text-center mb-8 mt-4">
+                      <h3 className="text-2xl font-bold text-neutral-900 mb-2">{SUBSCRIPTION_PLANS.proYearly.name}</h3>
+                      <div className="text-4xl font-bold text-neutral-900 mb-2">
+                        ${SUBSCRIPTION_PLANS.proYearly.price}<span className="text-lg font-normal text-neutral-600">/year</span>
+                      </div>
+                      <div className="text-sm text-neutral-500 line-through mb-2">$120/year at monthly rate</div>
+                      <p className="text-neutral-600">Save $24 + get bonus credits!</p>
+                    </div>
+
+                    <ul className="space-y-4 mb-8 flex-1">
+                      {SUBSCRIPTION_PLANS.proYearly.features.map((feature, index) => (
+                        <li key={index} className="flex items-center text-neutral-600">
+                          <svg className="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                          <span className={index === 0 ? 'font-semibold' : ''}>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    
+                    <SubscriptionButton
+                      priceId={SUBSCRIPTION_PLANS.proYearly.priceId}
+                      planType="proYearly"
+                      className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 px-6 rounded-full font-semibold hover:from-purple-500 hover:to-indigo-500 transition-all duration-300 text-center block shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                      loadingClassName="opacity-50 cursor-not-allowed"
+                      disabled={isPlanDisabled('proYearly')}
+                      disabledClassName="opacity-50 cursor-not-allowed"
+                    >
+                      {getPlanButtonLabel('proYearly', 'Subscribe Yearly')}
+                    </SubscriptionButton>
+                  </div>
+                </div>
+
+                <div className="text-center mt-12">
+                  <p className="text-neutral-600 text-sm max-w-2xl mx-auto">
+                    All plans include secure payment processing, instant account upgrades, and access to our customer support. 
+                    You can change or cancel your subscription at any time through your account settings.
+                  </p>
+                </div>
+              </div>
+            </div>
           )}
         </div>
         </div>

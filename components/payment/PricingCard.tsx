@@ -9,9 +9,10 @@ interface PricingCardProps {
   plan: SubscriptionPlan;
   currentPlan?: string;
   isPopular?: boolean;
+  variant?: 'dark' | 'light';
 }
 
-export default function PricingCard({ plan, currentPlan, isPopular }: PricingCardProps) {
+export default function PricingCard({ plan, currentPlan, isPopular, variant = 'dark' }: PricingCardProps) {
   const planData = SUBSCRIPTION_PLANS[plan];
   const isCurrentPlan = currentPlan === plan;
   const planPriority = getPlanPriority(plan);
@@ -31,15 +32,40 @@ export default function PricingCard({ plan, currentPlan, isPopular }: PricingCar
     );
   }
 
+  const isLight = variant === 'light';
+  
+  // Card background and border styles based on variant
+  const cardStyles = isLight
+    ? `relative bg-gradient-to-br from-white to-neutral-50 backdrop-blur-md rounded-2xl shadow-xl border border-neutral-200 p-8 transition-all duration-300 hover:shadow-2xl hover:shadow-primary-500/20 hover:scale-105 ${
+        isPopular ? 'border-2 border-orange-500/50 ring-2 ring-orange-500/20' : ''
+      } ${isCurrentPlan ? 'ring-2 ring-green-500/50' : ''}`
+    : `relative bg-white/10 backdrop-blur-sm rounded-2xl shadow-xl border p-8 transition-all duration-300 hover:shadow-2xl hover:scale-105 ${
+        isPopular ? 'border-orange-500 ring-2 ring-orange-500/20' : 'border-white/20'
+      } ${isCurrentPlan ? 'ring-2 ring-green-500/50' : ''}`;
+
+  // Text colors based on variant
+  const titleColor = isLight ? 'text-neutral-900' : 'text-white';
+  const priceColor = isLight ? 'text-neutral-900' : 'text-white';
+  const subtitleColor = isLight ? 'text-neutral-600' : 'text-gray-400';
+  const featureColor = isLight ? 'text-neutral-600' : 'text-gray-300';
+  const checkColor = isLight ? 'text-green-500' : 'text-green-400';
+  
+  // Credit badge colors
+  const creditColors = {
+    base: isLight ? 'text-green-600' : 'text-green-400',
+    pro: isLight ? 'text-blue-600' : 'text-blue-400',
+    proPlus: isLight ? 'text-orange-600' : 'text-orange-400',
+  };
+
   return (
-    <div className={`
-      relative bg-white/10 backdrop-blur-sm rounded-2xl shadow-xl border p-8 transition-all duration-300 hover:shadow-2xl hover:scale-105
-      ${isPopular ? 'border-orange-500 ring-2 ring-orange-500/20' : 'border-white/20'}
-      ${isCurrentPlan ? 'ring-2 ring-green-500/50' : ''}
-    `}>
+    <div className={cardStyles}>
       {isPopular && (
         <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-          <span className="bg-gradient-to-r from-orange-500 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
+          <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
+            isLight 
+              ? 'bg-gradient-to-r from-orange-500 to-pink-500 text-white shadow-lg' 
+              : 'bg-gradient-to-r from-orange-500 to-pink-500 text-white'
+          }`}>
             Most Popular
           </span>
         </div>
@@ -47,31 +73,35 @@ export default function PricingCard({ plan, currentPlan, isPopular }: PricingCar
 
       {isCurrentPlan && (
         <div className="absolute -top-4 right-4">
-          <span className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
+          <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+            isLight 
+              ? 'bg-green-500 text-white shadow-lg' 
+              : 'bg-green-500 text-white'
+          }`}>
             Current Plan
           </span>
         </div>
       )}
 
       <div className="text-center mb-8">
-        <h3 className="text-2xl font-bold text-white mb-2">{planData.name}</h3>
+        <h3 className={`text-2xl font-bold ${titleColor} mb-2`}>{planData.name}</h3>
         <div className="mb-4">
-          <span className="text-4xl font-bold text-white">${planData.price}</span>
-          <span className="text-gray-400 text-lg">/month</span>
+          <span className={`text-4xl font-bold ${priceColor}`}>${planData.price}</span>
+          <span className={`${subtitleColor} text-lg`}>/month</span>
         </div>
         
         {plan === 'base' && (
-          <div className="text-green-400 font-semibold text-sm">
+          <div className={`${creditColors.base} font-semibold text-sm`}>
             {planData.credits} credits/month
           </div>
         )}
         {plan === 'pro' && (
-          <div className="text-blue-400 font-semibold text-sm">
+          <div className={`${creditColors.pro} font-semibold text-sm`}>
             {planData.credits} credits/month
           </div>
         )}
         {plan === 'proPlus' && (
-          <div className="text-orange-400 font-semibold text-sm">
+          <div className={`${creditColors.proPlus} font-semibold text-sm`}>
             {planData.credits} credits/month
           </div>
         )}
@@ -80,15 +110,19 @@ export default function PricingCard({ plan, currentPlan, isPopular }: PricingCar
       <ul className="space-y-4 mb-8">
         {planData.features.map((feature, index) => (
           <li key={index} className="flex items-start">
-            <Check className="h-5 w-5 text-green-400 mr-3 mt-0.5 flex-shrink-0" />
-            <span className="text-gray-300 text-sm">{feature}</span>
+            <Check className={`h-5 w-5 ${checkColor} mr-3 mt-0.5 flex-shrink-0`} />
+            <span className={`${featureColor} text-sm`}>{feature}</span>
           </li>
         ))}
       </ul>
 
       <div className="mt-auto">
         {isCurrentPlan ? (
-          <div className="w-full py-3 px-6 rounded-xl bg-green-600 text-white text-center font-semibold cursor-default">
+          <div className={`w-full py-3 px-6 rounded-xl text-center font-semibold cursor-default ${
+            isLight 
+              ? 'bg-green-600 text-white shadow-lg' 
+              : 'bg-green-600 text-white'
+          }`}>
             ✓ Subscribed
           </div>
         ) : (
@@ -99,7 +133,9 @@ export default function PricingCard({ plan, currentPlan, isPopular }: PricingCar
               w-full py-3 px-6 rounded-xl font-semibold transition-all duration-200 text-center
               ${isPopular 
                 ? 'bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white shadow-lg hover:shadow-xl' 
-                : 'bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/40'
+                : isLight
+                  ? 'bg-white hover:bg-neutral-100 text-neutral-900 border border-neutral-300 hover:border-neutral-400'
+                  : 'bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/40'
               }
             `}
             loadingClassName="opacity-50 cursor-not-allowed"
