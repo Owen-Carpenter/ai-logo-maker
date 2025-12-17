@@ -73,11 +73,15 @@ export async function POST(req: NextRequest) {
     )
 
     // Get the current user
-    const { data: { session } } = await supabase.auth.getSession()
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
     
-    if (!session?.user) {
+    if (authError || !user) {
+      console.error('Auth error in checkout:', {
+        error: authError?.message,
+        hasUser: !!user
+      })
       return NextResponse.json(
-        { error: 'Unauthorized' },
+        { error: 'Please log in to continue.' },
         { status: 401 }
       )
     }
@@ -90,7 +94,7 @@ export async function POST(req: NextRequest) {
       const { data: existingSubscription, error: subscriptionError } = await supabase
         .from('subscriptions')
         .select('stripe_customer_id')
-        .eq('user_id', session.user.id)
+        .eq('user_id', user.id)
         .single()
 
       if (subscriptionError && subscriptionError.code !== 'PGRST116') {
@@ -117,16 +121,16 @@ export async function POST(req: NextRequest) {
       // Create Stripe customer if doesn't exist or is invalid
       if (!customerId) {
         const customer = await stripe.customers.create({
-          email: session.user.email!,
+          email: user.email!,
           metadata: {
-            supabase_user_id: session.user.id,
+            supabase_user_id: user.id,
           },
         })
         customerId = customer.id
 
         // Use our helper function to get or create subscription
         const { error: rpcError } = await supabase.rpc('get_or_create_subscription_for_user', {
-          p_user_id: session.user.id
+          p_user_id: user.id
         })
         
         if (rpcError) {
@@ -138,7 +142,7 @@ export async function POST(req: NextRequest) {
         const { error: updateError } = await supabase
           .from('subscriptions')
           .update({ stripe_customer_id: customerId })
-          .eq('user_id', session.user.id)
+          .eq('user_id', user.id)
         
         if (updateError) {
           console.error('Error updating subscription with customer ID:', updateError)
@@ -173,7 +177,7 @@ export async function POST(req: NextRequest) {
       success_url: `${req.nextUrl?.origin || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/generate?success=true&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.nextUrl?.origin || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/account?canceled=true`,
       metadata: {
-        user_id: session.user.id,
+        user_id: user.id,
         plan_type: planType,
       },
     })

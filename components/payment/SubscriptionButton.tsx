@@ -39,12 +39,24 @@ export default function SubscriptionButton({
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include', // Ensure cookies are sent
         body: JSON.stringify({ planType }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
+        // Log detailed error info for debugging
+        console.error('Checkout API error:', {
+          status: response.status,
+          error: data.error,
+          details: data.details
+        });
+        
+        if (response.status === 401) {
+          throw new Error('Authentication required. Please refresh the page and try again.');
+        }
+        
         throw new Error(data.error || 'Failed to create checkout session');
       }
 
