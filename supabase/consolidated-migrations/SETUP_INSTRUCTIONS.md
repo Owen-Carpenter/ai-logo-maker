@@ -96,3 +96,4 @@ Update email templates in **Authentication → Email Templates** with the files 
 - Verify middleware is handling auth correctly
 - Check browser console for cookie-related errors
 
+

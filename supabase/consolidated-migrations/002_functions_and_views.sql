@@ -373,3 +373,4 @@ BEGIN
     RAISE NOTICE 'All terminology uses "logo" instead of "icon"';
 END $$;
 
+

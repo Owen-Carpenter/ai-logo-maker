@@ -92,3 +92,4 @@ The `usage_tracking` table tracks:
 - All migrations are idempotent (can be run multiple times safely)
 - RLS policies ensure users can only access their own data
 
+
