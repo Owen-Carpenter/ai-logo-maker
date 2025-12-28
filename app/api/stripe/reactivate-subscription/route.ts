@@ -19,10 +19,10 @@ export async function POST(req: NextRequest) {
       }
     )
 
-    // Get the current user
-    const { data: { session } } = await supabase.auth.getSession()
+    // Get the current user (authenticated)
+    const { data: { user: authUser }, error: authError } = await supabase.auth.getUser()
     
-    if (!session?.user) {
+    if (authError || !authUser) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     const { data: subscription } = await supabase
       .from('subscriptions')
       .select('stripe_subscription_id, cancel_at_period_end')
-      .eq('user_id', session.user.id)
+      .eq('user_id', authUser.id)
       .single()
 
     if (!subscription?.stripe_subscription_id) {
@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
       .update({
         cancel_at_period_end: false,
       })
-      .eq('user_id', session.user.id)
+      .eq('user_id', authUser.id)
 
     return NextResponse.json({
       success: true,

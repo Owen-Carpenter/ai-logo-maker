@@ -19,10 +19,10 @@ export async function POST(req: NextRequest) {
       }
     )
 
-    // Get the current user
-    const { data: { session } } = await supabase.auth.getSession()
+    // Get the current user (authenticated)
+    const { data: { user: authUser }, error: authError } = await supabase.auth.getUser()
     
-    if (!session?.user) {
+    if (authError || !authUser) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     const { data: user } = await supabase
       .from('users')
       .select('stripe_customer_id')
-      .eq('id', session.user.id)
+      .eq('id', authUser.id)
       .single()
 
     if (!user?.stripe_customer_id) {

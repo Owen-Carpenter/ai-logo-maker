@@ -13,18 +13,27 @@ export default function AuthCallback() {
   useEffect(() => {
     const handleAuthCallback = async () => {
       try {
-        
         // Get the session from the URL
-        const { data, error } = await supabase.auth.getSession();
+        const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
         
-        if (error) {
-          console.error('OAuth callback error:', error);
+        if (sessionError) {
+          console.error('OAuth callback error:', sessionError);
           setError('Authentication failed. Please try again or contact support.');
           setLoading(false);
           return;
         }
 
-        if (data.session?.user) {
+        if (sessionData.session) {
+          // Verify the user is authenticated instead of using session.user
+          const { data: userData, error: userError } = await supabase.auth.getUser();
+          
+          if (userError || !userData.user) {
+            console.error('Failed to verify user:', userError);
+            setError('Could not verify authentication. Please try again.');
+            setLoading(false);
+            return;
+          }
+
           // Wait for auth context to update, then check subscription status
           setTimeout(async () => {
             try {

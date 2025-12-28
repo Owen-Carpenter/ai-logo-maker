@@ -19,10 +19,10 @@ export async function POST(req: NextRequest) {
       }
     )
 
-    // Get the current user
-    const { data: { session } } = await supabase.auth.getSession()
+    // Get the current user (authenticated)
+    const { data: { user: authUser }, error: authError } = await supabase.auth.getUser()
     
-    if (!session?.user) {
+    if (authError || !authUser) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     const { data: subscription } = await supabase
       .from('subscriptions')
       .select('stripe_subscription_id, stripe_customer_id, plan_type')
-      .eq('user_id', session.user.id)
+      .eq('user_id', authUser.id)
       .eq('status', 'active')
       .single()
 
@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
           cancel_at_period_end: false,
           canceled_at: new Date().toISOString(),
         })
-        .eq('user_id', session.user.id)
+        .eq('user_id', authUser.id)
         .eq('stripe_subscription_id', subscription.stripe_subscription_id)
     } else {
       await supabase
@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
         .update({
           cancel_at_period_end: true,
         })
-        .eq('user_id', session.user.id)
+        .eq('user_id', authUser.id)
         .eq('stripe_subscription_id', subscription.stripe_subscription_id)
     }
 

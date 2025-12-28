@@ -72,19 +72,18 @@ export async function middleware(req: NextRequest) {
   const publicRoutes = ['/', '/generate'] // Routes that don't require auth (generate checks auth when user tries to create)
   const callbackRoutes = ['/auth/callback', '/verify'] // Auth callback routes that should not redirect
 
-  // Try to get user, but handle fetch failures gracefully
+  // Try to get and verify user, but handle fetch failures gracefully
   let user = null
   try {
-    // Get session without forcing a refresh to avoid network issues
-    const { data: { session }, error: sessionError } = await supabase.auth.getSession()
+    // Use getUser() to properly verify the JWT with Supabase Auth
+    // This is the recommended secure approach per Supabase documentation
+    const { data: { user: verifiedUser }, error: userError } = await supabase.auth.getUser()
     
-    if (sessionError) {
-      throw sessionError
-    }
-    
-    // If we have a session, extract the user from it
-    if (session?.user) {
-      user = session.user
+    if (userError) {
+      // User not authenticated or token invalid
+      user = null
+    } else {
+      user = verifiedUser
     }
   } catch (error) {
     // Log the error but don't block the request

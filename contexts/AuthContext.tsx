@@ -95,28 +95,57 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // The global cache and request deduplication will handle rapid calls
 
   useEffect(() => {
-    // Get initial session
-    authService.getCurrentSession().then(async ({ session }) => {
-      setSession(session)
-      setUser(session?.user ?? null)
-      
-      if (session?.user) {
-        await fetchUserData(session.user.id, true) // Force refresh on initial load
+    // Get initial session and verify user
+    const initAuth = async () => {
+      try {
+        const { session } = await authService.getCurrentSession()
+        setSession(session)
+        
+        if (session) {
+          // Use getUser() to get authenticated user instead of session.user
+          const { user: authenticatedUser } = await authService.getCurrentUser()
+          setUser(authenticatedUser)
+          
+          if (authenticatedUser) {
+            await fetchUserData(authenticatedUser.id, true) // Force refresh on initial load
+          }
+        } else {
+          setUser(null)
+        }
+      } catch (error) {
+        console.error('Error initializing auth:', error)
+        setUser(null)
+        setSession(null)
+      } finally {
+        setLoading(false)
       }
-      
-      setLoading(false)
-    })
+    }
+    
+    initAuth()
 
     // Listen for auth changes
     const { data: { subscription } } = authService.onAuthStateChange(
       async (event, session) => {
-        console.log('Auth state changed:', event, session)
+        console.log('Auth state changed:', event)
         setSession(session)
-        setUser(session?.user ?? null)
         
-        if (session?.user) {
-          await fetchUserData(session.user.id, true) // Force refresh on auth state change
+        if (session) {
+          // Use getUser() to get authenticated user instead of session.user
+          try {
+            const { user: authenticatedUser } = await authService.getCurrentUser()
+            setUser(authenticatedUser)
+            
+            if (authenticatedUser) {
+              await fetchUserData(authenticatedUser.id, true) // Force refresh on auth state change
+            }
+          } catch (error) {
+            console.error('Error getting authenticated user:', error)
+            setUser(null)
+            setUserData(null)
+            setHasActiveSubscription(false)
+          }
         } else {
+          setUser(null)
           setUserData(null)
           setHasActiveSubscription(false)
         }
@@ -129,7 +158,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     )
 
     return () => subscription.unsubscribe()
-  }, [])
+  }, [fetchUserData])
 
   const signIn = async (email: string, password: string) => {
     setLoading(true)

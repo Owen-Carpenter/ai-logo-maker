@@ -195,27 +195,27 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
 
         
         {/* Floating Emoji Icons - Organic motion with depth animation */}
-        <div className="absolute top-24 left-16 text-3xl animate-float-organic-1 hover:scale-125 hover:rotate-12 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '0s'}}>
+        <div className="absolute top-24 left-16 text-3xl opacity-10 sm:opacity-20 md:opacity-30 z-0 animate-float-organic-1 hover:scale-125 hover:rotate-12 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '0s'}}>
           🎨
         </div>
         
-        <div className="absolute top-48 right-32 text-xl animate-float-organic-3 hover:scale-125 hover:-rotate-12 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '2.3s'}}>
+        <div className="absolute top-48 right-32 text-xl opacity-10 sm:opacity-20 md:opacity-30 z-0 animate-float-organic-3 hover:scale-125 hover:-rotate-12 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '2.3s'}}>
           ⭐
         </div>
         
-        <div className="absolute top-36 left-1/3 text-2xl animate-float-organic-2 hover:scale-125 hover:rotate-6 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '1.2s'}}>
+        <div className="absolute top-36 left-1/3 text-2xl opacity-10 sm:opacity-20 md:opacity-30 z-0 animate-float-organic-2 hover:scale-125 hover:rotate-6 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '1.2s'}}>
           ✨
         </div>
         
-        <div className="absolute bottom-48 left-24 text-xl animate-float-organic-1 hover:scale-125 hover:-rotate-6 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '3.8s'}}>
+        <div className="absolute bottom-48 left-24 text-xl opacity-10 sm:opacity-20 md:opacity-30 z-0 animate-float-organic-1 hover:scale-125 hover:-rotate-6 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '3.8s'}}>
           🚀
         </div>
         
-        <div className="absolute bottom-36 right-1/4 text-2xl animate-float-organic-3 hover:scale-125 hover:rotate-12 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '1.7s'}}>
+        <div className="absolute bottom-36 right-1/4 text-2xl opacity-10 sm:opacity-20 md:opacity-30 z-0 animate-float-organic-3 hover:scale-125 hover:rotate-12 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '1.7s'}}>
           💡
         </div>
         
-        <div className="absolute top-1/3 right-20 text-xl animate-float-organic-2 hover:scale-125 hover:-rotate-12 hover:!opacity-30 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '0.6s'}}>
+        <div className="absolute top-1/3 right-20 text-xl opacity-10 sm:opacity-20 md:opacity-30 z-0 animate-float-organic-2 hover:scale-125 hover:-rotate-12 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '0.6s'}}>
           🔥
         </div>
         <div className="flex flex-col items-center justify-center text-center w-full relative z-10">
