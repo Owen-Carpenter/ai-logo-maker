@@ -184,7 +184,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signOut = async () => {
     setLoading(true)
     const result = await authService.signOut()
+    
+    // Clear all state immediately
+    setUser(null)
+    setUserData(null)
+    setHasActiveSubscription(false)
+    setSession(null)
+    
+    // Clear cache
+    if (user) {
+      apiCache.invalidate(`user_profile_${user.id}`)
+    }
+    
     setLoading(false)
+    
+    // Redirect to home page immediately after sign out
+    if (typeof window !== 'undefined') {
+      window.location.href = '/'
+    }
+    
     return result
   }
 

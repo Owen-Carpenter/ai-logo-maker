@@ -72,28 +72,7 @@ export async function middleware(req: NextRequest) {
   const publicRoutes = ['/', '/generate'] // Routes that don't require auth (generate checks auth when user tries to create)
   const callbackRoutes = ['/auth/callback', '/verify'] // Auth callback routes that should not redirect
 
-  // Try to get and verify user, but handle fetch failures gracefully
-  let user = null
-  try {
-    // Use getUser() to properly verify the JWT with Supabase Auth
-    // This is the recommended secure approach per Supabase documentation
-    const { data: { user: verifiedUser }, error: userError } = await supabase.auth.getUser()
-    
-    if (userError) {
-      // User not authenticated or token invalid
-      user = null
-    } else {
-      user = verifiedUser
-    }
-  } catch (error) {
-    // Log the error but don't block the request
-    console.error('Supabase auth error in middleware:', error)
-    // If Supabase is unreachable, allow the request to continue
-    // The auth check will happen on the client side or in the route handler
-    return response
-  }
-
-  // Check route types
+  // Check route types first
   const isAppRoute = appRoutes.some(route => req.nextUrl.pathname.startsWith(route))
   const isAccountRoute = accountRoutes.some(route => req.nextUrl.pathname.startsWith(route))
   const isAuthRoute = authRoutes.some(route => req.nextUrl.pathname.startsWith(route))
@@ -105,9 +84,30 @@ export async function middleware(req: NextRequest) {
     return response
   }
 
-  // If not authenticated and trying to access protected routes
-  if ((isAppRoute || isAccountRoute) && !user) {
-    return NextResponse.redirect(new URL('/login', req.url))
+  // Only verify user for protected routes to avoid unnecessary network calls
+  let user = null
+  if (isAppRoute || isAccountRoute) {
+    try {
+      // Use getUser() to properly verify the JWT with Supabase Auth
+      // This is the recommended secure approach per Supabase documentation
+      const { data: { user: verifiedUser }, error: userError } = await supabase.auth.getUser()
+      
+      if (userError) {
+        // User not authenticated or token invalid - redirect to login
+        return NextResponse.redirect(new URL('/login', req.url))
+      }
+      
+      user = verifiedUser
+    } catch (error) {
+      // Log the error and redirect to login for protected routes
+      console.error('Supabase auth error in middleware:', error)
+      return NextResponse.redirect(new URL('/login', req.url))
+    }
+
+    // If not authenticated and trying to access protected routes
+    if (!user) {
+      return NextResponse.redirect(new URL('/login', req.url))
+    }
   }
 
   // Allow authenticated users to access auth pages (login/register)
