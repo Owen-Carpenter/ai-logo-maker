@@ -13,6 +13,12 @@ export async function middleware(req: NextRequest) {
     },
   })
 
+  // Check if environment variables are set
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    console.error('Supabase environment variables are not set')
+    return response
+  }
+
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -59,9 +65,6 @@ export async function middleware(req: NextRequest) {
     }
   )
 
-  // Refresh session if expired - required for Server Components
-  await supabase.auth.getSession()
-
   // Define route types
   const appRoutes = ['/library'] // Routes that require both auth AND subscription
   const accountRoutes = ['/account'] // Routes that require auth but not necessarily subscription
@@ -69,7 +72,27 @@ export async function middleware(req: NextRequest) {
   const publicRoutes = ['/', '/generate'] // Routes that don't require auth (generate checks auth when user tries to create)
   const callbackRoutes = ['/auth/callback', '/verify'] // Auth callback routes that should not redirect
 
-  const { data: { user } } = await supabase.auth.getUser()
+  // Try to get user, but handle fetch failures gracefully
+  let user = null
+  try {
+    // Get session without forcing a refresh to avoid network issues
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession()
+    
+    if (sessionError) {
+      throw sessionError
+    }
+    
+    // If we have a session, extract the user from it
+    if (session?.user) {
+      user = session.user
+    }
+  } catch (error) {
+    // Log the error but don't block the request
+    console.error('Supabase auth error in middleware:', error)
+    // If Supabase is unreachable, allow the request to continue
+    // The auth check will happen on the client side or in the route handler
+    return response
+  }
 
   // Check route types
   const isAppRoute = appRoutes.some(route => req.nextUrl.pathname.startsWith(route))
@@ -104,12 +127,19 @@ export async function middleware(req: NextRequest) {
         subscriptionData = cached.data
       } else {
         // Check if user has active subscription using new subscriptions table
-        const { data } = await supabase
+        const { data, error } = await supabase
           .from('subscriptions')
           .select('plan_type, status, current_period_end')
           .eq('user_id', user.id)
           .eq('status', 'active')
           .single()
+        
+        // If there's a fetch error, allow the request through
+        // The subscription check will happen on the page level
+        if (error && error.message && error.message.includes('fetch')) {
+          console.error('Fetch error in subscription check, allowing request through')
+          return response
+        }
         
         subscriptionData = data
         subscriptionCache.set(cacheKey, { data: subscriptionData, timestamp: Date.now() })
@@ -126,7 +156,13 @@ export async function middleware(req: NextRequest) {
       }
     } catch (error) {
       console.error('Error checking subscription status:', error)
-      // If we can't check subscription status, redirect to account for safety
+      // If there's a network error, allow the request through
+      // The check will happen on the page level instead
+      if (error instanceof Error && (error.message.includes('fetch') || error.message.includes('network'))) {
+        console.error('Network error in subscription check, allowing request through')
+        return response
+      }
+      // For other errors, redirect to account for safety
       return NextResponse.redirect(new URL('/account?error=subscription_check_failed', req.url))
     }
   }
