@@ -24,26 +24,8 @@ export default function LoginPage() {
       if (error) {
         setError(error.message)
         setLoading(false)
-      } else {
-        // Wait for auth context to update with user data
-        setTimeout(async () => {
-          // Check subscription status and redirect accordingly
-          const response = await fetch('/api/user/profile')
-          if (response.ok) {
-            const data = await response.json()
-            if (data.hasActiveSubscription) {
-              // User has subscription - go to generate page
-              router.push('/generate')
-            } else {
-              // User has no subscription - go to home page
-              router.push('/')
-            }
-          } else {
-            // Fallback to home page if we can't check subscription
-            router.push('/')
-          }
-        }, 1000) // Give more time for auth context to update
       }
+      // Note: signIn now handles redirect automatically, no need to do it here
     } catch (error) {
       setError('An unexpected error occurred')
       setLoading(false)

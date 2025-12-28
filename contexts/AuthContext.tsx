@@ -106,17 +106,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           const { user: authenticatedUser } = await authService.getCurrentUser()
           setUser(authenticatedUser)
           
+          // Stop loading immediately after we have the user
+          // Fetch user data in the background without blocking
+          setLoading(false)
+          
           if (authenticatedUser) {
-            await fetchUserData(authenticatedUser.id, true) // Force refresh on initial load
+            // Fetch in background, don't await
+            fetchUserData(authenticatedUser.id, true).catch(err => 
+              console.error('Background user data fetch failed:', err)
+            )
           }
         } else {
           setUser(null)
+          setLoading(false)
         }
       } catch (error) {
         console.error('Error initializing auth:', error)
         setUser(null)
         setSession(null)
-      } finally {
         setLoading(false)
       }
     }
@@ -130,20 +137,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setSession(session)
         
         if (session) {
-          // Use getUser() to get authenticated user instead of session.user
-          try {
-            const { user: authenticatedUser } = await authService.getCurrentUser()
-            setUser(authenticatedUser)
-            
-            if (authenticatedUser) {
-              await fetchUserData(authenticatedUser.id, true) // Force refresh on auth state change
+          // For SIGNED_IN and TOKEN_REFRESHED events, verify the user
+          // For other events, we can trust the session from the event
+          if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+            try {
+              const { user: authenticatedUser } = await authService.getCurrentUser()
+              setUser(authenticatedUser)
+              
+              if (authenticatedUser) {
+                // Fetch user data in background, don't block
+                fetchUserData(authenticatedUser.id, true).catch(err => 
+                  console.error('Background user data fetch failed:', err)
+                )
+              }
+            } catch (error) {
+              console.error('Error getting authenticated user:', error)
+              setUser(null)
+              setUserData(null)
+              setHasActiveSubscription(false)
             }
-          } catch (error) {
-            console.error('Error getting authenticated user:', error)
-            setUser(null)
-            setUserData(null)
-            setHasActiveSubscription(false)
           }
+          // For SIGNED_OUT event, session will be null so this won't run
         } else {
           setUser(null)
           setUserData(null)
@@ -163,6 +177,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signIn = async (email: string, password: string) => {
     setLoading(true)
     const result = await authService.signIn(email, password)
+    
+    if (result.user && !result.error) {
+      // Set user immediately for faster UI update
+      setUser(result.user)
+      
+      // Redirect immediately to generate page
+      if (typeof window !== 'undefined') {
+        window.location.href = '/generate'
+      }
+    }
+    
     setLoading(false)
     return result
   }
@@ -177,7 +202,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signInWithGoogle = async () => {
     setLoading(true)
     const result = await authService.signInWithGoogle()
-    setLoading(false)
+    // Note: OAuth redirect happens automatically, no need to set loading to false
     return result
   }
 
