@@ -80,17 +80,17 @@ function AccountPageContent() {
 
           {/* Success Message */}
           {showSuccess && (
-            <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4 mb-6 flex items-center">
-              <CheckCircle className="h-5 w-5 text-green-400 mr-3" />
-              <p className="text-green-400">Payment successful! Your subscription has been activated.</p>
+            <div className="bg-primary-50 border border-primary-200 rounded-lg p-4 mb-6 flex items-center">
+              <CheckCircle className="h-5 w-5 text-primary-600 mr-3" />
+              <p className="text-primary-600">Payment successful! Your subscription has been activated.</p>
             </div>
           )}
 
           {/* Subscription Required Message */}
           {showSubscriptionRequired && (
-            <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4 mb-6 flex items-center">
-              <Crown className="h-5 w-5 text-orange-400 mr-3" />
-              <p className="text-orange-400">A paid subscription is required to access the icon generator. Please choose a plan below.</p>
+            <div className="bg-primary-50 border border-primary-200 rounded-lg p-4 mb-6 flex items-center">
+              <Crown className="h-5 w-5 text-primary-600 mr-3" />
+              <p className="text-primary-600">A paid subscription is required to access the icon generator. Please choose a plan below.</p>
             </div>
           )}
 
@@ -128,7 +128,7 @@ function AccountPageContent() {
 
             {/* Subscription Status */}
             <div className="glass-swipe bg-gradient-to-br from-white to-neutral-50 backdrop-blur-md rounded-2xl p-8 border border-neutral-200 shadow-xl hover:shadow-2xl hover:shadow-primary-500/20 transition-all duration-500 hover:scale-105 group relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative z-10">
                 <h2 className="text-xl font-semibold text-neutral-900 mb-6 flex items-center">
                   <Crown className="h-5 w-5 mr-2" />
@@ -139,8 +139,8 @@ function AccountPageContent() {
                   <span className="text-neutral-600">Current Plan:</span>
                   <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
                     isPaidPlan 
-                      ? 'bg-gradient-to-r from-orange-500 to-pink-500 text-neutral-900' 
-                      : 'bg-red-500/20 text-red-400 border border-red-500/30'
+                      ? 'bg-gradient-to-r from-primary-600 to-accent-500 text-white' 
+                      : 'bg-neutral-100 text-neutral-600 border border-neutral-200'
                   }`}>
                     {(() => {
                       const plan = userData?.subscription?.plan_type || 'free';
@@ -159,7 +159,7 @@ function AccountPageContent() {
                         <Logo width={24} height={24} className="mr-2" />
                         {userData?.usage?.tokens_remaining || 0}
                         {userData?.subscription?.plan_type === 'enterprise' && (
-                          <span className="ml-1 text-xs bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded">
+                          <span className="ml-1 text-xs bg-primary-100 text-primary-600 px-2 py-0.5 rounded border border-primary-200">
                             Enterprise
                           </span>
                         )}
@@ -176,10 +176,10 @@ function AccountPageContent() {
                     )}
                   </>
                 ) : (
-                  <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4">
+                  <div className="bg-primary-50 border border-primary-200 rounded-lg p-4">
                     <div className="flex items-center mb-2">
-                      <Crown className="h-5 w-5 text-orange-400 mr-2" />
-                      <span className="text-orange-400 font-semibold">Access Required</span>
+                      <Crown className="h-5 w-5 text-primary-600 mr-2" />
+                      <span className="text-primary-600 font-semibold">Access Required</span>
                     </div>
                     <p className="text-neutral-600 text-sm">
                       Subscribe to start generating custom icons with AI. Choose from our flexible plans below to unlock unlimited creativity.
