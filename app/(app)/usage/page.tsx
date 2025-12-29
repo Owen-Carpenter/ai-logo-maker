@@ -105,10 +105,10 @@ function UsagePageContent() {
               {/* Credits Remaining */}
               <div className="bg-white border border-neutral-200 rounded-xl backdrop-blur-sm p-6 hover:shadow-xl hover:shadow-primary-500/10 transition-all duration-300 hover:scale-105 hover:border-primary-400">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
-                    <Zap className="h-6 w-6 text-neutral-900" />
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary-600 to-accent-500 rounded-xl flex items-center justify-center">
+                    <Zap className="h-6 w-6 text-white" />
                   </div>
-                  <span className="text-green-400 text-sm font-medium">Available</span>
+                  <span className="text-primary-600 text-sm font-medium">Available</span>
                 </div>
                 <div className="space-y-1">
                   <h3 className="text-2xl font-bold text-neutral-900">
@@ -122,7 +122,7 @@ function UsagePageContent() {
               <div className="bg-white border border-neutral-200 rounded-xl backdrop-blur-sm p-6 hover:shadow-xl hover:shadow-primary-500/10 transition-all duration-300 hover:scale-105 hover:border-primary-400">
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-12 h-12 bg-gradient-to-r from-primary-600 to-accent-500 rounded-xl flex items-center justify-center">
-                    <svg className="h-6 w-6 text-neutral-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
                     </svg>
                   </div>
@@ -131,7 +131,7 @@ function UsagePageContent() {
                 <div className="space-y-1">
                   <h3 className="text-2xl font-bold text-neutral-900">
                     {loadingIconCount ? (
-                      <div className="w-8 h-8 border-2 border-sunset-400 border-t-transparent rounded-full animate-spin"></div>
+                      <div className="w-8 h-8 border-2 border-primary-400 border-t-transparent rounded-full animate-spin"></div>
                     ) : savedIconsCount}
                   </h3>
                   <p className="text-neutral-600 text-sm">Icons Saved</p>
@@ -141,15 +141,15 @@ function UsagePageContent() {
               {/* This Month */}
               <div className="bg-white border border-neutral-200 rounded-xl backdrop-blur-sm p-6 hover:shadow-xl hover:shadow-primary-500/10 transition-all duration-300 hover:scale-105 hover:border-primary-400">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
-                    <Calendar className="h-6 w-6 text-neutral-900" />
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary-600 to-accent-500 rounded-xl flex items-center justify-center">
+                    <Calendar className="h-6 w-6 text-white" />
                   </div>
-                  <span className="text-purple-400 text-sm font-medium">Monthly</span>
+                  <span className="text-primary-600 text-sm font-medium">Monthly</span>
                 </div>
                 <div className="space-y-1">
                   <h3 className="text-2xl font-bold text-neutral-900">
                     {loadingIconCount ? (
-                      <div className="w-8 h-8 border-2 border-purple-400 border-t-transparent rounded-full animate-spin"></div>
+                      <div className="w-8 h-8 border-2 border-primary-400 border-t-transparent rounded-full animate-spin"></div>
                     ) : usageStats.thisMonth}
                   </h3>
                   <p className="text-neutral-600 text-sm">This Month</p>
@@ -159,15 +159,15 @@ function UsagePageContent() {
               {/* Average Daily */}
               <div className="bg-white border border-neutral-200 rounded-xl backdrop-blur-sm p-6 hover:shadow-xl hover:shadow-primary-500/10 transition-all duration-300 hover:scale-105 hover:border-primary-400">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center">
-                    <TrendingUp className="h-6 w-6 text-neutral-900" />
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary-600 to-accent-500 rounded-xl flex items-center justify-center">
+                    <TrendingUp className="h-6 w-6 text-white" />
                   </div>
-                  <span className="text-blue-400 text-sm font-medium">Daily Avg</span>
+                  <span className="text-primary-600 text-sm font-medium">Daily Avg</span>
                 </div>
                 <div className="space-y-1">
                   <h3 className="text-2xl font-bold text-neutral-900">
                     {loadingIconCount ? (
-                      <div className="w-8 h-8 border-2 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
+                      <div className="w-8 h-8 border-2 border-primary-400 border-t-transparent rounded-full animate-spin"></div>
                     ) : usageStats.avgPerDay}
                   </h3>
                   <p className="text-neutral-600 text-sm">Per Day</p>
@@ -215,7 +215,7 @@ function UsagePageContent() {
                   </div>
 
                   {!isUnlimited && usagePercentage > 80 && (
-                    <div className="bg-primary-100 border border-primary-200 rounded-lg p-4">
+                    <div className="bg-primary-50 border border-primary-200 rounded-lg p-4">
                       <div className="flex items-center mb-2">
                         <Crown className="h-4 w-4 text-primary-600 mr-2" />
                         <span className="text-primary-600 font-semibold">Usage Alert</span>
@@ -227,7 +227,7 @@ function UsagePageContent() {
                   )}
                 </div>
               ) : (
-                <div className="bg-primary-100 border border-primary-200 rounded-lg p-6 text-center">
+                <div className="bg-primary-50 border border-primary-200 rounded-lg p-6 text-center">
                   <Crown className="h-12 w-12 text-primary-600 mx-auto mb-4" />
                   <h3 className="text-lg font-semibold text-primary-600 mb-2">No Active Subscription</h3>
                   <p className="text-neutral-600 text-sm mb-4">
@@ -235,7 +235,7 @@ function UsagePageContent() {
                   </p>
                   <Link 
                     href="/account" 
-                    className="inline-block bg-gradient-to-r from-primary-600 to-accent-500 text-neutral-900 px-6 py-2 rounded-lg font-semibold hover:from-primary-700 hover:to-accent-600 transition-all duration-300"
+                    className="inline-block bg-gradient-to-r from-primary-600 to-accent-500 text-white px-6 py-2 rounded-lg font-semibold hover:from-primary-700 hover:to-accent-600 transition-all duration-300 shadow-lg hover:shadow-xl"
                   >
                     View Plans
                   </Link>
@@ -255,8 +255,8 @@ function UsagePageContent() {
                     <span className="text-neutral-600">Current Plan:</span>
                     <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
                       isPaidPlan 
-                        ? 'bg-gradient-to-r from-primary-600 to-accent-500 text-neutral-900' 
-                        : 'bg-red-500/20 text-red-400 border border-red-500/30'
+                        ? 'bg-gradient-to-r from-primary-600 to-accent-500 text-white' 
+                        : 'bg-neutral-100 text-neutral-600 border border-neutral-200'
                     }`}>
                       {(() => {
                         if (!isPaidPlan) return 'No Subscription';
@@ -288,10 +288,10 @@ function UsagePageContent() {
                         </div>
                       )}
 
-                      <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
+                      <div className="bg-primary-50 border border-primary-200 rounded-lg p-4">
                         <div className="flex items-center mb-2">
-                          <CheckCircle className="h-4 w-4 text-green-400 mr-2" />
-                          <span className="text-green-400 font-semibold">Active Subscription</span>
+                          <CheckCircle className="h-4 w-4 text-primary-600 mr-2" />
+                          <span className="text-primary-600 font-semibold">Active Subscription</span>
                         </div>
                         <p className="text-neutral-600 text-sm">
                           Your subscription is active and you can generate {isUnlimited ? 'unlimited' : creditsRemaining} more icons.
@@ -328,19 +328,19 @@ function UsagePageContent() {
               <div className="flex flex-wrap justify-center gap-4">
                 <Link 
                   href="/generate" 
-                  className="bg-gradient-to-r from-primary-600 to-accent-500 text-neutral-900 px-8 py-3 rounded-xl font-semibold hover:from-primary-700 hover:to-accent-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+                  className="bg-gradient-to-r from-primary-600 to-accent-500 text-white px-8 py-3 rounded-xl font-semibold hover:from-primary-700 hover:to-accent-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
                 >
                   Generate More Icons
                 </Link>
                 <Link 
                   href="/account" 
-                  className="bg-midnight-800/50 hover:bg-neutral-100 text-neutral-900 px-8 py-3 rounded-xl font-semibold transition-all duration-300 border border-neutral-200 hover:border-primary-400"
+                  className="bg-white hover:bg-neutral-50 text-neutral-900 px-8 py-3 rounded-xl font-semibold transition-all duration-300 border border-neutral-200 hover:border-primary-400 shadow-sm hover:shadow-md"
                 >
                   Manage Subscription
                 </Link>
                 <Link 
                   href="/library" 
-                  className="bg-midnight-800/50 hover:bg-neutral-100 text-neutral-900 px-8 py-3 rounded-xl font-semibold transition-all duration-300 border border-neutral-200 hover:border-primary-400"
+                  className="bg-white hover:bg-neutral-50 text-neutral-900 px-8 py-3 rounded-xl font-semibold transition-all duration-300 border border-neutral-200 hover:border-primary-400 shadow-sm hover:shadow-md"
                 >
                   View Library
                 </Link>
