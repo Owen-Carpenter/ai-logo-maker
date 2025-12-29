@@ -199,8 +199,8 @@ function AccountPageContent() {
                 )}
 
                 {userData?.subscription?.cancel_at_period_end && (
-                  <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-3">
-                    <p className="text-orange-400 text-sm">
+                  <div className="bg-primary-50 border border-primary-200 rounded-lg p-3">
+                    <p className="text-primary-600 text-sm">
                       <strong>Subscription Canceled</strong><br />
                       You'll retain access to all features until {userData.subscription.current_period_end ? new Date(userData.subscription.current_period_end).toLocaleDateString() : 'the end of your billing period'}.
                     </p>
@@ -210,14 +210,14 @@ function AccountPageContent() {
                 {/* Show Cancel button for active subscriptions */}
                 {isPaidPlan && !userData?.subscription?.cancel_at_period_end && (
                   <div className="pt-4">
-                    <CancelSubscriptionButton className="w-full bg-red-600 hover:bg-red-700 text-neutral-900 px-6 py-3 rounded-lg font-semibold transition-colors" />
+                    <CancelSubscriptionButton className="w-full bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors shadow-lg hover:shadow-xl" />
                   </div>
                 )}
 
                 {/* Show Reactivate button for canceled subscriptions still in grace period */}
                 {isPaidPlan && userData?.subscription?.cancel_at_period_end && (
                   <div className="pt-4">
-                    <ReactivateSubscriptionButton className="w-full bg-green-600 hover:bg-green-700 text-neutral-900 px-6 py-3 rounded-lg font-semibold transition-colors" />
+                    <ReactivateSubscriptionButton className="w-full bg-gradient-to-r from-primary-600 to-accent-500 hover:from-primary-700 hover:to-accent-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl" />
                   </div>
                 )}
               </div>
@@ -230,13 +230,13 @@ function AccountPageContent() {
             <div className="flex flex-wrap justify-center gap-4">
               <Link 
                 href="/generate" 
-                className="bg-gradient-to-r from-orange-500 to-pink-500 text-neutral-900 px-6 py-3 rounded-lg font-semibold hover:from-orange-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="bg-gradient-to-r from-primary-600 to-accent-500 text-white px-6 py-3 rounded-lg font-semibold hover:from-primary-700 hover:to-accent-600 transition-all duration-300 shadow-lg hover:shadow-xl"
               >
                 Generate Icons
               </Link>
               <Link 
                 href="/library" 
-                className="bg-white/10 hover:bg-white/20 text-neutral-900 px-6 py-3 rounded-lg font-semibold transition-colors border border-white/20 hover:border-white/40"
+                className="bg-white hover:bg-neutral-50 text-neutral-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 border border-neutral-200 hover:border-primary-400 shadow-sm hover:shadow-md"
               >
                 View Library
               </Link>
@@ -258,10 +258,10 @@ function AccountPageContent() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                   {/* Starter Pack - Credit Refill */}
-                  <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 backdrop-blur-md rounded-2xl p-8 border border-neutral-200 shadow-xl hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500 hover:scale-105 relative h-full flex flex-col">
+                  <div className="bg-gradient-to-br from-white to-neutral-50 backdrop-blur-md rounded-2xl p-8 border border-neutral-200 shadow-xl hover:shadow-2xl hover:shadow-primary-500/20 transition-all duration-500 hover:scale-105 relative h-full flex flex-col">
                     {/* Credit Refill Badge */}
                     <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                      <div className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
+                      <div className="bg-gradient-to-r from-primary-600 to-accent-500 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
                         💰 Credit Refill
                       </div>
                     </div>
@@ -277,7 +277,7 @@ function AccountPageContent() {
                     <ul className="space-y-4 mb-8 flex-1">
                       {SUBSCRIPTION_PLANS.starter.features.map((feature, index) => (
                         <li key={index} className="flex items-center text-neutral-600">
-                          <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-5 h-5 text-primary-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                           </svg>
                           {feature}
@@ -288,7 +288,7 @@ function AccountPageContent() {
                     <SubscriptionButton
                       priceId={SUBSCRIPTION_PLANS.starter.priceId}
                       planType="starter"
-                      className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-neutral-900 py-3 px-6 rounded-full font-semibold hover:from-green-600 hover:to-emerald-600 transition-all duration-300 text-center block shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full bg-gradient-to-r from-primary-600 to-accent-500 text-white py-3 px-6 rounded-full font-semibold hover:from-primary-700 hover:to-accent-600 transition-all duration-300 text-center block shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                       loadingClassName="opacity-50 cursor-not-allowed"
                       disabled={isPlanDisabled('starter')}
                       disabledClassName="opacity-50 cursor-not-allowed"
@@ -298,10 +298,10 @@ function AccountPageContent() {
                   </div>
 
                   {/* Pro Monthly Plan */}
-                  <div className="bg-gradient-to-br from-sunset-500/20 to-coral-500/20 backdrop-blur-md rounded-2xl p-8 border-2 border-sunset-500/50 shadow-2xl hover:shadow-3xl hover:shadow-sunset-500/30 transition-all duration-500 hover:scale-105 relative h-full flex flex-col">
+                  <div className="bg-gradient-to-br from-white to-neutral-50 backdrop-blur-md rounded-2xl p-8 border-2 border-primary-500/50 shadow-2xl hover:shadow-3xl hover:shadow-primary-500/30 transition-all duration-500 hover:scale-105 relative h-full flex flex-col">
                     {/* Popular Badge */}
                     <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                      <div className="bg-sunset-500 text-neutral-900 px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
+                      <div className="bg-gradient-to-r from-primary-600 to-accent-500 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
                         Most Popular
                       </div>
                     </div>
@@ -317,7 +317,7 @@ function AccountPageContent() {
                     <ul className="space-y-4 mb-8 flex-1">
                       {SUBSCRIPTION_PLANS.proMonthly.features.map((feature, index) => (
                         <li key={index} className="flex items-center text-neutral-600">
-                          <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-5 h-5 text-primary-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                           </svg>
                           {feature}
@@ -328,7 +328,7 @@ function AccountPageContent() {
                     <SubscriptionButton
                       priceId={SUBSCRIPTION_PLANS.proMonthly.priceId}
                       planType="proMonthly"
-                      className="w-full bg-gradient-to-r from-primary-600 to-accent-500 text-neutral-900 py-3 px-6 rounded-full font-semibold hover:from-sunset-600 hover:to-primary-700 transition-all duration-300 text-center block shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full bg-gradient-to-r from-primary-600 to-accent-500 text-white py-3 px-6 rounded-full font-semibold hover:from-primary-700 hover:to-accent-600 transition-all duration-300 text-center block shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                       loadingClassName="opacity-50 cursor-not-allowed"
                       disabled={isPlanDisabled('proMonthly')}
                       disabledClassName="opacity-50 cursor-not-allowed"
@@ -338,10 +338,10 @@ function AccountPageContent() {
                   </div>
 
                   {/* Pro Yearly Plan - Best Value */}
-                  <div className="bg-gradient-to-br from-purple-500/20 to-indigo-500/20 backdrop-blur-md rounded-2xl p-8 border-2 border-purple-500/50 shadow-xl hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-500 hover:scale-105 relative h-full flex flex-col">
+                  <div className="bg-gradient-to-br from-white to-neutral-50 backdrop-blur-md rounded-2xl p-8 border-2 border-primary-500/50 shadow-xl hover:shadow-2xl hover:shadow-primary-500/20 transition-all duration-500 hover:scale-105 relative h-full flex flex-col">
                     {/* Best Value Badge */}
                     <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                      <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-5 py-1.5 rounded-full text-xs font-bold shadow-lg whitespace-nowrap">
+                      <div className="bg-gradient-to-r from-primary-600 to-accent-500 text-white px-5 py-1.5 rounded-full text-xs font-bold shadow-lg whitespace-nowrap">
                         Save 20% 🎉
                       </div>
                     </div>
@@ -358,7 +358,7 @@ function AccountPageContent() {
                     <ul className="space-y-4 mb-8 flex-1">
                       {SUBSCRIPTION_PLANS.proYearly.features.map((feature, index) => (
                         <li key={index} className="flex items-center text-neutral-600">
-                          <svg className="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-5 h-5 text-primary-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                           </svg>
                           <span className={index === 0 ? 'font-semibold' : ''}>{feature}</span>
@@ -369,7 +369,7 @@ function AccountPageContent() {
                     <SubscriptionButton
                       priceId={SUBSCRIPTION_PLANS.proYearly.priceId}
                       planType="proYearly"
-                      className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 px-6 rounded-full font-semibold hover:from-purple-500 hover:to-indigo-500 transition-all duration-300 text-center block shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full bg-gradient-to-r from-primary-600 to-accent-500 text-white py-3 px-6 rounded-full font-semibold hover:from-primary-700 hover:to-accent-600 transition-all duration-300 text-center block shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                       loadingClassName="opacity-50 cursor-not-allowed"
                       disabled={isPlanDisabled('proYearly')}
                       disabledClassName="opacity-50 cursor-not-allowed"
