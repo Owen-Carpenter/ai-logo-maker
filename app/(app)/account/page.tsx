@@ -21,12 +21,23 @@ function AccountPageContent() {
   const [showSubscriptionRequired, setShowSubscriptionRequired] = useState(false);
   const [showError, setShowError] = useState('');
   
-  const currentPlan = userData?.subscription?.plan_type ?? 'free';
+  const currentPlan = userData?.subscription?.plan_type ?? null;
   const currentPlanPriority = getPlanPriority(currentPlan);
   
-  const isPlanDisabled = (planType: string) => currentPlanPriority >= getPlanPriority(planType);
+  // Starter pack is always available as a refill, regardless of current plan
+  const isPlanDisabled = (planType: string) => {
+    if (planType === 'starter') {
+      return false; // Starter pack is always available as a refill
+    }
+    // For subscription plans, check if user already has a higher tier
+    return currentPlanPriority >= getPlanPriority(planType);
+  };
   
   const getPlanButtonLabel = (planType: string, defaultLabel: string) => {
+    if (planType === 'starter') {
+      // Starter pack is always a refill option, regardless of current plan
+      return currentPlan ? 'Refill Credits (+25)' : 'Buy Credits';
+    }
     if (currentPlan === planType) {
       return 'Current Plan';
     }

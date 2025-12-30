@@ -1,10 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { headers } from 'next/headers'
 import { stripe, extractStripePeriod } from '../../../../lib/stripe'
-import { supabase } from '../../../../lib/supabase'
+import { createClient } from '@supabase/supabase-js'
 import Stripe from 'stripe'
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!
+
+// Create a service role client for webhooks to bypass RLS
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    }
+  }
+)
 
 export async function POST(req: NextRequest) {
   try {
@@ -75,17 +87,17 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
     return
   }
 
-  // Handle one-time payments (like starter pack)
+  // Handle one-time payments (like starter pack) - always add credits as refill
   if (!subscriptionId || planType === 'starter') {
-    console.log('Processing one-time payment for starter pack')
+    console.log('Processing starter pack refill purchase')
     try {
       // Add credits by increasing the subscription's monthly token limit
       const creditsToAdd = 25 // Starter pack credits
       
-      // Get or create subscription for the user
+      // Get existing subscription for the user (if any)
       const { data: existingSubscription, error: fetchError } = await supabase
         .from('subscriptions')
-        .select('id, monthly_token_limit')
+        .select('id, monthly_token_limit, plan_type, status')
         .eq('user_id', userId)
         .single()
       
@@ -95,13 +107,15 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
       }
 
       if (existingSubscription) {
-        // Update existing subscription: increase monthly limit and set customer ID
+        // User already has a subscription - add credits without changing plan_type
+        // This allows starter pack to work as a refill for any plan (proMonthly, proYearly, or previous starter)
         const { error: updateError } = await supabase
           .from('subscriptions')
           .update({
             monthly_token_limit: existingSubscription.monthly_token_limit + creditsToAdd,
             stripe_customer_id: customerId,
             updated_at: new Date().toISOString()
+            // Note: We don't update plan_type - keep their existing plan (proMonthly, proYearly, etc.)
           })
           .eq('id', existingSubscription.id)
         
@@ -109,8 +123,10 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
           console.error('Error updating subscription tokens:', updateError)
           throw updateError
         }
+        
+        console.log(`Successfully added ${creditsToAdd} credits to user ${userId} (existing plan: ${existingSubscription.plan_type})`)
       } else {
-        // Create new subscription with the credits
+        // User has no subscription - create one with starter plan
         const { error: insertError } = await supabase
           .from('subscriptions')
           .insert({
@@ -125,12 +141,13 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
           console.error('Error creating subscription with credits:', insertError)
           throw insertError
         }
+        
+        console.log(`Successfully created starter subscription with ${creditsToAdd} credits for user ${userId}`)
       }
 
-      console.log(`Successfully added ${creditsToAdd} credits to user ${userId}`)
       return
     } catch (error) {
-      console.error('Error handling one-time payment:', error)
+      console.error('Error handling starter pack purchase:', error)
       throw error
     }
   }

@@ -17,7 +17,8 @@ export default function PricingCard({ plan, currentPlan, isPopular, variant = 'd
   const isCurrentPlan = currentPlan === plan;
   const planPriority = getPlanPriority(plan);
   const currentPlanPriority = getPlanPriority(currentPlan);
-  const isDowngrade = currentPlanPriority > planPriority;
+  // Starter pack is always available as a refill, not a downgrade
+  const isDowngrade = plan === 'starter' ? false : currentPlanPriority > planPriority;
 
   // Safety check - if planData is undefined, return error state
   if (!planData) {
@@ -142,7 +143,11 @@ export default function PricingCard({ plan, currentPlan, isPopular, variant = 'd
             disabled={isDowngrade}
             disabledClassName="opacity-50 cursor-not-allowed"
           >
-            {isDowngrade ? 'Included in Your Plan' : `Upgrade to ${planData.name}`}
+            {plan === 'starter' 
+              ? (currentPlan ? 'Refill Credits (+25)' : 'Buy Credits')
+              : isDowngrade 
+                ? 'Included in Your Plan' 
+                : `Upgrade to ${planData.name}`}
           </SubscriptionButton>
         )}
       </div>

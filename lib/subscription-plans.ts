@@ -76,8 +76,7 @@ export const SUBSCRIPTION_PLANS = {
 export type SubscriptionPlan = keyof typeof SUBSCRIPTION_PLANS 
 
 const PLAN_PRIORITY: Record<string, number> = {
-  free: 0,
-  starter: 1,
+  starter: 0, // Starter is a refill, not a tiered plan
   base: 1, // Legacy
   proMonthly: 2,
   pro: 2, // Legacy
