@@ -333,6 +333,7 @@ DECLARE
     v_monthly_limit integer;
     v_existing_limit integer;
     v_existing_plan_type text;
+    v_old_plan_base integer;
 BEGIN
     -- Determine base monthly token limit for the new plan
     v_monthly_limit := CASE p_plan_type
@@ -342,22 +343,43 @@ BEGIN
         ELSE 0
     END;
 
-    -- Get existing subscription to preserve credits when upgrading
+    -- Get existing subscription to preserve credits when upgrading/switching
     SELECT monthly_token_limit, plan_type
     INTO v_existing_limit, v_existing_plan_type
     FROM subscriptions
     WHERE user_id = p_user_id
     LIMIT 1;
 
-    -- If upgrading from starter to a subscription plan, preserve the starter credits
-    -- Only add base plan credits if user is upgrading (not if they already have the same or higher plan)
-    IF v_existing_limit IS NOT NULL AND v_existing_plan_type = 'starter' AND p_plan_type IN ('proMonthly', 'proYearly') THEN
-        -- Preserve starter pack credits and add new plan credits
-        v_monthly_limit := v_existing_limit + v_monthly_limit;
-    ELSIF v_existing_limit IS NOT NULL AND p_plan_type IN ('proMonthly', 'proYearly') THEN
-        -- If user already has a subscription plan, just set to the new plan's base limit
-        -- (they're switching plans, not upgrading from starter)
-        v_monthly_limit := v_monthly_limit;
+    -- Preserve existing credits in all cases:
+    -- 1. If upgrading from starter to subscription plan → preserve starter credits and add new plan credits
+    -- 2. If user already has a subscription plan → preserve ALL existing credits (may include starter pack refills)
+    IF v_existing_limit IS NOT NULL THEN
+        IF v_existing_plan_type = 'starter' AND p_plan_type IN ('proMonthly', 'proYearly') THEN
+            -- Upgrading from starter: preserve starter credits and add new plan credits
+            v_monthly_limit := v_existing_limit + v_monthly_limit;
+        ELSIF v_existing_plan_type IN ('proMonthly', 'proYearly') AND p_plan_type IN ('proMonthly', 'proYearly') THEN
+            -- User already has a subscription plan and is switching/updating
+            -- ALWAYS preserve existing credits if they're higher than new plan base
+            -- This ensures starter pack refills are never lost when subscription updates occur
+            IF v_existing_limit >= v_monthly_limit THEN
+                -- User has same or more credits (may include refills) - preserve them
+                v_monthly_limit := v_existing_limit;
+            ELSE
+                -- New plan has higher base - check if user has refills to preserve
+                v_old_plan_base := CASE v_existing_plan_type
+                    WHEN 'proMonthly' THEN 50
+                    WHEN 'proYearly' THEN 700
+                    ELSE 0
+                END;
+                IF v_existing_limit > v_old_plan_base THEN
+                    -- User has refills - preserve them and add difference in base plans
+                    v_monthly_limit := v_existing_limit + (v_monthly_limit - v_old_plan_base);
+                ELSE
+                    -- Just base credits - use new plan's base
+                    v_monthly_limit := v_monthly_limit;
+                END IF;
+            END IF;
+        END IF;
     END IF;
 
     -- First, try to update any existing subscription that already has this Stripe customer ID
@@ -404,9 +426,16 @@ BEGIN
             plan_type = EXCLUDED.plan_type,
             status = EXCLUDED.status,
             monthly_token_limit = CASE
-                -- If upgrading from starter, preserve existing credits
+                -- If upgrading from starter, preserve existing credits and add new plan credits
                 WHEN subscriptions.plan_type = 'starter' AND EXCLUDED.plan_type IN ('proMonthly', 'proYearly') 
                 THEN subscriptions.monthly_token_limit + EXCLUDED.monthly_token_limit
+                -- If user already has a subscription plan, preserve existing credits if they're higher
+                -- (they may have bought starter pack refills)
+                WHEN subscriptions.plan_type IN ('proMonthly', 'proYearly') AND EXCLUDED.plan_type IN ('proMonthly', 'proYearly')
+                THEN GREATEST(subscriptions.monthly_token_limit, EXCLUDED.monthly_token_limit)
+                -- If existing credits are higher than new plan base, preserve them (user has refills)
+                WHEN subscriptions.monthly_token_limit > EXCLUDED.monthly_token_limit
+                THEN subscriptions.monthly_token_limit
                 -- Otherwise use the new plan's limit
                 ELSE EXCLUDED.monthly_token_limit
             END,
