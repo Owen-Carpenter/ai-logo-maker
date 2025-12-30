@@ -331,14 +331,34 @@ SET search_path = public
 AS $$
 DECLARE
     v_monthly_limit integer;
+    v_existing_limit integer;
+    v_existing_plan_type text;
 BEGIN
-    -- Determine monthly token limit based on plan
+    -- Determine base monthly token limit for the new plan
     v_monthly_limit := CASE p_plan_type
         WHEN 'starter' THEN 25
         WHEN 'proMonthly' THEN 50
         WHEN 'proYearly' THEN 700
         ELSE 0
     END;
+
+    -- Get existing subscription to preserve credits when upgrading
+    SELECT monthly_token_limit, plan_type
+    INTO v_existing_limit, v_existing_plan_type
+    FROM subscriptions
+    WHERE user_id = p_user_id
+    LIMIT 1;
+
+    -- If upgrading from starter to a subscription plan, preserve the starter credits
+    -- Only add base plan credits if user is upgrading (not if they already have the same or higher plan)
+    IF v_existing_limit IS NOT NULL AND v_existing_plan_type = 'starter' AND p_plan_type IN ('proMonthly', 'proYearly') THEN
+        -- Preserve starter pack credits and add new plan credits
+        v_monthly_limit := v_existing_limit + v_monthly_limit;
+    ELSIF v_existing_limit IS NOT NULL AND p_plan_type IN ('proMonthly', 'proYearly') THEN
+        -- If user already has a subscription plan, just set to the new plan's base limit
+        -- (they're switching plans, not upgrading from starter)
+        v_monthly_limit := v_monthly_limit;
+    END IF;
 
     -- First, try to update any existing subscription that already has this Stripe customer ID
     UPDATE subscriptions
@@ -383,7 +403,13 @@ BEGIN
             stripe_subscription_id = EXCLUDED.stripe_subscription_id,
             plan_type = EXCLUDED.plan_type,
             status = EXCLUDED.status,
-            monthly_token_limit = EXCLUDED.monthly_token_limit,
+            monthly_token_limit = CASE
+                -- If upgrading from starter, preserve existing credits
+                WHEN subscriptions.plan_type = 'starter' AND EXCLUDED.plan_type IN ('proMonthly', 'proYearly') 
+                THEN subscriptions.monthly_token_limit + EXCLUDED.monthly_token_limit
+                -- Otherwise use the new plan's limit
+                ELSE EXCLUDED.monthly_token_limit
+            END,
             current_period_start = EXCLUDED.current_period_start,
             current_period_end = EXCLUDED.current_period_end,
             cancel_at_period_end = EXCLUDED.cancel_at_period_end,

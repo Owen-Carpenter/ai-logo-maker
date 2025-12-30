@@ -263,7 +263,11 @@ function UsagePageContent() {
                         if (planType === 'base') return 'Base';
                         if (planType === 'pro') return 'Pro';
                         if (planType === 'proPlus') return 'Pro+';
-                        return planType.charAt(0).toUpperCase() + planType.slice(1);
+                        if (planType === 'starter') return 'Starter Pack';
+                        if (planType === 'proMonthly') return 'Pro Monthly';
+                        if (planType === 'proYearly') return 'Pro Yearly';
+                        // Fallback: capitalize first letter and add space before capital letters
+                        return planType.replace(/([A-Z])/g, ' $1').trim().replace(/^./, str => str.toUpperCase());
                       })()}
                     </span>
                   </div>

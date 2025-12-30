@@ -223,7 +223,7 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
   // Find subscription record directly
   const { data: existingSubscription } = await supabase
     .from('subscriptions')
-    .select('user_id')
+    .select('user_id, monthly_token_limit, plan_type')
     .eq('stripe_subscription_id', subscription.id)
     .single()
 
@@ -238,6 +238,13 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
 
   const { start: periodStart, end: periodEnd } = extractStripePeriod(subscription as any)
 
+  // Calculate new monthly limit - preserve existing credits if upgrading from starter
+  let newMonthlyLimit = getCreditsForPlan(planType)
+  if (existingSubscription.plan_type === 'starter' && (planType === 'proMonthly' || planType === 'proYearly')) {
+    // Preserve starter pack credits when upgrading
+    newMonthlyLimit = existingSubscription.monthly_token_limit + newMonthlyLimit
+  }
+
   // Update subscription directly
   await supabase
     .from('subscriptions')
@@ -247,7 +254,7 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
       current_period_start: periodStart,
       current_period_end: periodEnd,
       cancel_at_period_end: subscription.cancel_at_period_end || false,
-      monthly_token_limit: getCreditsForPlan(planType),
+      monthly_token_limit: newMonthlyLimit,
       updated_at: new Date().toISOString()
     })
     .eq('stripe_subscription_id', subscription.id)

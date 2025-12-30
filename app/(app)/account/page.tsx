@@ -154,10 +154,17 @@ function AccountPageContent() {
                       : 'bg-red-500/20 text-red-400 border border-red-500/30'
                   }`}>
                     {(() => {
-                      const plan = userData?.subscription?.plan_type || 'free';
-                      if (!isPaidPlan) return 'Subscription Required';
+                      const plan = userData?.subscription?.plan_type || null;
+                      if (!isPaidPlan || !plan) return 'Subscription Required';
                       if (plan === 'enterprise') return 'Enterprise';
-                      return plan.charAt(0).toUpperCase() + plan.slice(1);
+                      if (plan === 'starter') return 'Starter Pack';
+                      if (plan === 'proMonthly') return 'Pro Monthly';
+                      if (plan === 'proYearly') return 'Pro Yearly';
+                      if (plan === 'base') return 'Base';
+                      if (plan === 'pro') return 'Pro';
+                      if (plan === 'proPlus') return 'Pro+';
+                      // Fallback: capitalize first letter and add space before capital letters
+                      return plan.replace(/([A-Z])/g, ' $1').trim().replace(/^./, str => str.toUpperCase());
                     })()}
                   </span>
                 </div>
