@@ -116,27 +116,8 @@ function GeneratePageContent() {
   }, [isGenerating]);
 
   // Show loading state only for authenticated users checking their subscription
-  // Add a timeout to prevent infinite loading (max 5 seconds)
-  const [loadingTimeout, setLoadingTimeout] = useState(false);
-  
-  useEffect(() => {
-    if (user && loading) {
-      const timeout = setTimeout(() => {
-        setLoadingTimeout(true);
-      }, 5000);
-      return () => clearTimeout(timeout);
-    } else {
-      setLoadingTimeout(false);
-    }
-  }, [user, loading]);
-  
-  if (user && loading && !loadingTimeout) {
+  if (user && loading) {
     return <Loading text="Loading your workspace..." />;
-  }
-  
-  // If loading timeout, show the page anyway (user data will load in background)
-  if (user && loading && loadingTimeout) {
-    console.warn('Loading timeout reached, showing page anyway');
   }
 
   // Show payment processing state (only for authenticated users)

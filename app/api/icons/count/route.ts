@@ -28,9 +28,9 @@ export async function GET() {
       )
     }
 
-    // Get total count of user's saved icons
+    // Get total count of user's saved logos
     const { count: totalCount, error: totalError } = await supabase
-      .from('icons')
+      .from('logos')
       .select('*', { count: 'exact', head: true })
       .eq('user_id', user.id)
 
@@ -42,13 +42,13 @@ export async function GET() {
       )
     }
 
-    // Get count of icons created this month
+    // Get count of logos created this month
     const now = new Date()
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
     const startOfNextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1)
 
     const { count: thisMonthCount, error: monthError } = await supabase
-      .from('icons')
+      .from('logos')
       .select('*', { count: 'exact', head: true })
       .eq('user_id', user.id)
       .gte('created_at', startOfMonth.toISOString())
@@ -62,12 +62,12 @@ export async function GET() {
       )
     }
 
-    // Get count of icons created last month for comparison
+    // Get count of logos created last month for comparison
     const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1)
     const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 1)
 
     const { count: lastMonthCount, error: lastMonthError } = await supabase
-      .from('icons')
+      .from('logos')
       .select('*', { count: 'exact', head: true })
       .eq('user_id', user.id)
       .gte('created_at', startOfLastMonth.toISOString())

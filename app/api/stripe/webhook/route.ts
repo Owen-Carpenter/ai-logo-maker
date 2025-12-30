@@ -79,35 +79,52 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
   if (!subscriptionId || planType === 'starter') {
     console.log('Processing one-time payment for starter pack')
     try {
-      // Add credits directly to user's account
+      // Add credits by increasing the subscription's monthly token limit
       const creditsToAdd = 25 // Starter pack credits
       
-      // Get current user data
-      const { data: userData, error: fetchError } = await supabase
-        .from('users')
-        .select('remaining_tokens')
-        .eq('id', userId)
+      // Get or create subscription for the user
+      const { data: existingSubscription, error: fetchError } = await supabase
+        .from('subscriptions')
+        .select('id, monthly_token_limit')
+        .eq('user_id', userId)
         .single()
       
-      if (fetchError) {
-        console.error('Error fetching user data:', fetchError)
+      if (fetchError && fetchError.code !== 'PGRST116') {
+        console.error('Error fetching subscription:', fetchError)
         throw fetchError
       }
 
-      const currentTokens = userData?.remaining_tokens || 0
-      
-      // Update user's tokens
-      const { error: updateError } = await supabase
-        .from('users')
-        .update({
-          remaining_tokens: currentTokens + creditsToAdd,
-          stripe_customer_id: customerId
-        })
-        .eq('id', userId)
-      
-      if (updateError) {
-        console.error('Error updating user tokens:', updateError)
-        throw updateError
+      if (existingSubscription) {
+        // Update existing subscription: increase monthly limit and set customer ID
+        const { error: updateError } = await supabase
+          .from('subscriptions')
+          .update({
+            monthly_token_limit: existingSubscription.monthly_token_limit + creditsToAdd,
+            stripe_customer_id: customerId,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', existingSubscription.id)
+        
+        if (updateError) {
+          console.error('Error updating subscription tokens:', updateError)
+          throw updateError
+        }
+      } else {
+        // Create new subscription with the credits
+        const { error: insertError } = await supabase
+          .from('subscriptions')
+          .insert({
+            user_id: userId,
+            plan_type: 'starter',
+            status: 'active',
+            monthly_token_limit: creditsToAdd, // Starter pack credits
+            stripe_customer_id: customerId
+          })
+        
+        if (insertError) {
+          console.error('Error creating subscription with credits:', insertError)
+          throw insertError
+        }
       }
 
       console.log(`Successfully added ${creditsToAdd} credits to user ${userId}`)
@@ -131,7 +148,7 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
       p_user_id: userId,
       p_stripe_customer_id: customerId,
       p_stripe_subscription_id: subscriptionId,
-      p_plan_type: planType || 'free',
+      p_plan_type: planType || 'starter',
       p_status: subscription.status,
       p_current_period_start: periodStart,
       p_current_period_end: periodEnd,
@@ -261,15 +278,15 @@ async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
   
   const customerId = invoice.customer as string
   
-  // Find user by customer ID
-  const { data: user } = await supabase
-    .from('users')
-    .select('id')
+  // Find user by customer ID in subscriptions table
+  const { data: subscription } = await supabase
+    .from('subscriptions')
+    .select('user_id')
     .eq('stripe_customer_id', customerId)
     .single()
 
-  if (!user) {
-    console.error(`No user found for customer ${customerId}`)
+  if (!subscription) {
+    console.error(`No subscription found for customer ${customerId}`)
     return
   }
 
@@ -278,50 +295,27 @@ async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
 }
 
 function getPlanTypeFromPriceId(priceId: string): string {
-  // New plan types
+  // Plan types
   const starterPriceId = process.env.STRIPE_STARTER_PRICE_ID
   const proMonthlyPriceId = process.env.STRIPE_PRO_MONTHLY_PRICE_ID
   const proYearlyPriceId = process.env.STRIPE_PRO_YEARLY_PRICE_ID
-  
-  // Legacy plan types
-  const basePriceId = process.env.STRIPE_BASE_PRICE_ID
-  const proPriceId = process.env.STRIPE_PRO_PRICE_ID
-  const proPlusPriceId = process.env.STRIPE_PRO_PLUS_PRICE_ID
-  const enterprisePriceId = process.env.STRIPE_UNLIMITED_PRICE_ID
 
-  // New plans
   if (priceId === starterPriceId) return 'starter'
   if (priceId === proMonthlyPriceId) return 'proMonthly'
   if (priceId === proYearlyPriceId) return 'proYearly'
   
-  // Legacy plans
-  if (priceId === basePriceId) return 'base'
-  if (priceId === proPriceId) return 'pro'
-  if (priceId === proPlusPriceId) return 'proPlus'
-  if (priceId === enterprisePriceId) return 'proPlus'
-  
-  return 'free'
+  // Default to starter if price ID doesn't match (shouldn't happen)
+  return 'starter'
 }
 
 function getCreditsForPlan(planType: string): number {
   switch (planType) {
-    case 'free':
-      return 0 // Free tier has no credits
     case 'starter':
       return 25 // Starter pack: $5 one-time for 25 credits
     case 'proMonthly':
       return 50 // Pro Monthly: $10/month for 50 credits
     case 'proYearly':
       return 700 // Pro Yearly: $96/year for 700 credits (includes 100 bonus)
-    // Legacy plans
-    case 'base':
-      return 25 // Legacy base tier
-    case 'pro':
-      return 100 // Legacy pro tier
-    case 'proPlus':
-      return 200 // Legacy pro+ tier
-    case 'enterprise':
-      return 200 // Legacy enterprise maps to pro+
     default:
       return 0
   }

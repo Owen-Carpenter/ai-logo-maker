@@ -32,51 +32,18 @@ export async function GET(req: NextRequest) {
 
     // Note: Caching is now handled client-side for better performance
 
-    // Try to fetch user data with subscription and usage info using our new view
-    let { data: userData, error } = await supabase
-      .from('user_complete_profile')
-      .select('*')
+    // First check if user exists in users table
+    let { data: existingUser, error: userCheckError } = await supabase
+      .from('users')
+      .select('id, email, full_name, avatar_url, display_name, bio, created_at, updated_at')
       .eq('id', user.id)
       .single()
 
-    // If the view is not working correctly, calculate usage directly
-    if (userData && userData.tokens_remaining === userData.monthly_token_limit) {
-      // Get user's subscription
-      const { data: subscription } = await supabase
-        .from('subscriptions')
-        .select('*')
-        .eq('user_id', user.id)
-        .eq('status', 'active')
-        .single()
+    // If user doesn't exist in users table, create them
+    if (userCheckError?.code === 'PGRST116' || !existingUser) {
+      console.log('User not found in users table, creating user record...')
       
-      // Calculate usage directly from usage_tracking
-      const { data: usageData } = await supabase
-        .from('usage_tracking')
-        .select('tokens_used, generation_successful')
-        .eq('user_id', user.id)
-        .eq('subscription_id', subscription?.id || null)
-      
-      const totalUsed = usageData?.reduce((sum, record) => sum + record.tokens_used, 0) || 0
-      const monthlyLimit = subscription?.monthly_token_limit || 5
-      const remaining = Math.max(0, monthlyLimit - totalUsed)
-      
-      // Update the userData with correct usage
-      userData.tokens_used_this_month = totalUsed
-      userData.tokens_remaining = remaining
-      userData.total_generations = usageData?.length || 0
-      userData.successful_generations = usageData?.filter(r => r.generation_successful).length || 0
-      userData.usage_percentage = monthlyLimit > 0 ? (totalUsed / monthlyLimit) * 100 : 0
-    }
-
-    // If user doesn't exist, try to create them with error handling for duplicate key
-    if (error?.code === 'PGRST116' || !userData) {
-      
-      // Try both table names to handle migration state
-      let createUserError: any = null
-      let newUser: any = null
-      
-      // First try 'users' table
-      const { data: userData1, error: error1 } = await supabase
+      const { data: newUser, error: createError } = await supabase
         .from('users')
         .insert({
           id: user.id,
@@ -85,48 +52,35 @@ export async function GET(req: NextRequest) {
         })
         .select()
         .single()
-      
-      if (error1?.code === '23505') {
-        // Duplicate key error - user already exists, try to fetch them
-        const { data: existingUser, error: fetchError } = await supabase
-          .from('users')
-          .select('*')
-          .eq('id', user.id)
-          .single()
-        
-        if (!fetchError && existingUser) {
-          newUser = existingUser
-        } else {
-          // Try users_new table as fallback
-          const { data: existingUserNew, error: fetchErrorNew } = await supabase
-            .from('users_new')
-            .select('*')
+
+      if (createError) {
+        // If duplicate key error, try to fetch again
+        if (createError.code === '23505') {
+          const { data: fetchedUser } = await supabase
+            .from('users')
+            .select('id, email, full_name, avatar_url, display_name, bio, created_at, updated_at')
             .eq('id', user.id)
             .single()
-          
-          if (!fetchErrorNew && existingUserNew) {
-            newUser = existingUserNew
-          } else {
-            createUserError = error1
-          }
+          existingUser = fetchedUser
+        } else {
+          console.error('Error creating user record:', createError)
+          return NextResponse.json(
+            { error: 'Failed to create user record', details: createError.message },
+            { status: 500 }
+          )
         }
-      } else if (error1) {
-        createUserError = error1
       } else {
-        newUser = userData1
+        existingUser = newUser
       }
 
-      if (createUserError) {
-        console.error('Error creating user record:', createUserError)
-        return NextResponse.json(
-          { error: 'Failed to create user record' },
-          { status: 500 }
-        )
-      }
+      // Create default free subscription if it doesn't exist
+      const { data: existingSubscription } = await supabase
+        .from('subscriptions')
+        .select('id')
+        .eq('user_id', user.id)
+        .single()
 
-      // Only create subscription if we actually created a new user (not just fetched existing)
-      if (newUser && !error1) {
-        // Create default free subscription for the new user
+      if (!existingSubscription) {
         const { error: subscriptionError } = await supabase
           .from('subscriptions')
           .insert({
@@ -136,42 +90,71 @@ export async function GET(req: NextRequest) {
             monthly_token_limit: 5
           })
 
-        if (subscriptionError) {
-          console.error('Error creating subscription record:', subscriptionError)
-          // Continue anyway - user exists, subscription creation can be retried
+        if (subscriptionError && subscriptionError.code !== '23505') {
+          console.error('Error creating subscription:', subscriptionError)
+          // Continue anyway - subscription creation can be retried
         }
       }
+    }
 
-      // Now fetch the complete profile data
-      const { data: completeUserData, error: fetchError } = await supabase
-        .from('user_complete_profile')
+    // Now fetch complete user data with subscription and usage info
+    let { data: userData, error } = await supabase
+      .from('user_complete_profile')
+      .select('*')
+      .eq('id', user.id)
+      .single()
+
+    // If view query fails, build userData from existingUser and default values
+    if (error || !userData) {
+      console.log('View query failed or returned no data, building from user record...', error?.message)
+      
+      // Get subscription data directly
+      const { data: subscription } = await supabase
+        .from('subscriptions')
         .select('*')
-        .eq('id', user.id)
+        .eq('user_id', user.id)
+        .eq('status', 'active')
         .single()
 
-      if (fetchError) {
-        console.error('Error fetching complete user data:', fetchError)
-        // Fallback to basic user data
-        userData = {
-          ...newUser,
-          subscription_id: null,
-          plan_type: 'free',
-          subscription_status: 'active',
-          monthly_token_limit: 5,
-          tokens_remaining: 5,
-          tokens_used_this_month: 0,
-          usage_percentage: 0
-        }
-      } else {
-        userData = completeUserData
+      // Get usage data
+      const { data: usageData } = await supabase
+        .from('usage_tracking')
+        .select('tokens_used, generation_successful')
+        .eq('user_id', user.id)
+
+      const totalUsed = usageData?.reduce((sum, record) => sum + (record.tokens_used || 0), 0) || 0
+      const monthlyLimit = subscription?.monthly_token_limit || 5
+      const remaining = Math.max(0, monthlyLimit - totalUsed)
+
+      // Build userData object
+      userData = {
+        ...existingUser,
+        user_created_at: existingUser?.created_at,
+        user_updated_at: existingUser?.updated_at,
+        subscription_id: subscription?.id || null,
+        plan_type: subscription?.plan_type || 'free',
+        subscription_status: subscription?.status || 'active',
+        monthly_token_limit: monthlyLimit,
+        current_period_start: subscription?.current_period_start || null,
+        current_period_end: subscription?.current_period_end || null,
+        cancel_at_period_end: subscription?.cancel_at_period_end || false,
+        tokens_used_this_month: totalUsed,
+        tokens_remaining: remaining,
+        total_generations: usageData?.length || 0,
+        successful_generations: usageData?.filter(r => r.generation_successful).length || 0,
+        usage_percentage: monthlyLimit > 0 ? (totalUsed / monthlyLimit) * 100 : 0
       }
-    } else if (error) {
-      console.error('Error fetching user data:', error)
+    }
+
+    // If we still don't have userData, return error
+    if (!userData) {
+      console.error('Failed to get user data after all attempts')
       return NextResponse.json(
         { error: 'Failed to fetch user data' },
         { status: 500 }
       )
     }
+      
 
     // Check if user has active subscription using new structure
     const hasActiveSubscription = userData.subscription_status === 'active' && 

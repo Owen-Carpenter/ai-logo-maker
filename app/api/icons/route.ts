@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
 
     // Build query
     let query = supabase
-      .from('icons')
+      .from('logos')
       .select(`
         id,
         name,
@@ -84,7 +84,7 @@ export async function GET(req: NextRequest) {
 
     // Get total count for pagination
     const { count: totalCount } = await supabase
-      .from('icons')
+      .from('logos')
       .select('*', { count: 'exact', head: true })
       .eq('user_id', user.id)
 

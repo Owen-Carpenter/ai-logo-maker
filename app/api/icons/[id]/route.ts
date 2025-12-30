@@ -41,9 +41,9 @@ export async function DELETE(
       )
     }
 
-    // Delete the icon (RLS policy ensures user can only delete their own icons)
+    // Delete the logo (RLS policy ensures user can only delete their own logos)
     const { error } = await supabase
-      .from('icons')
+      .from('logos')
       .delete()
       .eq('id', iconId)
       .eq('user_id', user.id) // Extra safety check
@@ -126,9 +126,9 @@ export async function PUT(
       )
     }
 
-    // Update the icon
+    // Update the logo
     const { data: icon, error } = await supabase
-      .from('icons')
+      .from('logos')
       .update(updateData)
       .eq('id', iconId)
       .eq('user_id', user.id) // Extra safety check

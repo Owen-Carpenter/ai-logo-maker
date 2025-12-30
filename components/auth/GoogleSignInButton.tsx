@@ -24,10 +24,11 @@ export default function GoogleSignInButton({
     try {
       const { error } = await signInWithGoogle();
       if (error) {
-        setError(error.message);
+        setError(error.message || 'Failed to sign in with Google');
         setLoading(false);
       }
       // If successful, the OAuth flow will redirect to the callback page
+      // Don't set loading to false here - the redirect will happen
     } catch (err) {
       setError('An unexpected error occurred');
       setLoading(false);

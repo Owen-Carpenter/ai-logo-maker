@@ -51,9 +51,9 @@ export async function POST(req: NextRequest) {
     // Calculate approximate file size (image URL length as rough estimate)
     const file_size = image_url.length
 
-    // Insert icon into database
+    // Insert logo into database
     const { data: icon, error } = await supabase
-      .from('icons')
+      .from('logos')
       .insert({
         user_id: user.id,
         name: name.trim(),

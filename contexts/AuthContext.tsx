@@ -157,12 +157,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               setHasActiveSubscription(false)
             }
           }
+          // For SIGNED_OUT event, session will be null so this won't run
         } else {
-          // Session is null - this happens on SIGNED_OUT
-          if (event === 'SIGNED_OUT') {
-            console.log('SIGNED_OUT event detected, clearing user state')
-          }
-          // Clear all user-related state
           setUser(null)
           setUserData(null)
           setHasActiveSubscription(false)
@@ -211,50 +207,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const signOut = async () => {
-    console.log('Sign out initiated...')
     setLoading(true)
+    const result = await authService.signOut()
     
-    // Clear cache first
-    if (user) {
-      apiCache.invalidate(`user_profile_${user.id}`)
-    }
-    
-    // Clear all state immediately (optimistic update)
+    // Clear all state immediately
     setUser(null)
     setUserData(null)
     setHasActiveSubscription(false)
     setSession(null)
     
-    try {
-      // Call signOut - this will trigger SIGNED_OUT event
-      const result = await authService.signOut()
-      
-      if (result.error) {
-        console.error('Sign out error:', result.error)
-        // Even if there's an error, we've cleared local state, so proceed with redirect
-      }
-      
-      console.log('Sign out successful, redirecting...')
-      
-      // Use window.location.replace() for consistent behavior with sign in
-      // Small delay to ensure state updates complete
-      setTimeout(() => {
-        if (typeof window !== 'undefined') {
-          window.location.replace('/')
-        }
-      }, 100)
-      
-      return result
-    } catch (error) {
-      console.error('Unexpected error during sign out:', error)
-      // Even on error, redirect to home
-      setTimeout(() => {
-        if (typeof window !== 'undefined') {
-          window.location.replace('/')
-        }
-      }, 100)
-      return { error }
+    // Clear cache
+    if (user) {
+      apiCache.invalidate(`user_profile_${user.id}`)
     }
+    
+    setLoading(false)
+    
+    // Redirect to home page immediately after sign out
+    if (typeof window !== 'undefined') {
+      window.location.href = '/'
+    }
+    
+    return result
   }
 
   const resetPassword = async (email: string) => {

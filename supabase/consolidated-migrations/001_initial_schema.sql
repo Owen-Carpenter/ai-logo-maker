@@ -264,19 +264,29 @@ SECURITY DEFINER
 SET search_path = public
 AS $$
 BEGIN
-    -- Create user profile
+    -- Create user profile (handle duplicate gracefully)
     INSERT INTO public.users (id, email, full_name)
     VALUES (
         NEW.id, 
         NEW.email, 
         COALESCE(NEW.raw_user_meta_data->>'full_name', NEW.raw_user_meta_data->>'name', split_part(NEW.email, '@', 1))
+    )
+    ON CONFLICT (id) DO NOTHING;
+    
+    -- Create a free subscription for new users (handle duplicate gracefully)
+    -- Only create if user doesn't already have a subscription
+    INSERT INTO public.subscriptions (user_id, plan_type, status, monthly_token_limit)
+    SELECT NEW.id, 'free', 'active', 5
+    WHERE NOT EXISTS (
+        SELECT 1 FROM public.subscriptions WHERE user_id = NEW.id
     );
     
-    -- Create a free subscription for new users
-    INSERT INTO public.subscriptions (user_id, plan_type, status, monthly_token_limit)
-    VALUES (NEW.id, 'free', 'active', 5);
-    
     RETURN NEW;
+EXCEPTION
+    WHEN others THEN
+        -- Log the error but don't fail the auth signup
+        RAISE WARNING 'Error in handle_new_user_signup for user %: %', NEW.id, SQLERRM;
+        RETURN NEW;
 END;
 $$;
 
