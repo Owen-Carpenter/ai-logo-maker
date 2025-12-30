@@ -10,7 +10,7 @@ import SmartGenerateLink from '../../../components/SmartGenerateLink';
 import Footer from '../../../components/Footer';
 import { generateFileName, downloadPNGImage } from '../../../lib/download-utils';
 
-interface SavedIcon {
+interface SavedLogo {
   id: string;
   name: string;
   image_url: string;
@@ -28,13 +28,13 @@ export default function LibraryPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [savedIcons, setSavedIcons] = useState<SavedIcon[]>([]);
-  const [isLoadingIcons, setIsLoadingIcons] = useState(false);
+  const [savedLogos, setSavedLogos] = useState<SavedLogo[]>([]);
+  const [isLoadingLogos, setIsLoadingLogos] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [iconToDelete, setIconToDelete] = useState<SavedIcon | null>(null);
+  const [logoToDelete, setLogoToDelete] = useState<SavedLogo | null>(null);
   const [showImageModal, setShowImageModal] = useState(false);
-  const [selectedIcon, setSelectedIcon] = useState<SavedIcon | null>(null);
+  const [selectedLogo, setSelectedLogo] = useState<SavedLogo | null>(null);
 
   // Debounce search term
   useEffect(() => {
@@ -45,15 +45,15 @@ export default function LibraryPage() {
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
-  // Fetch icons from database (only once on mount)
+  // Fetch logos from database (only once on mount)
   useEffect(() => {
     if (hasActiveSubscription && user) {
-      fetchIcons();
+      fetchLogos();
     }
   }, [hasActiveSubscription, user]);
 
-  const fetchIcons = async () => {
-    setIsLoadingIcons(true);
+  const fetchLogos = async () => {
+    setIsLoadingLogos(true);
     setError(null);
     
     try {
@@ -61,19 +61,19 @@ export default function LibraryPage() {
       
       if (response.ok) {
         const data = await response.json();
-        setSavedIcons(data.icons || []);
+        setSavedLogos(data.icons || []);
       } else {
-        throw new Error('Failed to fetch icons');
+        throw new Error('Failed to fetch logos');
       }
     } catch (error) {
-      console.error('Error fetching icons:', error);
-      setError('Failed to load your icons. Please try again.');
+      console.error('Error fetching logos:', error);
+      setError('Failed to load your logos. Please try again.');
       
       // Fallback to mock data for demonstration
-      setSavedIcons([
+      setSavedLogos([
         {
           id: '1',
-          name: 'AI Icon Maker Logo',
+          name: 'AI Logo Maker Logo',
           image_url: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMTMuMDkgOC4yNkwyMCA5TDEzLjA5IDE1Ljc0TDEyIDIyTDEwLjkxIDE1Ljc0TDQgOUwxMC45MSA4LjI2TDEyIDJaIiBmaWxsPSIjRkY2QzAwIi8+Cjwvc3ZnPgo=',
           created_at: '2024-01-15',
           tags: ['logo', 'brand', 'ai'],
@@ -82,7 +82,7 @@ export default function LibraryPage() {
         },
         {
           id: '2',
-          name: 'Heart Icon',
+          name: 'Heart Logo',
           image_url: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIwLjg0IDQuNjFhNS41IDUuNSAwIDAgMC03Ljc4IDBMMTIgNS42N2wtMS4wNi0xLjA2YTUuNSA1LjUgMCAwIDAtNy43OCA3Ljc4bDEuMDYgMS4wNkwxMiAyMWw3Ljc4LTcuNzggMS4wNi0xLjA2YTUuNSA1LjUgMCAwIDAtNy43OC03Ljc4eiIgZmlsbD0iI0ZGNkM2QyIvPgo8L3N2Zz4K',
           created_at: '2024-01-14',
           tags: ['love', 'like', 'favorite'],
@@ -91,71 +91,71 @@ export default function LibraryPage() {
         }
       ]);
     } finally {
-      setIsLoadingIcons(false);
+      setIsLoadingLogos(false);
     }
   };
 
-  const filteredIcons = savedIcons.filter(icon => {
-    const matchesSearch = icon.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         icon.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+  const filteredLogos = savedLogos.filter(logo => {
+    const matchesSearch = logo.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         logo.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
     
     return matchesSearch;
   });
 
-  const handleDownload = async (icon: SavedIcon) => {
+  const handleDownload = async (logo: SavedLogo) => {
     try {
       // Always download as PNG from the image URL
-      const fileName = generateFileName(icon.name, 'png');
-      await downloadPNGImage(icon.image_url, fileName);
+      const fileName = generateFileName(logo.name, 'png');
+      await downloadPNGImage(logo.image_url, fileName);
     } catch (error) {
-      console.error('Error downloading icon:', error);
-      alert('Failed to download icon as PNG. Please try again.');
+      console.error('Error downloading logo:', error);
+      alert('Failed to download logo as PNG. Please try again.');
     }
   };
 
-  const openDeleteModal = (icon: SavedIcon) => {
-    setIconToDelete(icon);
+  const openDeleteModal = (logo: SavedLogo) => {
+    setLogoToDelete(logo);
     setShowDeleteModal(true);
   };
 
-  const openImageModal = (icon: SavedIcon) => {
-    setSelectedIcon(icon);
+  const openImageModal = (logo: SavedLogo) => {
+    setSelectedLogo(logo);
     setShowImageModal(true);
   };
 
   const handleDelete = async () => {
-    if (!iconToDelete) return;
+    if (!logoToDelete) return;
 
     try {
-      const response = await fetch(`/api/icons/${iconToDelete.id}`, {
+      const response = await fetch(`/api/icons/${logoToDelete.id}`, {
         method: 'DELETE',
       });
 
       if (response.ok) {
-        // Remove the icon from the local state
-        setSavedIcons(prevIcons => prevIcons.filter(icon => icon.id !== iconToDelete.id));
+        // Remove the logo from the local state
+        setSavedLogos(prevLogos => prevLogos.filter(logo => logo.id !== logoToDelete.id));
         setShowDeleteModal(false);
-        setIconToDelete(null);
+        setLogoToDelete(null);
       } else {
-        throw new Error('Failed to delete icon');
+        throw new Error('Failed to delete logo');
       }
     } catch (error) {
-      console.error('Error deleting icon:', error);
-      alert('Failed to delete icon. Please try again.');
+      console.error('Error deleting logo:', error);
+      alert('Failed to delete logo. Please try again.');
     }
   };
 
 
-  if (loading || isLoadingIcons) {
-    return <Loading text="Loading your icon library..." />;
+  if (loading || isLoadingLogos) {
+    return <Loading text="Loading your logo library..." />;
   }
 
   // Show subscription gate if user doesn't have active subscription
   if (!hasActiveSubscription) {
     return (
       <SubscriptionGate 
-        title="Icon Library"
-        description="Access your saved icons and manage your collection. A subscription is required to access the icon library."
+        title="Logo Library"
+        description="Access your saved logos and manage your collection. A subscription is required to access the logo library."
       />
     );
   }
@@ -194,7 +194,7 @@ export default function LibraryPage() {
                       </svg>
                       <input
                         type="text"
-                        placeholder="Search your icon collection..."
+                        placeholder="Search your logo collection..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="w-full pl-14 pr-6 py-4 bg-white border-2 border-neutral-200 rounded-2xl text-neutral-900 placeholder-neutral-400 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all duration-300 text-lg backdrop-blur-sm hover:bg-midnight-800/90"
@@ -254,7 +254,7 @@ export default function LibraryPage() {
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                       </svg>
-                      <span className="font-medium">{filteredIcons.length} {filteredIcons.length === 1 ? 'Icon' : 'Icons'}</span>
+                      <span className="font-medium">{filteredLogos.length} {filteredLogos.length === 1 ? 'Logo' : 'Logos'}</span>
                     </div>
                     {searchTerm && (
                       <div className="flex items-center gap-2 text-primary-600/80">
@@ -266,34 +266,34 @@ export default function LibraryPage() {
                     )}
                   </div>
                   <div className="text-sunset-300/60 text-xs">
-                    All icons are PNG format
+                    All logos are PNG format
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Icons Grid/List */}
+          {/* Logos Grid/List */}
           <div className="px-6 sm:px-8 lg:px-12 pb-32">
-            {filteredIcons.length > 0 ? (
+            {filteredLogos.length > 0 ? (
               <div className={viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6' : 'space-y-4'}>
-                {filteredIcons.map((icon) => (
-                  <div key={icon.id} className={`bg-white border border-neutral-200 rounded-xl backdrop-blur-sm hover:shadow-xl hover:shadow-primary-500/20 transition-all duration-300 hover:scale-105 hover:border-primary-400 ${viewMode === 'list' ? 'flex items-center p-4' : 'p-6 flex flex-col'}`}>
+                {filteredLogos.map((logo) => (
+                  <div key={logo.id} className={`bg-white border border-neutral-200 rounded-xl backdrop-blur-sm hover:shadow-xl hover:shadow-primary-500/20 transition-all duration-300 hover:scale-105 hover:border-primary-400 ${viewMode === 'list' ? 'flex items-center p-4' : 'p-6 flex flex-col'}`}>
                     {viewMode === 'grid' ? (
                       <>
                         <div 
                           className="bg-neutral-100 rounded-xl p-4 mb-4 flex items-center justify-center h-24 hover:bg-neutral-200 transition-colors duration-300 cursor-pointer group"
-                          onClick={() => openImageModal(icon)}
+                          onClick={() => openImageModal(logo)}
                         >
-                          <img src={icon.image_url} alt={icon.name} className="w-12 h-12 group-hover:scale-110 transition-transform duration-300" />
+                          <img src={logo.image_url} alt={logo.name} className="w-12 h-12 group-hover:scale-110 transition-transform duration-300" />
                         </div>
-                        <h3 className="text-neutral-900 font-semibold mb-2 truncate">{icon.name}</h3>
+                        <h3 className="text-neutral-900 font-semibold mb-2 truncate">{logo.name}</h3>
                         <div className="flex items-center justify-end text-xs text-neutral-600 mb-4">
-                          <span>{new Date(icon.created_at).toLocaleDateString()}</span>
+                          <span>{new Date(logo.created_at).toLocaleDateString()}</span>
                         </div>
                         <div className="flex gap-1 mt-auto">
                           <button
-                            onClick={() => handleDownload(icon)}
+                            onClick={() => handleDownload(logo)}
                             className="flex-1 bg-gradient-to-r from-primary-600 to-accent-500 hover:from-primary-700 hover:to-accent-600 text-neutral-900 text-xs py-1.5 px-2 rounded-md transition-all duration-300 font-medium flex items-center justify-center gap-1 min-w-0 sm:py-2 sm:px-3 sm:rounded-lg"
                           >
                             <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -303,9 +303,9 @@ export default function LibraryPage() {
                             <span className="truncate sm:hidden">PNG</span>
                           </button>
                           <button
-                            onClick={() => openDeleteModal(icon)}
+                            onClick={() => openDeleteModal(logo)}
                             className="bg-red-500/20 hover:bg-red-500 text-red-400 hover:text-neutral-900 text-xs py-1.5 px-2 rounded-md transition-all duration-300 flex items-center justify-center flex-shrink-0 sm:py-2 sm:px-3 sm:rounded-lg"
-                            title="Delete Icon"
+                            title="Delete Logo"
                           >
                             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -317,19 +317,19 @@ export default function LibraryPage() {
                       <>
                         <div 
                           className="bg-neutral-100 rounded-xl p-3 mr-4 flex items-center justify-center cursor-pointer group hover:bg-neutral-200 transition-colors duration-300"
-                          onClick={() => openImageModal(icon)}
+                          onClick={() => openImageModal(logo)}
                         >
-                          <img src={icon.image_url} alt={icon.name} className="w-8 h-8 group-hover:scale-110 transition-transform duration-300" />
+                          <img src={logo.image_url} alt={logo.name} className="w-8 h-8 group-hover:scale-110 transition-transform duration-300" />
                         </div>
                         <div className="flex-1">
-                          <h3 className="text-neutral-900 font-semibold">{icon.name}</h3>
+                          <h3 className="text-neutral-900 font-semibold">{logo.name}</h3>
                           <div className="flex items-center gap-4 text-xs text-neutral-600 mt-1">
-                            <span>{new Date(icon.created_at).toLocaleDateString()}</span>
+                            <span>{new Date(logo.created_at).toLocaleDateString()}</span>
                           </div>
                         </div>
                         <div className="flex gap-1">
                           <button
-                            onClick={() => handleDownload(icon)}
+                            onClick={() => handleDownload(logo)}
                             className="bg-gradient-to-r from-primary-600 to-accent-500 hover:from-primary-700 hover:to-accent-600 text-neutral-900 text-xs py-1.5 px-2 rounded-md transition-all duration-300 font-medium flex items-center gap-1 sm:text-sm sm:py-2 sm:px-4 sm:rounded-lg"
                           >
                             <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -339,9 +339,9 @@ export default function LibraryPage() {
                             <span className="sm:hidden">PNG</span>
                           </button>
                           <button
-                            onClick={() => openDeleteModal(icon)}
+                            onClick={() => openDeleteModal(logo)}
                             className="bg-red-500/20 hover:bg-red-500 text-red-400 hover:text-neutral-900 text-xs py-1.5 px-2 rounded-md transition-all duration-300 flex items-center justify-center sm:text-sm sm:py-2 sm:px-3 sm:rounded-lg"
-                            title="Delete Icon"
+                            title="Delete Logo"
                           >
                             <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -361,18 +361,18 @@ export default function LibraryPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                     </svg>
                   </div>
-                  <h3 className="text-neutral-900 text-xl font-semibold mb-3">No icons found</h3>
+                  <h3 className="text-neutral-900 text-xl font-semibold mb-3">No logos found</h3>
                   <p className="text-neutral-600 mb-8 leading-relaxed">
                     {searchTerm 
                       ? 'Try adjusting your search to find what you\'re looking for'
-                      : 'Start creating icons to build your personal library'
+                      : 'Start creating logos to build your personal library'
                     }
                   </p>
                   <SmartGenerateLink 
                     className="inline-flex items-center bg-gradient-to-r from-primary-600 to-accent-500 hover:from-primary-700 hover:to-accent-600 text-neutral-900 px-8 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
                   >
                     <span className="mr-2">🎨</span>
-                    Create Your First Icon
+                    Create Your First Logo
                   </SmartGenerateLink>
                   </div>
                 </div>
@@ -386,12 +386,12 @@ export default function LibraryPage() {
 
 
       {/* Image Preview Modal */}
-      {showImageModal && selectedIcon && (
+      {showImageModal && selectedLogo && (
         <div 
           className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4"
           onClick={() => {
             setShowImageModal(false);
-            setSelectedIcon(null);
+            setSelectedLogo(null);
           }}
         >
           <div 
@@ -406,14 +406,14 @@ export default function LibraryPage() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-neutral-900">{selectedIcon.name}</h3>
-                  <p className="text-neutral-600 text-sm">Created {new Date(selectedIcon.created_at).toLocaleDateString()}</p>
+                  <h3 className="text-2xl font-bold text-neutral-900">{selectedLogo.name}</h3>
+                  <p className="text-neutral-600 text-sm">Created {new Date(selectedLogo.created_at).toLocaleDateString()}</p>
                 </div>
               </div>
               <button
                 onClick={() => {
                   setShowImageModal(false);
-                  setSelectedIcon(null);
+                  setSelectedLogo(null);
                 }}
                 className="text-gray-400 hover:text-neutral-900 transition-colors p-2 hover:bg-white/10 rounded-lg"
               >
@@ -425,15 +425,15 @@ export default function LibraryPage() {
             
             <div className="bg-neutral-100 rounded-xl p-8 mb-6 flex items-center justify-center min-h-[300px]">
               <img 
-                src={selectedIcon.image_url} 
-                alt={selectedIcon.name} 
+                src={selectedLogo.image_url} 
+                alt={selectedLogo.name} 
                 className="max-w-full max-h-[400px] object-contain"
               />
             </div>
             
             <div className="flex gap-3 justify-center">
               <button
-                onClick={() => handleDownload(selectedIcon)}
+                onClick={() => handleDownload(selectedLogo)}
                 className="bg-gradient-to-r from-primary-600 to-accent-500 hover:from-primary-700 hover:to-accent-600 text-neutral-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl hover:scale-105"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -442,7 +442,7 @@ export default function LibraryPage() {
                 Download PNG
               </button>
               <button
-                onClick={() => openDeleteModal(selectedIcon)}
+                onClick={() => openDeleteModal(selectedLogo)}
                 className="bg-red-500/20 hover:bg-red-500/30 text-red-400 hover:text-neutral-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -456,7 +456,7 @@ export default function LibraryPage() {
       )}
 
       {/* Delete Confirmation Modal */}
-      {showDeleteModal && iconToDelete && (
+      {showDeleteModal && logoToDelete && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-gradient-to-br from-white to-neutral-50 rounded-2xl border border-neutral-200 p-6 w-full max-w-md">
             <div className="flex items-center mb-4">
@@ -465,11 +465,11 @@ export default function LibraryPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-neutral-900">Delete Icon</h3>
+              <h3 className="text-xl font-bold text-neutral-900">Delete Logo</h3>
             </div>
             
             <p className="text-gray-300 mb-6">
-              Are you sure you want to delete <span className="font-semibold text-neutral-900">"{iconToDelete.name}"</span>? This action cannot be undone.
+              Are you sure you want to delete <span className="font-semibold text-neutral-900">"{logoToDelete.name}"</span>? This action cannot be undone.
             </p>
             
             <div className="flex gap-3">
@@ -477,7 +477,7 @@ export default function LibraryPage() {
                 type="button"
                 onClick={() => {
                   setShowDeleteModal(false);
-                  setIconToDelete(null);
+                  setLogoToDelete(null);
                 }}
                 className="flex-1 px-4 py-2 bg-white/10 hover:bg-white/20 text-neutral-900 rounded-lg transition-colors"
               >
