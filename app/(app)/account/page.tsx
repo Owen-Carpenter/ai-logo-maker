@@ -250,7 +250,7 @@ function AccountPageContent() {
                 href="/generate" 
                 className="bg-gradient-to-r from-orange-500 to-pink-500 text-neutral-900 px-6 py-3 rounded-lg font-semibold hover:from-orange-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl"
               >
-                Generate Icons
+                Generate Logos
               </Link>
               <Link 
                 href="/library" 

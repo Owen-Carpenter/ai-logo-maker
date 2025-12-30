@@ -94,7 +94,7 @@ export default function Sidebar({ currentPage = 'generate', onStartWalkthrough, 
           >
             <img 
               src="/images/AI-Logo-Generator-Logo.png" 
-              alt="AI Icon Maker" 
+              alt="AI Logo Generator" 
               className="w-8 h-8 lg:w-10 lg:h-10 object-contain lg:mr-0 mr-3"
             />
             <span className="text-primary-600 font-semibold lg:hidden drop-shadow-md">AI Logo Generator</span>
@@ -119,10 +119,10 @@ export default function Sidebar({ currentPage = 'generate', onStartWalkthrough, 
             <svg className="w-5 h-5 text-neutral-900/90 group-hover:text-neutral-900 transition-colors lg:mr-0 mr-3 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
-            <span className="text-neutral-900/90 group-hover:text-neutral-900 font-semibold lg:hidden drop-shadow-sm transition-colors">Generate Icons</span>
+            <span className="text-neutral-900/90 group-hover:text-neutral-900 font-semibold lg:hidden drop-shadow-sm transition-colors">Generate Logos</span>
             {/* Desktop Tooltip */}
             <div className="hidden lg:block absolute left-full ml-3 px-3 py-2 bg-white/20 backdrop-blur-xl border border-white/30 rounded-2xl text-neutral-900/90 text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-[99999] shadow-lg shadow-black/20 ring-1 ring-white/20">
-              Generate Icons
+              Generate Logos
               <div className="absolute left-0 top-1/2 transform -translate-x-1 -translate-y-1/2 w-0 h-0 border-t-4 border-b-4 border-r-4 border-transparent border-r-white/20"></div>
             </div>
           </div>
@@ -138,10 +138,10 @@ export default function Sidebar({ currentPage = 'generate', onStartWalkthrough, 
             <svg className="w-5 h-5 text-neutral-900/80 group-hover:text-neutral-900 transition-colors lg:mr-0 mr-3 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
             </svg>
-            <span className="text-neutral-900/80 group-hover:text-neutral-900 font-medium lg:hidden drop-shadow-sm transition-colors">Icon Library</span>
+            <span className="text-neutral-900/80 group-hover:text-neutral-900 font-medium lg:hidden drop-shadow-sm transition-colors">Logo Library</span>
             {/* Desktop Tooltip */}
             <div className="hidden lg:block absolute left-full ml-3 px-3 py-2 bg-white/20 backdrop-blur-xl border border-white/30 rounded-2xl text-neutral-900/90 text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-[99999] shadow-lg shadow-black/20 ring-1 ring-white/20">
-              Icon Library
+              Logo Library
               <div className="absolute left-0 top-1/2 transform -translate-x-1 -translate-y-1/2 w-0 h-0 border-t-4 border-b-4 border-r-4 border-transparent border-r-white/20"></div>
             </div>
           </div>
@@ -212,7 +212,7 @@ export default function Sidebar({ currentPage = 'generate', onStartWalkthrough, 
       <ConfirmDialog
         isOpen={showConfirmDialog}
         title="Generation in Progress"
-        message="Your icon is still being generated. If you leave now, your progress will be lost. Are you sure you want to continue?"
+        message="Your logo is still being generated. If you leave now, your progress will be lost. Are you sure you want to continue?"
         confirmText="Leave Anyway"
         cancelText="Stay on Page"
         onConfirm={handleConfirmNavigation}
