@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { Check } from 'lucide-react';
 import { SUBSCRIPTION_PLANS, SubscriptionPlan, getPlanPriority } from '../../lib/subscription-plans';
 import SubscriptionButton from './SubscriptionButton';
 
@@ -12,7 +11,7 @@ interface PricingCardProps {
   variant?: 'dark' | 'light';
 }
 
-export default function PricingCard({ plan, currentPlan, isPopular, variant = 'dark' }: PricingCardProps) {
+export default function PricingCard({ plan, currentPlan, isPopular, variant = 'light' }: PricingCardProps) {
   const planData = SUBSCRIPTION_PLANS[plan];
   const isCurrentPlan = currentPlan === plan;
   const planPriority = getPlanPriority(plan);
@@ -33,112 +32,129 @@ export default function PricingCard({ plan, currentPlan, isPopular, variant = 'd
     );
   }
 
-  const isLight = variant === 'light';
-  
-  // Card background and border styles based on variant
-  const cardStyles = isLight
-    ? `relative bg-gradient-to-br from-white to-neutral-50 backdrop-blur-md rounded-2xl shadow-xl border border-neutral-200 p-8 transition-all duration-300 hover:shadow-2xl hover:shadow-primary-500/20 hover:scale-105 ${
-        isPopular ? 'border-2 border-orange-500/50 ring-2 ring-orange-500/20' : ''
-      } ${isCurrentPlan ? 'ring-2 ring-green-500/50' : ''}`
-    : `relative bg-white/10 backdrop-blur-sm rounded-2xl shadow-xl border p-8 transition-all duration-300 hover:shadow-2xl hover:scale-105 ${
-        isPopular ? 'border-orange-500 ring-2 ring-orange-500/20' : 'border-white/20'
-      } ${isCurrentPlan ? 'ring-2 ring-green-500/50' : ''}`;
+  // Get plan-specific styling matching marketing page
+  const getCardStyles = () => {
+    if (plan === 'starter') {
+      return 'bg-gradient-to-br from-green-500/20 to-emerald-500/20 backdrop-blur-md rounded-2xl p-8 border border-neutral-200 shadow-xl hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500 hover:scale-105 relative h-full flex flex-col';
+    } else if (plan === 'proMonthly') {
+      return 'bg-gradient-to-br from-sunset-500/20 to-coral-500/20 backdrop-blur-md rounded-2xl p-8 border-2 border-sunset-500/50 shadow-2xl hover:shadow-3xl hover:shadow-sunset-500/30 transition-all duration-500 hover:scale-105 relative h-full flex flex-col';
+    } else if (plan === 'proYearly') {
+      return 'bg-gradient-to-br from-purple-500/20 to-indigo-500/20 backdrop-blur-md rounded-2xl p-8 border-2 border-purple-500/50 shadow-xl hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-500 hover:scale-105 relative h-full flex flex-col';
+    }
+    return 'bg-gradient-to-br from-white to-neutral-50 backdrop-blur-md rounded-2xl shadow-xl border border-neutral-200 p-8 transition-all duration-300 hover:shadow-2xl hover:scale-105 relative h-full flex flex-col';
+  };
 
-  // Text colors based on variant
-  const titleColor = isLight ? 'text-neutral-900' : 'text-white';
-  const priceColor = isLight ? 'text-neutral-900' : 'text-white';
-  const subtitleColor = isLight ? 'text-neutral-600' : 'text-gray-400';
-  const featureColor = isLight ? 'text-neutral-600' : 'text-gray-300';
-  const checkColor = isLight ? 'text-green-500' : 'text-green-400';
-  
-  // Credit badge colors
-  const creditColors = {
-    base: isLight ? 'text-green-600' : 'text-green-400',
-    pro: isLight ? 'text-blue-600' : 'text-blue-400',
-    proPlus: isLight ? 'text-orange-600' : 'text-orange-400',
+  // Get checkmark color based on plan
+  const getCheckColor = () => {
+    if (plan === 'starter' || plan === 'proMonthly') {
+      return 'text-green-400';
+    } else if (plan === 'proYearly') {
+      return 'text-purple-500';
+    }
+    return 'text-green-400';
+  };
+
+  // Get button styles based on plan
+  const getButtonStyles = () => {
+    if (plan === 'starter') {
+      return 'w-full bg-gradient-to-r from-green-500 to-emerald-500 text-neutral-900 py-3 px-6 rounded-full font-semibold hover:from-green-600 hover:to-emerald-600 transition-all duration-300 text-center block shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed';
+    } else if (plan === 'proMonthly') {
+      return 'w-full bg-gradient-to-r from-primary-600 to-accent-500 text-neutral-900 py-3 px-6 rounded-full font-semibold hover:from-sunset-600 hover:to-primary-700 transition-all duration-300 text-center block shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed';
+    } else if (plan === 'proYearly') {
+      return 'w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 px-6 rounded-full font-semibold hover:from-purple-500 hover:to-indigo-500 transition-all duration-300 text-center block shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed';
+    }
+    return 'w-full py-3 px-6 rounded-full font-semibold transition-all duration-300 text-center block';
+  };
+
+  // Format plan name for display
+  const getFormattedPlanName = (planType: string) => {
+    if (planType === 'starter') return 'Starter Pack';
+    if (planType === 'proMonthly') return 'Pro Monthly';
+    if (planType === 'proYearly') return 'Pro Yearly';
+    if (planType === 'base') return 'Base';
+    if (planType === 'pro') return 'Pro';
+    if (planType === 'proPlus') return 'Pro+';
+    if (planType === 'enterprise') return 'Enterprise';
+    // Fallback: capitalize first letter and add space before capital letters
+    return planType.replace(/([A-Z])/g, ' $1').trim().replace(/^./, str => str.toUpperCase());
   };
 
   return (
-    <div className={cardStyles}>
-      {isPopular && (
+    <div className={getCardStyles()}>
+      {/* Starter Pack Badge */}
+      {plan === 'starter' && (
         <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-          <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
-            isLight 
-              ? 'bg-gradient-to-r from-orange-500 to-pink-500 text-white shadow-lg' 
-              : 'bg-gradient-to-r from-orange-500 to-pink-500 text-white'
-          }`}>
+          <div className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
+            💰 Credit Refill
+          </div>
+        </div>
+      )}
+
+      {/* Pro Monthly Popular Badge */}
+      {plan === 'proMonthly' && isPopular && (
+        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+          <div className="bg-sunset-500 text-neutral-900 px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
             Most Popular
-          </span>
+          </div>
         </div>
       )}
 
-      {isCurrentPlan && (
-        <div className="absolute -top-4 right-4">
-          <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-            isLight 
-              ? 'bg-green-500 text-white shadow-lg' 
-              : 'bg-green-500 text-white'
-          }`}>
-            Current Plan
-          </span>
+      {/* Pro Yearly Badge */}
+      {plan === 'proYearly' && (
+        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+          <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-5 py-1.5 rounded-full text-xs font-bold shadow-lg whitespace-nowrap">
+            Save 20% 🎉
+          </div>
         </div>
       )}
 
-      <div className="text-center mb-8">
-        <h3 className={`text-2xl font-bold ${titleColor} mb-2`}>{planData.name}</h3>
-        <div className="mb-4">
-          <span className={`text-4xl font-bold ${priceColor}`}>${planData.price}</span>
-          <span className={`${subtitleColor} text-lg`}>/month</span>
+      <div className="text-center mb-8 mt-4">
+        <h3 className="text-2xl font-bold text-neutral-900 mb-2">{planData.name}</h3>
+        <div className={plan === 'proYearly' ? 'mb-2' : 'mb-4'}>
+          <span className="text-4xl font-bold text-neutral-900">${planData.price}</span>
+          {planData.isOneTime ? (
+            <span className="text-lg font-normal text-neutral-600"></span>
+          ) : planData.interval === 'year' ? (
+            <span className="text-lg font-normal text-neutral-600">/year</span>
+          ) : (
+            <span className="text-lg font-normal text-neutral-600">/month</span>
+          )}
         </div>
-        
-        {plan === 'base' && (
-          <div className={`${creditColors.base} font-semibold text-sm`}>
-            {planData.credits} credits/month
-          </div>
+        {plan === 'proYearly' && (
+          <>
+            <div className="text-sm text-neutral-500 line-through mb-2">$120/year at monthly rate</div>
+            <p className="text-neutral-600">Save $24 + get bonus credits!</p>
+          </>
         )}
-        {plan === 'pro' && (
-          <div className={`${creditColors.pro} font-semibold text-sm`}>
-            {planData.credits} credits/month
-          </div>
+        {plan === 'proMonthly' && (
+          <p className="text-neutral-600">For regular creators</p>
         )}
-        {plan === 'proPlus' && (
-          <div className={`${creditColors.proPlus} font-semibold text-sm`}>
-            {planData.credits} credits/month
-          </div>
+        {plan === 'starter' && (
+          <p className="text-neutral-600">&nbsp;</p>
         )}
       </div>
 
-      <ul className="space-y-4 mb-8">
+      <ul className="space-y-4 mb-8 flex-1">
         {planData.features.map((feature, index) => (
-          <li key={index} className="flex items-start">
-            <Check className={`h-5 w-5 ${checkColor} mr-3 mt-0.5 flex-shrink-0`} />
-            <span className={`${featureColor} text-sm`}>{feature}</span>
+          <li key={index} className="flex items-center text-neutral-600">
+            <svg className={`w-5 h-5 ${getCheckColor()} mr-3`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            <span className={plan === 'proYearly' && index === 0 ? 'font-semibold' : ''}>{feature}</span>
           </li>
         ))}
       </ul>
 
       <div className="mt-auto">
         {isCurrentPlan ? (
-          <div className={`w-full py-3 px-6 rounded-xl text-center font-semibold cursor-default ${
-            isLight 
-              ? 'bg-green-600 text-white shadow-lg' 
-              : 'bg-green-600 text-white'
-          }`}>
-            ✓ Subscribed
+          <div className="w-full bg-green-600 text-white py-3 px-6 rounded-full text-center font-semibold cursor-default pointer-events-none shadow-lg opacity-90">
+            ✓ {getFormattedPlanName(plan)}
           </div>
         ) : (
           <SubscriptionButton
             priceId={planData.priceId!}
             planType={plan}
-            className={`
-              w-full py-3 px-6 rounded-xl font-semibold transition-all duration-200 text-center
-              ${isPopular 
-                ? 'bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white shadow-lg hover:shadow-xl' 
-                : isLight
-                  ? 'bg-white hover:bg-neutral-100 text-neutral-900 border border-neutral-300 hover:border-neutral-400'
-                  : 'bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/40'
-              }
-            `}
+            className={getButtonStyles()}
             loadingClassName="opacity-50 cursor-not-allowed"
             disabled={isDowngrade}
             disabledClassName="opacity-50 cursor-not-allowed"
@@ -147,7 +163,11 @@ export default function PricingCard({ plan, currentPlan, isPopular, variant = 'd
               ? (currentPlan ? 'Refill Credits (+25)' : 'Buy Credits')
               : isDowngrade 
                 ? 'Included in Your Plan' 
-                : `Upgrade to ${planData.name}`}
+                : plan === 'proMonthly'
+                  ? 'Subscribe Monthly'
+                  : plan === 'proYearly'
+                    ? 'Subscribe Yearly'
+                    : `Upgrade to ${planData.name}`}
           </SubscriptionButton>
         )}
       </div>
