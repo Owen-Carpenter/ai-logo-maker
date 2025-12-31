@@ -13,8 +13,11 @@ export default function AuthCallback() {
 
   useEffect(() => {
     let mounted = true;
+    let redirectTimeout: NodeJS.Timeout;
+    let hasRedirected = false;
+    let subscription: { unsubscribe: () => void } | null = null;
     
-    const handleAuthCallback = async () => {
+    const handleAuthCallback = () => {
       try {
         // Check for error parameters in URL first
         if (typeof window !== 'undefined') {
@@ -30,41 +33,67 @@ export default function AuthCallback() {
           }
         }
         
-        // Wait a bit for Supabase to process the OAuth callback
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        // Get the session from the URL
-        const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-        
-        if (!mounted) return;
-        
-        if (sessionError) {
-          console.error('OAuth callback error:', sessionError);
-          setError('Authentication failed. Please try again or contact support.');
-          setLoading(false);
-          return;
-        }
-
-        if (sessionData.session) {
-          // Verify the user is authenticated instead of using session.user
-          const { data: userData, error: userError } = await supabase.auth.getUser();
-          
-          if (!mounted) return;
-          
-          if (userError || !userData.user) {
-            console.error('Failed to verify user:', userError);
-            setError('Could not verify authentication. Please try again.');
-            setLoading(false);
-            return;
+        // Listen to auth state changes instead of polling
+        const { data: { subscription: authSubscription } } = supabase.auth.onAuthStateChange(
+          async (event, session) => {
+            if (!mounted || hasRedirected) {
+              return;
+            }
+            
+            if (event === 'SIGNED_IN' && session) {
+              if (!mounted || hasRedirected) {
+                return;
+              }
+              
+              // Use session.user directly - no need to call getUser() which hangs
+              if (session.user) {
+                // Successfully authenticated - redirect to generate page immediately
+                hasRedirected = true;
+                clearTimeout(redirectTimeout);
+                if (typeof window !== 'undefined') {
+                  window.location.href = '/generate';
+                }
+              } else {
+                setError('Could not verify authentication. Please try again.');
+                setLoading(false);
+              }
+            } else if (event === 'SIGNED_OUT') {
+              if (!mounted || hasRedirected) return;
+              setError('Authentication was cancelled. Please try again.');
+              setLoading(false);
+            }
           }
-
-          // Successfully authenticated - redirect to generate page
-          // The auth context will handle fetching user data in the background
-          router.push('/generate');
-        } else {
-          setError('Could not complete authentication. Please try again.');
-          setLoading(false);
-        }
+        );
+        
+        subscription = authSubscription;
+        
+        // Set a timeout as fallback
+        redirectTimeout = setTimeout(() => {
+          if (!mounted || hasRedirected) return;
+          
+          // Try one more time with a timeout on getSession
+          Promise.race([
+            supabase.auth.getSession(),
+            new Promise((_, reject) => setTimeout(() => reject(new Error('getSession timeout')), 2000))
+          ]).then((result: any) => {
+            if (!mounted || hasRedirected) return;
+            
+            const { data: sessionData } = result;
+            
+            if (sessionData?.session) {
+              hasRedirected = true;
+              window.location.href = '/generate';
+            } else {
+              setError('Authentication timed out. Please try again.');
+              setLoading(false);
+            }
+          }).catch((err) => {
+            console.error('Timeout check error:', err);
+            if (!mounted || hasRedirected) return;
+            setError('Authentication timed out. Please try again.');
+            setLoading(false);
+          });
+        }, 5000);
       } catch (err) {
         console.error('Unexpected error during OAuth callback:', err);
         if (!mounted) return;
@@ -77,6 +106,10 @@ export default function AuthCallback() {
     
     return () => {
       mounted = false;
+      if (redirectTimeout) clearTimeout(redirectTimeout);
+      if (subscription) {
+        subscription.unsubscribe();
+      }
     };
   }, [router]);
 
