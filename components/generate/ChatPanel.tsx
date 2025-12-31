@@ -56,9 +56,9 @@ export default function ChatPanel({
     }
   }, [resetConversation, setCurrentPrompt]);
 
-  // Helper function to format icon title
-  const formatIconTitle = (prompt: string) => {
-    if (!prompt.trim()) return 'Icon Assistant';
+  // Helper function to format logo title
+  const formatLogoTitle = (prompt: string) => {
+    if (!prompt.trim()) return 'Logo Assistant';
     const words = prompt.trim().split(' ');
     if (words.length <= 3) return prompt.trim();
     return words.slice(0, 3).join(' ') + '...';
@@ -85,11 +85,11 @@ export default function ChatPanel({
         className="w-full lg:w-96 lg:flex-shrink-0 bg-white backdrop-blur-sm flex flex-col border-r-0 lg:border-r border-b lg:border-b-0 border-neutral-200 h-full lg:h-full lg:min-h-0"
       >
       {/* Chat Header */}
-      <div className="px-6 py-4 border-b border-neutral-200 bg-neutral-50 backdrop-blur-sm">
+      <div className="px-6 py-4 border-b border-neutral-200 bg-white/50 backdrop-blur-sm">
         <div className="flex items-center space-x-3">
           <div className="flex-1">
             <h2 className="text-lg font-semibold text-neutral-900">
-              {formatIconTitle(currentPrompt)}
+              {formatLogoTitle(currentPrompt)}
             </h2>
             <p className="text-neutral-600 text-sm">
               {isImprovementMode ? 'Describe how to improve this logo' : 'Powered by GPT Image 1'}
@@ -115,25 +115,25 @@ export default function ChatPanel({
         {/* Initial assistant message */}
         {conversationHistory.length === 0 && (
           <div className="flex justify-start">
-            <div className="bg-neutral-100 border border-neutral-200 rounded-lg p-3">
+            <div className="bg-neutral-100 border border-neutral-200 rounded-lg p-3 shadow-sm">
               <p className="text-neutral-900 text-sm leading-relaxed">
                 {isImprovementMode 
-                  ? 'I can see the icon you want to improve! Describe what changes you\'d like me to make.'
-                  : 'Hi! Describe the icon you\'d like me to create, and I\'ll generate multiple variations for you.'
+                  ? 'I can see the logo you want to improve! Describe what changes you\'d like me to make.'
+                  : 'Hi! Describe the logo you\'d like me to create, and I\'ll generate multiple variations for you.'
                 }
               </p>
             </div>
           </div>
         )}
 
-        {/* Show selected icon in improvement mode - hide in mobile compact mode */}
+        {/* Show selected logo in improvement mode - hide in mobile compact mode */}
         {isImprovementMode && selectedIconUrl && conversationHistory.length === 0 && !mobileCompactMode && (
           <div className="flex justify-start">
-            <div className="bg-neutral-100 border border-neutral-200 rounded-lg p-3">
-              <p className="text-neutral-900 text-sm mb-2">Selected icon to improve:</p>
+            <div className="bg-neutral-100 border border-neutral-200 rounded-lg p-3 shadow-sm">
+              <p className="text-neutral-900 text-sm mb-2">Selected logo to improve:</p>
               <img 
                 src={selectedIconUrl} 
-                alt="Icon to improve" 
+                alt="Logo to improve" 
                 className="w-16 h-16 object-contain bg-neutral-50 rounded-lg"
               />
             </div>
@@ -170,14 +170,14 @@ export default function ChatPanel({
         {/* Generating indicator */}
         {isGenerating && (
           <div className="flex justify-start">
-            <div className="bg-neutral-100 border border-neutral-200 rounded-lg p-3">
+            <div className="bg-neutral-100 border border-neutral-200 rounded-lg p-3 shadow-sm">
               <p className="text-neutral-900 text-sm">
-                {isImprovementMode ? 'Improving your icon...' : 'Creating variations...'}
+                {isImprovementMode ? 'Improving your logo...' : 'Creating variations...'}
               </p>
               <div className="mt-2 flex space-x-1">
-                <div className="w-1.5 h-1.5 bg-sunset-300 rounded-full animate-bounce"></div>
-                <div className="w-1.5 h-1.5 bg-sunset-300 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                <div className="w-1.5 h-1.5 bg-sunset-300 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                <div className="w-1.5 h-1.5 bg-primary-400 rounded-full animate-bounce"></div>
+                <div className="w-1.5 h-1.5 bg-primary-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                <div className="w-1.5 h-1.5 bg-primary-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
               </div>
             </div>
           </div>
@@ -186,13 +186,13 @@ export default function ChatPanel({
         {/* Success message */}
         {generatedImages.length > 0 && !isGenerating && (
           <div className="flex justify-start">
-            <div className="bg-neutral-100 border border-neutral-200 rounded-lg p-3">
+            <div className="bg-neutral-100 border border-neutral-200 rounded-lg p-3 shadow-sm">
               <p className="text-neutral-900 text-sm">
-                ✨ {isImprovementMode ? 'Icon improved!' : `Generated ${generatedImages.length} icons!`} Check them out →
+                ✨ {isImprovementMode ? 'Logo improved!' : `Generated ${generatedImages.length} logos!`} Check them out →
               </p>
               <p className="text-neutral-600 text-xs mt-1">
                 {isImprovementMode ? 'How else would you like to improve it?' : 
-                 hasUserTakenAction ? 'Want different variations?' : 'Please choose an action for one of your icons first!'}
+                 hasUserTakenAction ? 'Want different variations?' : 'Please choose an action for one of your logos first!'}
               </p>
             </div>
           </div>
@@ -206,7 +206,7 @@ export default function ChatPanel({
       </div>
 
       {/* Input Area */}
-      <div className="p-4 border-t border-neutral-200 bg-neutral-50 backdrop-blur-sm">
+      <div className="p-4 border-t border-neutral-200 bg-white/50 backdrop-blur-sm">
         <form onSubmit={handleSubmit} className="space-y-3">
           
           {/* Style Controls */}
@@ -216,7 +216,7 @@ export default function ChatPanel({
               value={style}
               onChange={(e) => setStyle(e.target.value)}
               disabled={isGenerating || (!hasUserTakenAction && generatedImages.length > 0 && !isImprovementMode)}
-              className="flex-1 bg-neutral-100 border border-neutral-200 rounded-lg px-2 py-2 text-neutral-900 text-xs focus:outline-none focus:border-primary-500 transition-colors [&>option]:bg-white [&>option]:text-neutral-900 [&>option]:border-none disabled:opacity-50"
+              className="flex-1 bg-white border border-neutral-200 rounded-lg px-2 py-2 text-neutral-900 text-xs focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors [&>option]:bg-white [&>option]:text-neutral-900 [&>option]:border-none disabled:opacity-50 shadow-sm"
             >
               <option value="modern">Modern</option>
               <option value="flat">Flat</option>
@@ -238,19 +238,19 @@ export default function ChatPanel({
               onChange={(e) => setCurrentPrompt(e.target.value)}
               placeholder={
                 !hasUserTakenAction && generatedImages.length > 0 && !isImprovementMode 
-                  ? "Choose an action for your icons first..." 
+                  ? "Choose an action for your logos first..." 
                   : isImprovementMode 
-                    ? "Describe how to improve this icon..." 
-                    : "Describe your icon idea..."
+                    ? "Describe how to improve this logo..." 
+                    : "Describe your logo idea..."
               }
-              className="flex-1 bg-neutral-100 border border-neutral-200 rounded-lg px-3 py-2 text-neutral-900 text-sm placeholder-sunset-300 focus:outline-none focus:border-primary-500 transition-colors disabled:opacity-50"
+              className="flex-1 bg-white border border-neutral-200 rounded-lg px-3 py-2 text-neutral-900 text-sm placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors disabled:opacity-50 shadow-sm"
               disabled={isGenerating || (!hasUserTakenAction && generatedImages.length > 0 && !isImprovementMode)}
             />
             <button
               data-walkthrough="generate-button"
               type="submit"
               disabled={!currentPrompt.trim() || isGenerating || (!hasUserTakenAction && generatedImages.length > 0 && !isImprovementMode)}
-              className="bg-gradient-to-r from-primary-600 to-accent-500 hover:from-sunset-600 hover:to-coral-600 disabled:opacity-50 text-neutral-900 px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-1"
+              className="bg-gradient-to-r from-primary-600 to-accent-500 hover:from-primary-700 hover:to-accent-600 disabled:opacity-50 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-1 shadow-md hover:shadow-lg"
             >
               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />

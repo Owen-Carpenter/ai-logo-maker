@@ -5,7 +5,7 @@ import { useAuth } from '../../../contexts/AuthContext';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { CheckCircle } from 'lucide-react';
 import ChatPanel from '../../../components/generate/ChatPanel';
-import IconDisplayPanel from '../../../components/generate/IconDisplayPanel';
+import LogoDisplayPanel from '../../../components/generate/LogoDisplayPanel';
 import Sidebar from '../../../components/generate/Sidebar';
 import Loading from '../../../components/ui/Loading';
 import { useToast } from '../../../hooks/useToast';
@@ -453,7 +453,7 @@ function GeneratePageContent() {
     success('Logo Downloaded!', 'Logo saved to your downloads folder');
   };
 
-  const handleImproveIcon = (imageUrl: string) => {
+  const handleImproveLogo = (imageUrl: string) => {
     setSelectedIconUrl(imageUrl);
     setIsImprovementMode(true);
     setHasUserTakenAction(true);
@@ -615,17 +615,17 @@ function GeneratePageContent() {
           {/* Mobile Layout: Different views based on state */}
           <div className="lg:hidden w-full h-full">
             {isGenerating ? (
-              // Mobile: Show only IconDisplayPanel during generation
-              <IconDisplayPanel
+              // Mobile: Show only LogoDisplayPanel during generation
+              <LogoDisplayPanel
                 generatedImages={generatedImages}
                 isGenerating={isGenerating}
                 onRegenerate={handleRegenerateVariations}
                 onReset={handleReset}
                 onSelectImage={handleSelectImage}
-                onImproveIcon={handleImproveIcon}
+                onImproveLogo={handleImproveLogo}
                 isImprovementMode={isImprovementMode}
                 onExitImprovementMode={handleExitImprovementMode}
-                selectedIconUrl={selectedIconUrl}
+                selectedLogoUrl={selectedIconUrl}
                 currentPrompt={currentPrompt}
                 currentStyle={style}
                 onStreamingThoughts={streamingThoughtsCallback}
@@ -633,19 +633,19 @@ function GeneratePageContent() {
                 currentColor="#000000"
               />
             ) : isImprovementMode ? (
-              // Mobile: Show compact IconDisplayPanel at top, ChatPanel takes remaining space
+              // Mobile: Show compact LogoDisplayPanel at top, ChatPanel takes remaining space
               <div className="flex flex-col h-full">
                 <div className="h-auto flex-shrink-0 py-4">
-                  <IconDisplayPanel
+                  <LogoDisplayPanel
                     generatedImages={generatedImages}
                     isGenerating={isGenerating}
                     onRegenerate={handleRegenerateVariations}
                     onReset={handleReset}
                     onSelectImage={handleSelectImage}
-                    onImproveIcon={handleImproveIcon}
+                    onImproveLogo={handleImproveLogo}
                     isImprovementMode={isImprovementMode}
                     onExitImprovementMode={handleExitImprovementMode}
-                    selectedIconUrl={selectedIconUrl}
+                    selectedLogoUrl={selectedIconUrl}
                     currentPrompt={currentPrompt}
                     currentStyle={style}
                     onStreamingThoughts={streamingThoughtsCallback}
@@ -672,17 +672,17 @@ function GeneratePageContent() {
                 </div>
               </div>
             ) : generatedImages.length > 0 && !isImprovementMode ? (
-              // Mobile: Show only IconDisplayPanel when user needs to select a logo to improve
-              <IconDisplayPanel
+              // Mobile: Show only LogoDisplayPanel when user needs to select a logo to improve
+              <LogoDisplayPanel
                 generatedImages={generatedImages}
                 isGenerating={isGenerating}
                 onRegenerate={handleRegenerateVariations}
                 onReset={handleReset}
                 onSelectImage={handleSelectImage}
-                onImproveIcon={handleImproveIcon}
+                onImproveLogo={handleImproveLogo}
                 isImprovementMode={isImprovementMode}
                 onExitImprovementMode={handleExitImprovementMode}
-                selectedIconUrl={selectedIconUrl}
+                selectedLogoUrl={selectedIconUrl}
                 currentPrompt={currentPrompt}
                 currentStyle={style}
                 onStreamingThoughts={streamingThoughtsCallback}
@@ -690,19 +690,19 @@ function GeneratePageContent() {
                 currentColor="#000000"
               />
             ) : (
-              // Mobile: Show IconDisplayPanel + ChatPanel when user can interact freely
+              // Mobile: Show LogoDisplayPanel + ChatPanel when user can interact freely
               <div className="flex flex-col h-full">
                 <div className="flex-1 flex flex-col min-h-0">
-                  <IconDisplayPanel
+                  <LogoDisplayPanel
                     generatedImages={generatedImages}
                     isGenerating={isGenerating}
                     onRegenerate={handleRegenerateVariations}
                     onReset={handleReset}
                     onSelectImage={handleSelectImage}
-                    onImproveIcon={handleImproveIcon}
+                    onImproveLogo={handleImproveLogo}
                     isImprovementMode={isImprovementMode}
                     onExitImprovementMode={handleExitImprovementMode}
-                    selectedIconUrl={selectedIconUrl}
+                    selectedLogoUrl={selectedIconUrl}
                     currentPrompt={currentPrompt}
                     currentStyle={style}
                     onStreamingThoughts={streamingThoughtsCallback}
@@ -745,16 +745,16 @@ function GeneratePageContent() {
               resetConversation={resetConversation}
             />
 
-            <IconDisplayPanel
+            <LogoDisplayPanel
               generatedImages={generatedImages}
               isGenerating={isGenerating}
               onRegenerate={handleRegenerateVariations}
               onReset={handleReset}
               onSelectImage={handleSelectImage}
-              onImproveIcon={handleImproveIcon}
+              onImproveLogo={handleImproveLogo}
               isImprovementMode={isImprovementMode}
               onExitImprovementMode={handleExitImprovementMode}
-              selectedIconUrl={selectedIconUrl}
+              selectedLogoUrl={selectedIconUrl}
               currentPrompt={currentPrompt}
               currentStyle={style}
               onStreamingThoughts={streamingThoughtsCallback}
