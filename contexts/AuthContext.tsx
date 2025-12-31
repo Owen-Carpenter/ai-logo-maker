@@ -133,34 +133,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Listen for auth changes
     const { data: { subscription } } = authService.onAuthStateChange(
       async (event, session) => {
-        // Set loading to false immediately to prevent UI from getting stuck
-        setLoading(false)
+        console.log('Auth state changed:', event)
         setSession(session)
         
         if (session) {
-          // Use session.user directly - it's already available and verified
-          // Only call getUser() if session.user is not available (shouldn't happen)
-          if (session.user) {
-            setUser(session.user)
-            
-            // Fetch user data in background, don't block
-            if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
-              fetchUserData(session.user.id, true).catch(err => 
-                console.error('Background user data fetch failed:', err)
-              )
-            }
-          } else {
-            // Fallback: try to get user if session.user is not available (rare case)
+          // For SIGNED_IN and TOKEN_REFRESHED events, verify the user
+          // For other events, we can trust the session from the event
+          if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
             try {
-              const getUserPromise = authService.getCurrentUser()
-              const timeoutPromise = new Promise((_, reject) => 
-                setTimeout(() => reject(new Error('getUser timeout')), 2000)
-              )
-              
-              const { user: authenticatedUser } = await Promise.race([getUserPromise, timeoutPromise]) as any
+              const { user: authenticatedUser } = await authService.getCurrentUser()
               setUser(authenticatedUser)
               
               if (authenticatedUser) {
+                // Fetch user data in background, don't block
                 fetchUserData(authenticatedUser.id, true).catch(err => 
                   console.error('Background user data fetch failed:', err)
                 )
@@ -172,12 +157,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               setHasActiveSubscription(false)
             }
           }
+          // For SIGNED_OUT event, session will be null so this won't run
         } else {
-          // No session - user is signed out
           setUser(null)
           setUserData(null)
           setHasActiveSubscription(false)
         }
+        
+        setLoading(false)
         
         // Don't auto-redirect after sign-in - let the page handle it or user navigate manually
         // This prevents unwanted redirects and gives users control
@@ -189,28 +176,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signIn = async (email: string, password: string) => {
     setLoading(true)
-    try {
-      const result = await authService.signIn(email, password)
+    const result = await authService.signIn(email, password)
+    
+    if (result.user && !result.error) {
+      // Set user immediately for faster UI update
+      setUser(result.user)
       
-      if (result.user && !result.error) {
-        // Set user immediately for faster UI update
-        setUser(result.user)
-        setLoading(false)
-        
-        // Redirect immediately to generate page
-        if (typeof window !== 'undefined') {
-          window.location.href = '/generate'
-          return result
-        }
+      // Redirect immediately to generate page
+      if (typeof window !== 'undefined') {
+        window.location.href = '/generate'
       }
-      
-      setLoading(false)
-      return result
-    } catch (error) {
-      console.error('Sign in error:', error)
-      setLoading(false)
-      throw error
     }
+    
+    setLoading(false)
+    return result
   }
 
   const signUp = async (email: string, password: string) => {
@@ -229,39 +208,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signOut = async () => {
     setLoading(true)
-    try {
-      // Clear all state immediately before sign out
-      const userId = user?.id
-      setUser(null)
-      setUserData(null)
-      setHasActiveSubscription(false)
-      setSession(null)
-      
-      // Clear cache
-      if (userId) {
-        apiCache.invalidate(`user_profile_${userId}`)
-      }
-      
-      // Perform sign out
-      const result = await authService.signOut()
-      
-      setLoading(false)
-      
-      // Redirect to home page immediately after sign out
-      if (typeof window !== 'undefined') {
-        window.location.href = '/'
-      }
-      
-      return result
-    } catch (error) {
-      console.error('Sign out error:', error)
-      setLoading(false)
-      // Still redirect even if there's an error
-      if (typeof window !== 'undefined') {
-        window.location.href = '/'
-      }
-      throw error
+    const result = await authService.signOut()
+    
+    // Clear all state immediately
+    setUser(null)
+    setUserData(null)
+    setHasActiveSubscription(false)
+    setSession(null)
+    
+    // Clear cache
+    if (user) {
+      apiCache.invalidate(`user_profile_${user.id}`)
     }
+    
+    setLoading(false)
+    
+    // Redirect to home page immediately after sign out
+    if (typeof window !== 'undefined') {
+      window.location.href = '/'
+    }
+    
+    return result
   }
 
   const resetPassword = async (email: string) => {

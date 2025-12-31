@@ -133,7 +133,7 @@ export default function Walkthrough({ steps, isActive, onComplete, onSkip }: Wal
   return (
     <>
       {/* Overlay with backdrop blur */}
-      <div className="fixed inset-0 bg-gradient-to-br from-black/60 via-black/50 to-black/60 backdrop-blur-sm z-[9998] transition-all duration-500 animate-in fade-in">
+      <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[9998] transition-all duration-500 animate-in fade-in">
         {/* Spotlight effect around target element */}
         {targetElement && (
           <>
@@ -145,13 +145,13 @@ export default function Walkthrough({ steps, isActive, onComplete, onSkip }: Wal
                 top: targetElement.getBoundingClientRect().top - 12,
                 width: targetElement.getBoundingClientRect().width + 24,
                 height: targetElement.getBoundingClientRect().height + 24,
-                background: 'radial-gradient(circle, rgba(251, 146, 60, 0.15) 0%, transparent 70%)',
+                background: 'radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%)',
                 pointerEvents: 'none'
               }}
             />
             {/* Glowing border */}
             <div
-              className="absolute rounded-xl border-2 border-sunset-400/60 shadow-[0_0_30px_rgba(251,146,60,0.4)] transition-all duration-300"
+              className="absolute rounded-xl border-2 border-primary-400/60 shadow-[0_0_30px_rgba(59,130,246,0.4)] transition-all duration-300"
               style={{
                 left: targetElement.getBoundingClientRect().left - 8,
                 top: targetElement.getBoundingClientRect().top - 8,
@@ -163,7 +163,7 @@ export default function Walkthrough({ steps, isActive, onComplete, onSkip }: Wal
             />
             {/* Inner highlight */}
             <div
-              className="absolute rounded-lg border border-white/20 transition-all duration-300"
+              className="absolute rounded-lg border border-primary-300/40 transition-all duration-300"
               style={{
                 left: targetElement.getBoundingClientRect().left - 4,
                 top: targetElement.getBoundingClientRect().top - 4,
@@ -176,28 +176,28 @@ export default function Walkthrough({ steps, isActive, onComplete, onSkip }: Wal
         )}
       </div>
 
-      {/* Enhanced Tooltip Card with Glassmorphism */}
+      {/* Enhanced Tooltip Card */}
       <div
         ref={tooltipRef}
-        className="fixed z-[9999] bg-white/20 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/30 p-7 max-w-md animate-in fade-in slide-in-from-bottom-4 duration-300 ring-1 ring-white/20"
+        className="fixed z-[9999] bg-white rounded-2xl shadow-2xl border border-neutral-200 p-7 max-w-md animate-in fade-in slide-in-from-bottom-4 duration-300"
         style={{
           left: tooltipPosition.x,
           top: tooltipPosition.y,
           transform: 'translateZ(0)',
-          boxShadow: '0 20px 60px -15px rgba(0, 0, 0, 0.3)'
+          boxShadow: '0 20px 60px -15px rgba(0, 0, 0, 0.15)'
         }}
       >
 
          {/* Step indicator */}
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center space-x-3">
-            <div className="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-sunset-500 to-coral-500 rounded-full shadow-sm">
+            <div className="flex items-center justify-center w-8 h-8 bg-gradient-to-r from-primary-600 to-accent-500 rounded-full shadow-sm">
               <span className="text-white text-xs font-bold">
                 {currentStep + 1}
               </span>
             </div>
             <div>
-              <span className="text-xs font-semibold text-white/90 uppercase tracking-wide drop-shadow-sm">
+              <span className="text-xs font-semibold text-neutral-600 uppercase tracking-wide">
                 Step {currentStep + 1} of {steps.length}
               </span>
               <div className="flex space-x-1 mt-1">
@@ -206,10 +206,10 @@ export default function Walkthrough({ steps, isActive, onComplete, onSkip }: Wal
                     key={index}
                     className={`h-1 rounded-full transition-all duration-300 ${
                       index === currentStep
-                        ? 'w-6 bg-sunset-500'
+                        ? 'w-6 bg-primary-600'
                         : index < currentStep
-                        ? 'w-3 bg-sunset-300'
-                        : 'w-3 bg-white/30'
+                        ? 'w-3 bg-primary-400'
+                        : 'w-3 bg-neutral-200'
                     }`}
                   />
                 ))}
@@ -218,7 +218,7 @@ export default function Walkthrough({ steps, isActive, onComplete, onSkip }: Wal
           </div>
           <button
             onClick={skipWalkthrough}
-            className="text-white/70 hover:text-white text-xs font-semibold transition-all duration-300 px-3 py-1.5 rounded-lg hover:bg-white/20 hover:backdrop-blur-md"
+            className="text-neutral-500 hover:text-neutral-700 text-xs font-semibold transition-all duration-300 px-3 py-1.5 rounded-lg hover:bg-neutral-100"
           >
             ✕ Skip
           </button>
@@ -227,28 +227,28 @@ export default function Walkthrough({ steps, isActive, onComplete, onSkip }: Wal
         {/* Content with icon */}
         <div className="mb-6">
           <div className="flex items-start space-x-3 mb-3">
-            <div className="flex-shrink-0 w-10 h-10 bg-white/30 backdrop-blur-md rounded-xl flex items-center justify-center border border-white/40">
+            <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-primary-500/10 to-accent-500/10 rounded-xl flex items-center justify-center border border-primary-200">
               <span className="text-xl">
                 {currentStep === 0 ? '👋' : currentStep === steps.length - 1 ? '🎉' : '💡'}
               </span>
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="text-xl font-bold text-white drop-shadow-sm mb-2 leading-tight">
+              <h3 className="text-xl font-bold text-neutral-900 mb-2 leading-tight">
                 {step.title}
               </h3>
             </div>
           </div>
-          <p className="text-white/90 text-sm leading-relaxed pl-13 drop-shadow-sm">
+          <p className="text-neutral-600 text-sm leading-relaxed pl-14">
             {step.content}
           </p>
         </div>
 
         {/* Action buttons with better styling */}
-        <div className="flex items-center justify-between pt-4 border-t border-white/20">
+        <div className="flex items-center justify-between pt-4 border-t border-neutral-200">
           <button
             onClick={prevStep}
             disabled={currentStep === 0}
-            className="flex items-center space-x-1 text-white/70 hover:text-white text-sm font-semibold transition-all duration-300 px-4 py-2 rounded-xl hover:bg-white/20 hover:backdrop-blur-md disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent group border border-transparent hover:border-white/30"
+            className="flex items-center space-x-1 text-neutral-600 hover:text-neutral-900 text-sm font-semibold transition-all duration-300 px-4 py-2 rounded-xl hover:bg-neutral-100 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent group"
           >
             <svg className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -258,7 +258,7 @@ export default function Walkthrough({ steps, isActive, onComplete, onSkip }: Wal
           
           <button
             onClick={nextStep}
-            className="flex items-center space-x-2 bg-gradient-to-r from-orange-500/90 to-pink-500/90 hover:from-orange-500 hover:to-pink-500 text-white px-6 py-2.5 rounded-2xl text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 group border border-white/20 hover:border-white/40"
+            className="flex items-center space-x-2 bg-gradient-to-r from-primary-600 to-accent-500 hover:from-primary-700 hover:to-accent-600 text-white px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 group"
           >
             <span>{isLastStep ? '🎯 Finish Tour' : step.nextButton || 'Continue'}</span>
             {!isLastStep && (
@@ -269,11 +269,11 @@ export default function Walkthrough({ steps, isActive, onComplete, onSkip }: Wal
           </button>
         </div>
 
-        {/* Enhanced pointer arrow with glassmorphism */}
+        {/* Enhanced pointer arrow */}
         {step.position !== 'center' && (
           <>
             <div
-              className={`absolute w-4 h-4 bg-white/20 backdrop-blur-xl border-white/30 transform rotate-45 ${
+              className={`absolute w-4 h-4 bg-white border-neutral-200 transform rotate-45 ${
                 step.position === 'top'
                   ? 'bottom-[-8px] left-1/2 -translate-x-1/2 border-b border-r'
                   : step.position === 'bottom'
