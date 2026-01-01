@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
       await supabase.rpc('record_token_usage', {
         p_user_id: user.id,
         p_tokens_used: 0, // No additional tokens for the failure record
-        p_usage_type: 'icon_generation',
+        p_usage_type: 'logo_generation',
         p_prompt_text: prompt.trim(),
         p_style_selected: style,
         p_generation_successful: false,
@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
       })
 
       return NextResponse.json(
-        { error: result.error || 'Failed to generate icons' },
+        { error: result.error || 'Failed to generate logos' },
         { status: 500 }
       )
     }

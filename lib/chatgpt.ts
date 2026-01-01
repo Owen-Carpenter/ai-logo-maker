@@ -281,24 +281,22 @@ export async function generateIconsWithChatGPT(request: IconGenerationRequest): 
 
     // Handle billing hard limit error specifically
     if (billingError) {
-      console.warn('GPT Image 1 billing limit reached, using fallback logos');
-      const fallbackIcons = generateFallbackIcons(prompt, style, count);
+      console.error('GPT Image 1 billing limit reached');
       return {
-        success: true,
-        icons: fallbackIcons,
+        success: false,
+        icons: [],
         error: 'OpenAI billing limit reached. Please add more credits to your OpenAI account at https://platform.openai.com/ for full functionality.'
       };
     }
 
     if (imageUrls.length === 0) {
-      console.warn('No GPT Image 1 images generated, using fallback logos');
-      console.warn('imageUrls array is empty:', imageUrls);
-      console.warn('imageUrls length:', imageUrls.length);
-      const fallbackIcons = generateFallbackIcons(prompt, style, count);
+      console.error('No GPT Image 1 images generated');
+      console.error('imageUrls array is empty:', imageUrls);
+      console.error('imageUrls length:', imageUrls.length);
       return {
-        success: true,
-        icons: fallbackIcons,
-        error: 'Unable to generate GPT Image 1 images. Showing placeholder logos. Please check your OpenAI account billing.'
+        success: false,
+        icons: [],
+        error: 'Unable to generate logos. Please check your OpenAI account billing and try again later.'
       };
     }
 
