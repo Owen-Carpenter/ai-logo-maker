@@ -6,7 +6,7 @@ import {
   getInitialImagePrompt,
   getImprovementImagePrompt,
   extractImprovementParts
-} from './icon-prompts';
+} from './logo-prompts';
 
 // Initialize OpenAI client
 const openai = new OpenAI({
