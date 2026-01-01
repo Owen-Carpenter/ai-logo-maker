@@ -298,7 +298,7 @@ function UsagePageContent() {
                           <span className="text-green-400 font-semibold">Active Subscription</span>
                         </div>
                         <p className="text-neutral-600 text-sm">
-                          Your subscription is active and you can generate {isUnlimited ? 'unlimited' : creditsRemaining} more icons.
+                          Your subscription is active and you can generate {isUnlimited ? 'unlimited' : creditsRemaining} more logos.
                         </p>
                       </div>
                     </>
