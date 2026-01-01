@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
     const monthlyLimit = subscription?.monthly_token_limit || 5
     const remaining = Math.max(0, monthlyLimit - totalUsed)
     
-    // Icon improvements cost 3 credits (because we pass image as input), new generations cost 1 credit
+    // Logo improvements cost 3 credits (because we pass image as input), new generations cost 1 credit
     const creditsNeeded = isImprovement ? 3 : 1
     
     if (remaining < creditsNeeded) {
@@ -81,7 +81,7 @@ export async function POST(request: NextRequest) {
       .rpc('use_tokens', {
         p_user_id: user.id,
         p_tokens_needed: creditsNeeded,
-        p_usage_type: isImprovement ? 'icon_improvement' : 'icon_generation',
+        p_usage_type: isImprovement ? 'logo_improvement' : 'logo_generation',
         p_prompt_text: prompt.trim(),
         p_style_selected: style
       })
