@@ -118,7 +118,7 @@ export default function LogoDisplayPanel({
   // Reset thoughts when generation starts or stops
   useEffect(() => {
     if (isGenerating) {
-      // Reset GPT Image 1 thoughts
+      // Reset GPT Image 1.5 thoughts
     }
   }, [isGenerating]);
 
@@ -206,13 +206,13 @@ export default function LogoDisplayPanel({
                 </div>
                 <div className="text-center">
                   <p className="text-neutral-900 text-lg font-medium">Generating your logos...</p>
-                  <p className="text-neutral-600 text-sm mt-2">GPT Image 1 is generating images</p>
+                  <p className="text-neutral-600 text-sm mt-2">GPT Image 1.5 is generating images</p>
                   <p className="text-neutral-400 text-xs mt-1">This can take up to a minute</p>
                 </div>
               </>
             )}
             
-            {/* GPT Image 1's Thoughts Display */}
+            {/* GPT Image 1.5's Thoughts Display */}
             <div className="bg-white border border-neutral-200 rounded-xl p-6 w-full max-w-2xl mt-4 shadow-lg">
               <div className="flex items-center mb-4">
                 <div className="w-8 h-8 bg-gradient-to-br from-primary-500/10 to-accent-500/10 rounded-lg flex items-center justify-center mr-2">
@@ -221,7 +221,7 @@ export default function LogoDisplayPanel({
                   </svg>
                 </div>
                 <span className="text-primary-600 text-sm font-semibold">
-                  {streamedThoughts ? 'GPT Image 1 is thinking...' : 'Waiting for GPT Image 1\'s thoughts...'}
+                  {streamedThoughts ? 'GPT Image 1.5 is thinking...' : 'Waiting for GPT Image 1.5\'s thoughts...'}
                 </span>
                 {isGenerating && <div className="ml-2 w-2 h-4 bg-primary-500 animate-pulse rounded"></div>}
                 {!isGenerating && streamedThoughts && (
@@ -235,7 +235,7 @@ export default function LogoDisplayPanel({
                 className="h-[300px] overflow-y-auto scrollbar-thin scrollbar-thumb-primary-500/50 scrollbar-track-neutral-100 rounded-lg bg-neutral-50/50"
               >
                 <div className="text-neutral-700 text-sm font-normal leading-relaxed whitespace-pre-wrap p-4">
-                  {streamedThoughts || (isGenerating ? '🎨 GPT Image 1 is analyzing your request...\n📝 Generating detailed design reasoning...\n🔍 Preparing professional logo concepts...\n⚡ Processing with AI...' : '')}
+                  {streamedThoughts || (isGenerating ? '🎨 GPT Image 1.5 is analyzing your request...\n📝 Generating detailed design reasoning...\n🔍 Preparing professional logo concepts...\n⚡ Processing with AI...' : '')}
                   {streamedThoughts && isGenerating && (
                     <span className="inline-block w-2 h-4 bg-primary-500 animate-pulse ml-1 rounded"></span>
                   )}

@@ -55,7 +55,7 @@ export interface IconGenerationResponse {
 }
 
 /**
- * Generate logos using GPT Image 1
+ * Generate logos using GPT Image 1.5
  */
 export async function generateIconsWithChatGPT(request: IconGenerationRequest): Promise<IconGenerationResponse> {
   try {
@@ -114,19 +114,19 @@ export async function generateIconsWithChatGPT(request: IconGenerationRequest): 
         }
         
         // Add a separator before image generation
-        onThought("\n\n🎨 Now generating the actual logos with GPT Image 1...\n");
+        onThought("\n\n🎨 Now generating the actual logos with GPT Image 1.5...\n");
         
       } catch (reasoningError) {
         console.error('Error generating reasoning:', reasoningError);
         // Fallback to simple reasoning if ChatGPT fails
-        onThought(`🎨 GPT Image 1 is creating professional "${prompt}" logos in ${style} style...\n`);
+        onThought(`🎨 GPT Image 1.5 is creating professional "${prompt}" logos in ${style} style...\n`);
         onThought("🔍 Designing brand-ready logos with transparent PNG backgrounds...\n");
         onThought("✨ Creating memorable, scalable designs for business use...\n");
         onThought("🖼️ Generating professional logo variations...\n");
       }
     }
 
-    // Create detailed prompts for GPT Image 1 generation
+    // Create detailed prompts for GPT Image 1.5 generation
     const imagePrompts = [];
     const actualCount = isImprovement ? 1 : count; // Force 1 icon for improvements
     
@@ -154,7 +154,7 @@ export async function generateIconsWithChatGPT(request: IconGenerationRequest): 
       imagePrompts.push(imagePrompt);
     }
 
-    // Generate images using GPT Image 1
+    // Generate images using GPT Image 1.5
     const imageUrls = [];
     let billingError = false;
     
@@ -178,7 +178,7 @@ export async function generateIconsWithChatGPT(request: IconGenerationRequest): 
           const imageFile = await urlToFile(sourceImageUrl, 'source-logo.png');
           
           response = await openai.images.edit({
-            model: "gpt-image-1", // Use GPT Image 1 model
+            model: "gpt-image-1.5", // Use GPT Image 1.5 model
             image: imageFile,
             prompt: imagePrompt,
             n: 1,
@@ -187,7 +187,7 @@ export async function generateIconsWithChatGPT(request: IconGenerationRequest): 
         } else {
           // Use standard generation endpoint for new icons
           response = await openai.images.generate({
-            model: "gpt-image-1", // Use GPT Image 1 model
+            model: "gpt-image-1.5", // Use GPT Image 1.5 model
             prompt: imagePrompt,
             n: 1,
             size: "1024x1024",
@@ -195,9 +195,9 @@ export async function generateIconsWithChatGPT(request: IconGenerationRequest): 
           });
         }
 
-        // GPT Image 1 response received
+        // GPT Image 1.5 response received
 
-        // Check for base64 in response.data[0].b64_json (GPT Image 1 format)
+        // Check for base64 in response.data[0].b64_json (GPT Image 1.5 format)
         if (response.data && response.data[0]?.b64_json) {
           const dataUrl = `data:image/png;base64,${response.data[0].b64_json}`;
           imageUrls.push(dataUrl);
@@ -245,7 +245,7 @@ export async function generateIconsWithChatGPT(request: IconGenerationRequest): 
           }
         }
         else {
-          console.error(`❌ No URL or b64_json found in GPT Image 1 response for ${variation} variation:`, response);
+          console.error(`❌ No URL or b64_json found in GPT Image 1.5 response for ${variation} variation:`, response);
           console.error('Response structure:', {
             hasData: !!response.data,
             dataLength: response.data?.length,
@@ -281,7 +281,7 @@ export async function generateIconsWithChatGPT(request: IconGenerationRequest): 
 
     // Handle billing hard limit error specifically
     if (billingError) {
-      console.error('GPT Image 1 billing limit reached');
+      console.error('GPT Image 1.5 billing limit reached');
       return {
         success: false,
         icons: [],
@@ -290,7 +290,7 @@ export async function generateIconsWithChatGPT(request: IconGenerationRequest): 
     }
 
     if (imageUrls.length === 0) {
-      console.error('No GPT Image 1 images generated');
+      console.error('No GPT Image 1.5 images generated');
       console.error('imageUrls array is empty:', imageUrls);
       console.error('imageUrls length:', imageUrls.length);
       return {
@@ -313,13 +313,13 @@ export async function generateIconsWithChatGPT(request: IconGenerationRequest): 
     };
 
   } catch (error) {
-    console.error('GPT Image 1 logo generation error:', error);
+    console.error('GPT Image 1.5 logo generation error:', error);
     
     // Handle specific OpenAI errors
     let errorMessage = 'Unknown error occurred';
     if (error instanceof Error) {
       if (error.message.includes('billing hard limit reached') || error.message.includes('Billing hard limit')) {
-        errorMessage = 'OpenAI billing hard limit reached. Please add credits to your OpenAI account to continue using GPT Image 1 generation.';
+        errorMessage = 'OpenAI billing hard limit reached. Please add credits to your OpenAI account to continue using GPT Image 1.5 generation.';
       } else if (error.message.includes('429') || error.message.includes('quota')) {
         errorMessage = 'OpenAI API quota exceeded. Please check your billing and add credits to your OpenAI account.';
       } else if (error.message.includes('401') || error.message.includes('unauthorized')) {

@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
         // Send initial response to confirm stream is working
         const initialData = JSON.stringify({ 
           type: 'start', 
-          message: 'Starting GPT Image 1 generation...' 
+          message: 'Starting GPT Image 1.5 generation...' 
         });
         safeEnqueue(`data: ${initialData}\n\n`);
         
@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
         // Add timeout to prevent hanging (longer timeout for improvements)
         const timeoutDuration = isImprovement ? 120000 : 90000; // 120s for improvements, 90s for new icons
         const timeoutId = setTimeout(() => {
-          console.error(`GPT Image 1 generation timeout after ${timeoutDuration/1000} seconds`);
+          console.error(`GPT Image 1.5 generation timeout after ${timeoutDuration/1000} seconds`);
           const data = JSON.stringify({ 
             type: 'error', 
             error: 'Generation timeout - please try again' 
@@ -108,7 +108,7 @@ export async function POST(request: NextRequest) {
           }, 100);
         }).catch((error) => {
           clearTimeout(timeoutId); // Clear timeout on error
-          console.error('GPT Image 1 generation failed:', error);
+          console.error('GPT Image 1.5 generation failed:', error);
           // Send error
           const data = JSON.stringify({ 
             type: 'error', 

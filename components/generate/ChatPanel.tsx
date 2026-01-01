@@ -92,7 +92,7 @@ export default function ChatPanel({
               {formatLogoTitle(currentPrompt)}
             </h2>
             <p className="text-neutral-600 text-sm">
-              {isImprovementMode ? 'Describe how to improve this logo' : 'Powered by GPT Image 1'}
+              {isImprovementMode ? 'Describe how to improve this logo' : 'Powered by GPT Image 1.5'}
             </p>
           </div>
           {isImprovementMode && onExitImprovementMode && (

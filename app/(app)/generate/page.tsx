@@ -232,7 +232,7 @@ function GeneratePageContent() {
       invalidateCache();
       await refreshUserData(true);
 
-      // Call the streaming API to generate logos using GPT Image 1 with real-time thoughts
+      // Call the streaming API to generate logos using GPT Image 1.5 with real-time thoughts
       const response = await fetch('/api/generate-icons-stream', {
         method: 'POST',
         headers: {
