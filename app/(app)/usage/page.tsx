@@ -338,13 +338,13 @@ function UsagePageContent() {
                 </Link>
                 <Link 
                   href="/account" 
-                  className="bg-midnight-800/50 hover:bg-neutral-100 text-neutral-900 px-8 py-3 rounded-xl font-semibold transition-all duration-300 border border-neutral-200 hover:border-primary-400"
+                  className="bg-white hover:bg-primary-50 text-neutral-900 px-8 py-3 rounded-xl font-semibold transition-all duration-300 border-2 border-primary-300 hover:border-primary-500 shadow-md hover:shadow-lg hover:scale-105"
                 >
                   Manage Subscription
                 </Link>
                 <Link 
                   href="/library" 
-                  className="bg-midnight-800/50 hover:bg-neutral-100 text-neutral-900 px-8 py-3 rounded-xl font-semibold transition-all duration-300 border border-neutral-200 hover:border-primary-400"
+                  className="bg-white hover:bg-primary-50 text-neutral-900 px-8 py-3 rounded-xl font-semibold transition-all duration-300 border-2 border-primary-300 hover:border-primary-500 shadow-md hover:shadow-lg hover:scale-105"
                 >
                   View Library
                 </Link>
