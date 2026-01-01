@@ -342,44 +342,6 @@ export async function generateIconsWithChatGPT(request: IconGenerationRequest): 
 }
 
 /**
- * Generate fallback placeholder logos when GPT Image 1 is unavailable
- */
-function generateFallbackIcons(prompt: string, style: string, count: number): string[] {
-  const fallbackIcons = [];
-  
-  // Create different logo variations based on the prompt with transparent backgrounds
-  const iconVariations = [
-    // Variation 1: Simple geometric shape with transparent background
-    `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="512" height="512">
-      <circle cx="12" cy="12" r="10" fill="#3b82f6" stroke="#1e40af" stroke-width="2"/>
-      <text x="12" y="16" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">${prompt.charAt(0).toUpperCase()}</text>
-    </svg>`,
-    
-    // Variation 2: Square with rounded corners and transparent background
-    `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="512" height="512">
-      <rect x="2" y="2" width="20" height="20" rx="4" fill="#10b981" stroke="#059669" stroke-width="2"/>
-      <text x="12" y="16" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">${prompt.charAt(0).toUpperCase()}</text>
-    </svg>`,
-    
-    // Variation 3: Diamond shape with transparent background
-    `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="512" height="512">
-      <path d="M12 2l8 8-8 8-8-8z" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
-      <text x="12" y="16" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="white">${prompt.charAt(0).toUpperCase()}</text>
-    </svg>`
-  ];
-  
-  for (let i = 0; i < count; i++) {
-    const svgIcon = iconVariations[i % iconVariations.length];
-    
-    // Convert to data URL
-    const base64 = Buffer.from(svgIcon).toString('base64');
-    fallbackIcons.push(`data:image/svg+xml;base64,${base64}`);
-  }
-  
-  return fallbackIcons;
-}
-
-/**
  * Test OpenAI API key
  */
 export async function testOpenAIKey(): Promise<{success: boolean, error?: string}> {
