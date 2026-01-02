@@ -204,7 +204,7 @@ function UsagePageContent() {
                   <div className="grid grid-cols-2 gap-4 pt-4">
                     <div className="text-center">
                       <div className="text-2xl font-bold text-neutral-900">{creditsUsed}</div>
-                      <div className="text-neutral-600 text-sm">Icons Created</div>
+                      <div className="text-neutral-600 text-sm">Logos Created</div>
                     </div>
                     <div className="text-center">
                       <div className="text-2xl font-bold text-neutral-900">
