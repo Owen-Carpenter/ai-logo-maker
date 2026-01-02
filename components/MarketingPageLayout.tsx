@@ -10,7 +10,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { getPlanPriority } from '../lib/subscription-plans';
 
 interface MarketingPageLayoutProps {
-  h1Title: string;
+  h1Title: string | React.ReactNode;
   h2Subtitle: string;
 }
 
@@ -50,12 +50,12 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
   // Typing animation effect
   useEffect(() => {
     const examples = [
-      "Ask AI Icon Maker to create an icon for my...",
-      "Create a shopping cart icon with modern flat design",
-      "Design an AI icon maker logo for a productivity app", 
-      "Generate a heart icon with gradient colors",
-      "Build a settings gear icon with minimal style",
-      "Make a star rating icon with golden color"
+      "Ask AI Logo Generator to create a logo for my...",
+      "Create a professional tech startup logo with modern design",
+      "Design a bold restaurant logo with vintage style", 
+      "Generate a minimalist consulting firm logo",
+      "Build a creative agency logo with geometric shapes",
+      "Make a luxury brand logo with elegant typography"
     ];
     
     let currentExample = 0;
@@ -109,19 +109,19 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
   const faqData = [
     {
       question: "What AI models do you use?",
-      answer: "We use GPT Image 1 for generating high-quality AI images and advanced prompt-to-icon technology to convert your descriptions into precise icons. This ensures professional-grade, visually stunning icons with the latest AI technology."
+      answer: "We use GPT Image 1 for generating high-quality AI images and advanced prompt-to-logo technology to convert your descriptions into professional logos. This ensures professional-grade, visually stunning logos with the latest AI technology."
     },
     {
-      question: "What if I need more icons?",
-      answer: "Our Pro plan (100 credits/month) covers most professional needs. For agencies and high-volume users, our Profession Plus plan offers 200 credits/month plus advanced features."
+      question: "How do credits work?",
+      answer: "Each logo generation uses 1 credit and creates multiple variations. Logo improvements use 3 credits. The Starter Pack gives you 25 credits to try the service. Monthly gives you 50 credits/month, and Yearly gives you 700 credits/year (100 bonus credits included!)."
     },
     {
-      question: "Can I cancel anytime?",
-      answer: "Yes! You can cancel your subscription at any time. Your access continues until the end of your current billing period."
+      question: "Can I cancel my subscription anytime?",
+      answer: "Yes! Monthly subscriptions can be cancelled anytime and you keep access until the end of your billing period. The Starter Pack is a credit refill with no recurring charges - buy it as many times as you need! Yearly subscriptions can also be cancelled but are non-refundable."
     },
     {
-      question: "Do I own the generated icons?",
-      answer: "Yes! All icons generated with AI Icon Maker can be used for commercial purposes without any additional licensing fees."
+      question: "Do I own the generated logos?",
+      answer: "Yes! All logos generated with AI Logo Generator can be used for commercial purposes without any additional licensing fees. You have full ownership and commercial rights."
     }
   ];
 
@@ -193,46 +193,45 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
       setIsSubmitting(false);
     }
   };
-
   return (
-    <div className="min-h-screen bg-dark-gradient">
+    <div className="min-h-screen bg-gradient-to-b from-white via-blue-50 to-blue-100">
       {/* Navigation */}
       <Navbar variant="marketing" />
 
       {/* Hero Section */}
-      <div className="w-full h-screen px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-gradient-radial from-sunset-800 via-midnight-700 to-midnight-800 relative overflow-visible animate-fade-in flex items-center">
+      <div className="w-full h-screen px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-gradient-to-b from-white via-blue-50 to-blue-100 relative overflow-visible animate-fade-in flex items-center">
 
         
-        {/* Floating Emoji Icons - Organic motion with depth animation */}
-        <div className="absolute top-24 left-16 text-3xl opacity-10 sm:opacity-20 md:opacity-30 z-0 animate-float-organic-1 hover:scale-125 hover:rotate-12 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '0s'}}>
-          🎨
+        {/* Floating Logo Icons - Organic motion with depth animation */}
+        <div className="absolute top-24 left-16 w-16 h-16 bg-white rounded-2xl p-3 shadow-lg opacity-30 animate-float-organic-1 hover:scale-125 hover:rotate-12 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '0s'}}>
+          <img src="/logos/logoipsum-280.svg" alt="Logo" className="w-full h-full object-contain" />
         </div>
         
-        <div className="absolute top-48 right-32 text-xl opacity-10 sm:opacity-20 md:opacity-30 z-0 animate-float-organic-3 hover:scale-125 hover:-rotate-12 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '2.3s'}}>
-          ⭐
+        <div className="absolute top-48 right-32 w-12 h-12 bg-white rounded-xl p-2 shadow-lg opacity-30 animate-float-organic-3 hover:scale-125 hover:-rotate-12 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '2.3s'}}>
+          <img src="/logos/logoipsum-381.svg" alt="Logo" className="w-full h-full object-contain" />
         </div>
         
-        <div className="absolute top-36 left-1/3 text-2xl opacity-10 sm:opacity-20 md:opacity-30 z-0 animate-float-organic-2 hover:scale-125 hover:rotate-6 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '1.2s'}}>
-          ✨
+        <div className="absolute top-36 left-1/3 w-14 h-14 bg-white rounded-xl p-2.5 shadow-lg opacity-30 animate-float-organic-2 hover:scale-125 hover:rotate-6 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '1.2s'}}>
+          <img src="/logos/logoipsum-339.svg" alt="Logo" className="w-full h-full object-contain" />
         </div>
         
-        <div className="absolute bottom-48 left-24 text-xl opacity-10 sm:opacity-20 md:opacity-30 z-0 animate-float-organic-1 hover:scale-125 hover:-rotate-6 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '3.8s'}}>
-          🚀
+        <div className="absolute bottom-48 left-24 w-12 h-12 bg-white rounded-xl p-2 shadow-lg opacity-30 animate-float-organic-1 hover:scale-125 hover:-rotate-6 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '3.8s'}}>
+          <img src="/logos/logoipsum-413.svg" alt="Logo" className="w-full h-full object-contain" />
         </div>
         
-        <div className="absolute bottom-36 right-1/4 text-2xl opacity-10 sm:opacity-20 md:opacity-30 z-0 animate-float-organic-3 hover:scale-125 hover:rotate-12 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '1.7s'}}>
-          💡
+        <div className="absolute bottom-36 right-1/4 w-14 h-14 bg-white rounded-xl p-2.5 shadow-lg opacity-30 animate-float-organic-3 hover:scale-125 hover:rotate-12 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '1.7s'}}>
+          <img src="/logos/logoipsum-405.svg" alt="Logo" className="w-full h-full object-contain" />
         </div>
         
-        <div className="absolute top-1/3 right-20 text-xl opacity-10 sm:opacity-20 md:opacity-30 z-0 animate-float-organic-2 hover:scale-125 hover:-rotate-12 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '0.6s'}}>
-          🔥
+        <div className="absolute top-1/3 right-20 w-12 h-12 bg-white rounded-xl p-2 shadow-lg opacity-30 animate-float-organic-2 hover:scale-125 hover:-rotate-12 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '0.6s'}}>
+          <img src="/logos/logoipsum-340.svg" alt="Logo" className="w-full h-full object-contain" />
         </div>
         <div className="flex flex-col items-center justify-center text-center w-full relative z-10">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
-            {h1Title}
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-900 mb-4 leading-tight">
+            {typeof h1Title === 'string' ? h1Title : h1Title}
           </h1>
           
-          <h2 className="text-base sm:text-lg lg:text-xl text-sunset-200 mb-8 max-w-2xl px-4">
+          <h2 className="text-base sm:text-lg lg:text-xl text-neutral-700 mb-8 max-w-2xl px-4">
             {h2Subtitle}
           </h2>
           
@@ -241,23 +240,23 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
               <div className="relative">
                 <textarea
                   id="ai-prompt"
-                  className="w-full bg-midnight-800/90 border border-midnight-700 rounded-2xl p-4 sm:p-6 pr-12 sm:pr-16 text-white placeholder-transparent focus:outline-none focus:border-sunset-400 focus:ring-2 focus:ring-sunset-400/20 transition-all duration-300 resize-none text-base sm:text-lg backdrop-blur-sm min-h-[100px] sm:min-h-[120px] max-h-[200px]"
+                  className="w-full bg-white border-2 border-neutral-200 rounded-2xl p-4 sm:p-6 pr-12 sm:pr-16 text-neutral-900 placeholder-transparent focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-300 resize-none text-base sm:text-lg shadow-lg min-h-[100px] sm:min-h-[120px] max-h-[200px]"
                   rows={4}
                   placeholder=""
                   disabled
                 />
                 <div 
                   id="typing-placeholder" 
-                  className="absolute top-4 left-4 sm:top-6 sm:left-6 text-sunset-300/70 pointer-events-none text-base sm:text-lg"
+                  className="absolute top-4 left-4 sm:top-6 sm:left-6 text-neutral-400 pointer-events-none text-base sm:text-lg"
                 >
                   <span id="typed-text"></span>
-                  <span id="cursor" className="animate-pulse text-sunset-400">|</span>
+                  <span id="cursor" className="animate-pulse text-primary-600">|</span>
                 </div>
                 
                 {/* Interactive Elements at Bottom */}
                 <div className="absolute bottom-3 left-4 sm:bottom-4 sm:left-6 flex items-center space-x-2 sm:space-x-4">
                   <select 
-                    className="bg-midnight-700/50 hover:bg-midnight-600/50 border border-white/20 rounded-lg px-2 py-1 text-sunset-300 text-xs focus:outline-none focus:border-sunset-500 transition-colors [&>option]:bg-midnight-800 [&>option]:text-white [&>option]:border-none"
+                    className="bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 rounded-lg px-2 py-1 text-neutral-700 text-xs focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-200 transition-colors [&>option]:bg-white [&>option]:text-neutral-900 [&>option]:border-none"
                   >
                     <option value="modern">Modern</option>
                     <option value="flat">Flat</option>
@@ -271,7 +270,7 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
                 </div>
                 
                 {/* Send Button */}
-                <button className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 bg-sunset-gradient hover:scale-105 text-white p-2 sm:p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-sunset-500/30">
+                <button className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 bg-gradient-to-r from-primary-600 to-accent-500 hover:from-primary-700 hover:to-accent-600 hover:scale-105 text-white p-2 sm:p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-primary-500/30">
                   <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
                   </svg>
@@ -280,12 +279,12 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
             </div>
           
           {/* CTA Button */}
-          <div className="inline-block [background:linear-gradient(45deg,#111827,theme(colors.midnight.800)_50%,#111827)_padding-box,conic-gradient(from_var(--border-angle),#FF8A65,#CE93D8,#FFF7ED,#FF8A65)_border-box] rounded-lg border-4 border-transparent animate-border shadow-lg shadow-sunset-500/50 hover:shadow-xl hover:shadow-sunset-500/70 transition-all duration-300">
+          <div className="inline-block [background:linear-gradient(45deg,#FFFFFF,theme(colors.blue.50)_50%,#FFFFFF)_padding-box,conic-gradient(from_var(--border-angle),#3B82F6,#0EA5E9,#60A5FA,#3B82F6)_border-box] rounded-lg border-4 border-transparent animate-border shadow-lg shadow-primary-500/50 hover:shadow-xl hover:shadow-primary-500/70 transition-all duration-300">
             <SmartGenerateLink 
-              className="bg-transparent text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300 block"
+              className="bg-transparent text-neutral-900 px-12 py-4 rounded-lg font-semibold hover:scale-110 transition-all duration-300 block"
               fallbackHref="/#pricing"
             >
-              Create Your First Icon
+              Create Your First Logo
             </SmartGenerateLink>
           </div>
         </div>
@@ -294,8 +293,8 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
         <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-3/4 z-20">
           <ScrollAnimation delay={200}>
             <div className="w-full max-w-[95vw] mx-auto px-2">
-              <div className="bg-midnight-900/50 backdrop-blur-sm rounded-lg p-3 shadow-2xl border border-midnight-800 hover:shadow-3xl transition-all duration-500 hover:scale-105">
-                <div className="bg-coral-gradient rounded-lg aspect-video w-full h-[70vh] sm:min-h-[60vh] overflow-hidden">
+              <div className="bg-white/80 backdrop-blur-sm rounded-lg p-3 shadow-2xl border border-neutral-200 hover:shadow-3xl transition-all duration-500 hover:scale-105">
+                <div className="bg-gradient-to-br from-primary-100 to-accent-100 rounded-lg aspect-video w-full h-[70vh] sm:min-h-[60vh] overflow-hidden">
                   <video
                     className="w-full h-full object-cover rounded-lg"
                     autoPlay
@@ -314,100 +313,157 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
       </div>
 
       {/* Demo Section - Now with title/subtitle below the video */}
-      <div className="pt-[32rem] pb-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16" style={{background: 'radial-gradient(ellipse at top, rgb(154, 52, 18), rgb(55, 65, 81), rgb(31, 41, 55))'}}>
+      <div className="pt-[40rem] pb-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-gradient-to-b from-blue-100 via-blue-50 to-white">
         <div className="container mx-auto text-center">
           {/* Title and subtitle positioned below the video */}
           <ScrollAnimation delay={300} type="scale" duration={1200}>
-            <h2 className="text-4xl font-bold text-white mb-4">From Words to Wonders in Seconds</h2>
+            <h2 className="text-4xl font-bold text-neutral-900 mb-4">From Words to Wonders in Seconds</h2>
           </ScrollAnimation>
           <ScrollAnimation delay={500} type="fade-up" duration={1000}>
-            <p className="text-sunset-200 mb-12 max-w-2xl mx-auto">
-              Experience the future of icon creation. Watch real users transform simple descriptions into professional-grade icons that would take hours to design manually.<br />
-              <span className="text-coral-300 font-medium">No design skills required. Just pure creative freedom.</span>
+            <p className="text-neutral-700 mb-12 max-w-2xl mx-auto">
+              Experience the future of logo creation. Watch real users transform simple descriptions into professional-grade logos that would take hours to design manually.<br />
+              <span className="text-primary-600 font-medium">No design skills required. Just pure creative freedom.</span>
             </p>
           </ScrollAnimation>
           
           {/* Additional demo content or features can go here */}
-          <ScrollAnimation delay={500}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <ScrollAnimation delay={600} type="fade-up" duration={800}>
               <div className="text-center">
-                <div className="w-12 h-12 bg-sunset-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-sunset-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">Instant Generation</h3>
-                <p className="text-sunset-200 text-sm">Generate multiple icon variations in seconds</p>
+                <h3 className="text-lg font-semibold text-neutral-900 mb-2">Instant Generation</h3>
+                <p className="text-neutral-600 text-sm">Generate multiple logo variations in seconds</p>
               </div>
+            </ScrollAnimation>
               
+            <ScrollAnimation delay={700} type="fade-up" duration={800}>
               <div className="text-center">
-                <div className="w-12 h-12 bg-sunset-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-sunset-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">AI-Powered Refinement</h3>
-                <p className="text-sunset-200 text-sm">Improve and iterate on your icons with natural language</p>
+                <h3 className="text-lg font-semibold text-neutral-900 mb-2">AI-Powered Refinement</h3>
+                <p className="text-neutral-600 text-sm">Improve and iterate on your logos with natural language</p>
               </div>
+            </ScrollAnimation>
               
+            <ScrollAnimation delay={800} type="fade-up" duration={800}>
               <div className="text-center">
-                <div className="w-12 h-12 bg-sunset-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-sunset-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">Professional Export</h3>
-                <p className="text-sunset-200 text-sm">Download your AI generated icons as a PNG file</p>
+                <h3 className="text-lg font-semibold text-neutral-900 mb-2">Professional Export</h3>
+                <p className="text-neutral-600 text-sm">Download your AI generated logos as a PNG file</p>
               </div>
-            </div>
-          </ScrollAnimation>
+            </ScrollAnimation>
+          </div>
+        </div>
+      </div>
+
+      {/* Divider */}
+      <div className="bg-white py-0">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+          <div className="border-t-2 border-neutral-200"></div>
         </div>
       </div>
 
       {/* How It Works Section */}
-      <div id="how-it-works" className="bg-midnight-900/30 py-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+      <div id="how-it-works" className="bg-white py-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <ScrollAnimation>
-            <h2 className="text-4xl font-bold text-white mb-4">How It Works</h2>
+          <div className="text-center mb-16 max-w-3xl mx-auto">
+            <ScrollAnimation type="fade" duration={800}>
+              <span className="inline-block px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-semibold mb-4">
+                SIMPLE 3-STEP PROCESS
+              </span>
+            </ScrollAnimation>
+            <ScrollAnimation delay={200} type="scale" duration={1000}>
+              <h2 className="text-4xl lg:text-5xl font-bold text-neutral-900 mb-6">
+                From Idea to Logo in Minutes
+              </h2>
+            </ScrollAnimation>
+            <ScrollAnimation delay={400} type="fade-up" duration={1000}>
+              <p className="text-xl text-neutral-600">
+                Our AI-powered platform makes professional logo design accessible to everyone. No design experience required.
+              </p>
+            </ScrollAnimation>
+            
+            {/* Stats Bar */}
+            <ScrollAnimation delay={600} type="fade-up" duration={1200}>
+              <div className="grid grid-cols-3 gap-8 mt-12 pt-12 border-t border-neutral-200">
+                <div>
+                  <div className="text-3xl font-bold text-primary-600 mb-2">30 sec</div>
+                  <div className="text-sm text-neutral-600">Average Generation Time</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-primary-600 mb-2">500+</div>
+                  <div className="text-sm text-neutral-600">Happy Customers</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-primary-600 mb-2">10k+</div>
+                  <div className="text-sm text-neutral-600">Logos Generated</div>
+                </div>
+              </div>
             </ScrollAnimation>
           </div>
           
-          <div className="space-y-32">
+          <div className="space-y-24">
             {/* Step 1 - Left Side */}
-            <ScrollAnimation delay={100}>
-              <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+            <ScrollAnimation delay={200} type="slide-up" duration={1200}>
+              <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center bg-gradient-to-br from-blue-50 to-white rounded-3xl p-8 lg:p-12 border border-neutral-200">
                 {/* Content - Left */}
                 <div className="order-2 lg:order-1 space-y-6">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 bg-coral-gradient rounded-2xl flex items-center justify-center shadow-lg">
-                      <span className="text-2xl font-bold text-white">1</span>
+                  <div className="inline-flex items-center gap-3 bg-white px-4 py-2 rounded-full shadow-sm border border-neutral-200">
+                    <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-accent-500 rounded-full flex items-center justify-center">
+                      <span className="text-sm font-bold text-white">1</span>
                     </div>
-                    <div className="h-px bg-gradient-to-r from-coral-500 to-transparent flex-1"></div>
+                    <span className="text-sm font-semibold text-neutral-700 uppercase tracking-wide">Step One</span>
                   </div>
-                  <h3 className="text-4xl lg:text-5xl font-bold text-white leading-tight">
-                    Speak Your Vision
+                  
+                  <h3 className="text-3xl lg:text-4xl font-bold text-neutral-900 leading-tight">
+                    Describe Your Vision
                   </h3>
-                  <p className="text-sunset-200 text-xl leading-relaxed max-w-lg">
-                    Simply describe what you envision and watch our AI bring it to life. From "minimalist shopping cart" to "futuristic rocket with neon glow" - your words become stunning icons.
+                  
+                  <p className="text-lg text-neutral-600 leading-relaxed">
+                    Simply type what you want in plain English. Our AI understands natural language and interprets your creative vision with precision.
                   </p>
-                  <div className="pt-4">
-                    <div className="inline-flex items-center gap-2 text-coral-400 font-medium">
-                      <span>Start creating</span>
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  
+                  {/* Feature List */}
+                  <ul className="space-y-3 pt-4">
+                    <li className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                    </div>
-                  </div>
+                      <span className="text-neutral-600">No design experience needed</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-neutral-600">8+ style options to choose from</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-neutral-600">Real-time AI interpretation</span>
+                    </li>
+                  </ul>
                 </div>
                 
                 {/* Visual - Right */}
                 <div className="order-1 lg:order-2">
-                  <div className="relative">
-                    <div className="bg-coral-gradient rounded-3xl p-4 shadow-2xl">
-                      <div className="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden h-[400px] sm:h-[350px] md:h-[400px]">
+                  <div className="relative group">
+                    <div className="bg-gradient-to-br from-primary-500 to-accent-500 rounded-2xl p-1 shadow-xl">
+                      <div className="bg-white rounded-xl overflow-hidden">
                         <video
-                          className="w-full h-full object-cover rounded-2xl"
+                          className="w-full h-full object-cover rounded-xl"
                           autoPlay
                           muted
                           loop
@@ -418,23 +474,25 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
                         </video>
                       </div>
                     </div>
-                    <div className="absolute -top-4 -right-4 w-8 h-8 bg-coral-400 rounded-full"></div>
-                    <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-coral-300 rounded-full"></div>
+                    {/* Floating badge */}
+                    <div className="absolute -top-4 -right-4 bg-white rounded-full px-4 py-2 shadow-lg border border-neutral-200">
+                      <span className="text-sm font-bold text-primary-600">✨ AI Powered</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </ScrollAnimation>
 
             {/* Step 2 - Right Side */}
-            <ScrollAnimation delay={200}>
-              <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+            <ScrollAnimation delay={200} type="slide-up" duration={1200}>
+              <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center bg-gradient-to-br from-purple-50 to-white rounded-3xl p-8 lg:p-12 border border-neutral-200">
                 {/* Visual - Left */}
                 <div className="order-1">
-                  <div className="relative">
-                    <div className="bg-sunset-gradient rounded-3xl p-4 shadow-2xl">
-                      <div className="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden h-[400px] sm:h-[350px] md:h-[400px]">
+                  <div className="relative group">
+                    <div className="bg-gradient-to-br from-primary-600 to-purple-600 rounded-2xl p-1 shadow-xl">
+                      <div className="bg-white rounded-xl overflow-hidden">
                         <video
-                          className="w-full h-full object-cover rounded-2xl"
+                          className="w-full h-full object-cover rounded-xl"
                           autoPlay
                           muted
                           loop
@@ -445,71 +503,105 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
                         </video>
                       </div>
                     </div>
-                    <div className="absolute -top-4 -left-4 w-8 h-8 bg-sunset-400 rounded-full"></div>
-                    <div className="absolute -bottom-4 -right-4 w-6 h-6 bg-sunset-300 rounded-full"></div>
+                    {/* Floating badge */}
+                    <div className="absolute -top-4 -right-4 bg-white rounded-full px-4 py-2 shadow-lg border border-neutral-200">
+                      <span className="text-sm font-bold text-purple-600">⚡ Instant</span>
+                    </div>
                   </div>
                 </div>
                 
                 {/* Content - Right */}
                 <div className="order-2 space-y-6">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 bg-sunset-gradient rounded-2xl flex items-center justify-center shadow-lg">
-                      <span className="text-2xl font-bold text-white">2</span>
+                  <div className="inline-flex items-center gap-3 bg-white px-4 py-2 rounded-full shadow-sm border border-neutral-200">
+                    <div className="w-8 h-8 bg-gradient-to-br from-primary-600 to-purple-600 rounded-full flex items-center justify-center">
+                      <span className="text-sm font-bold text-white">2</span>
                     </div>
-                    <div className="h-px bg-gradient-to-r from-sunset-500 to-transparent flex-1"></div>
+                    <span className="text-sm font-semibold text-neutral-700 uppercase tracking-wide">Step Two</span>
                   </div>
-                  <h3 className="text-4xl lg:text-5xl font-bold text-white leading-tight">
-                    Watch Ideas Transform
+                  
+                  <h3 className="text-3xl lg:text-4xl font-bold text-neutral-900 leading-tight">
+                    AI Generates Multiple Options
                   </h3>
-                  <p className="text-sunset-200 text-xl leading-relaxed max-w-lg">
-                    GPT Image 1 works its magic, analyzing every word and crafting multiple professional-grade variations. Each icon is pixel-perfect and ready for any project.
+                  
+                  <p className="text-lg text-neutral-600 leading-relaxed">
+                    Our GPT Image 1 technology analyzes your description and creates multiple professional logo variations in seconds.
                   </p>
-                  <div className="pt-4">
-                    <div className="inline-flex items-center gap-2 text-sunset-400 font-medium">
-                      <span>Watch the magic</span>
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  
+                  {/* Feature List */}
+                  <ul className="space-y-3 pt-4">
+                    <li className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                    </div>
-                  </div>
+                      <span className="text-neutral-600">Multiple variations per generation</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-neutral-600">Professional-grade quality</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-neutral-600">Generated in under 30 seconds</span>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </ScrollAnimation>
 
             {/* Step 3 - Left Side */}
             <ScrollAnimation delay={200} type="slide-up" duration={1200}>
-              <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+              <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center bg-gradient-to-br from-green-50 to-white rounded-3xl p-8 lg:p-12 border border-neutral-200">
                 {/* Content - Left */}
                 <div className="order-2 lg:order-1 space-y-6">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 bg-aurora-gradient rounded-2xl flex items-center justify-center shadow-lg">
-                      <span className="text-2xl font-bold text-white">3</span>
+                  <div className="inline-flex items-center gap-3 bg-white px-4 py-2 rounded-full shadow-sm border border-neutral-200">
+                    <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center">
+                      <span className="text-sm font-bold text-white">3</span>
                     </div>
-                    <div className="h-px bg-gradient-to-r from-purple-400 to-transparent flex-1"></div>
+                    <span className="text-sm font-semibold text-neutral-700 uppercase tracking-wide">Step Three</span>
                   </div>
-                  <h3 className="text-4xl lg:text-5xl font-bold text-white leading-tight">
-                    Perfect & Deploy
+                  
+                  <h3 className="text-3xl lg:text-4xl font-bold text-neutral-900 leading-tight">
+                    Download & Deploy
                   </h3>
-                  <p className="text-sunset-200 text-xl leading-relaxed max-w-lg">
-                    Select your favorite from multiple stunning variations, download instantly as high-quality PNG, or save to your organized library. Your perfect icon is ready in seconds.
+                  
+                  <p className="text-lg text-neutral-600 leading-relaxed">
+                    Choose your favorite design, download in high-quality PNG format, and start using it immediately. It's that simple.
                   </p>
-                  <div className="pt-4">
-                    <div className="inline-flex items-center gap-2 text-purple-400 font-medium">
-                      <span>Get your icons</span>
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  
+                  {/* Feature List */}
+                  <ul className="space-y-3 pt-4">
+                    <li className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                    </div>
-                  </div>
+                      <span className="text-neutral-600">High-resolution PNG exports</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-neutral-600">Save to your personal library</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-neutral-600">Full commercial usage rights</span>
+                    </li>
+                  </ul>
                 </div>
                 
                 {/* Visual - Right */}
                 <div className="order-1 lg:order-2">
-                  <div className="relative">
-                    <div className="bg-aurora-gradient rounded-3xl p-4 shadow-2xl">
-                      <div className="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden h-[400px] sm:h-[350px] md:h-[400px]">
+                  <div className="relative group">
+                    <div className="bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl p-1 shadow-xl">
+                      <div className="bg-white rounded-xl overflow-hidden">
                         <video
-                          className="w-full h-full object-cover rounded-2xl"
+                          className="w-full h-full object-cover rounded-xl"
                           autoPlay
                           muted
                           loop
@@ -520,8 +612,10 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
                         </video>
                       </div>
                     </div>
-                    <div className="absolute -top-4 -right-4 w-8 h-8 bg-purple-400 rounded-full"></div>
-                    <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-purple-300 rounded-full"></div>
+                    {/* Floating badge */}
+                    <div className="absolute -top-4 -right-4 bg-white rounded-full px-4 py-2 shadow-lg border border-neutral-200">
+                      <span className="text-sm font-bold text-green-600">✓ Ready to Use</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -534,110 +628,110 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
       <div id="features" className="py-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <ScrollAnimation type="scale" duration={1000}>
-            <h2 className="text-4xl font-bold text-white mb-4">Why Creators Choose AI Icon Maker</h2>
+            <ScrollAnimation>
+            <h2 className="text-4xl font-bold text-neutral-900 mb-4">Why Creators Choose AI Logo Generator</h2>
             </ScrollAnimation>
-            <ScrollAnimation delay={200} type="fade-up" duration={1000}>
-              <p className="text-sunset-200 max-w-2xl mx-auto">
-              Everything you need to create stunning, professional icons without the learning curve of traditional design tools.
+            <ScrollAnimation delay={100}>
+              <p className="text-neutral-600 max-w-2xl mx-auto">
+              Everything you need to create stunning, professional logos without the learning curve of traditional design tools.
             </p>
             </ScrollAnimation>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* AI-Powered Icon Generation */}
-            <ScrollAnimation delay={300} type="fade-up" duration={900}>
-              <div className="glass-swipe bg-gradient-to-br from-midnight-900/30 to-midnight-950/50 backdrop-blur-md rounded-lg p-8 border border-white/10 shadow-xl hover:shadow-2xl hover:shadow-sunset-500/20 transition-all duration-500 hover:scale-105 group relative overflow-hidden h-full flex flex-col">
-                <div className="absolute inset-0 bg-gradient-to-br from-coral-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <ScrollAnimation delay={150}>
+              <div className="glass-swipe bg-gradient-to-br from-white to-neutral-50 backdrop-blur-md rounded-lg p-8 border border-neutral-200 shadow-xl hover:shadow-2xl hover:shadow-primary-500/20 transition-all duration-500 hover:scale-105 group relative overflow-hidden h-full flex flex-col">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative z-10 flex flex-col h-full">
-                  <div className="w-16 h-16 bg-gradient-to-br from-[#ff7e5f] to-coral-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg hover:rotate-12 transition-transform duration-300 group-hover:scale-110">
-                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg hover:rotate-12 transition-transform duration-300 group-hover:scale-110">
+                    <svg className="w-8 h-8 text-neutral-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-coral-300 transition-colors duration-300">Lightning-Fast Creation</h3>
-                  <p className="text-sunset-200 text-sm leading-relaxed">Generate multiple professional variations in seconds. What takes hours in Photoshop now happens instantly with GPT Image 1.</p>
+                  <h3 className="text-xl font-bold text-neutral-900 mb-3 group-hover:text-primary-600 transition-colors duration-300">Lightning-Fast Creation</h3>
+                  <p className="text-neutral-600 text-sm leading-relaxed">Generate multiple professional logo variations in seconds. What takes hours in Photoshop now happens instantly with GPT Image 1.</p>
                 </div>
               </div>
             </ScrollAnimation>
 
             {/* No Design Skills Needed */}
-            <ScrollAnimation delay={400} type="fade-up" duration={900}>
-              <div className="glass-swipe bg-gradient-to-br from-midnight-900/30 to-midnight-950/50 backdrop-blur-md rounded-lg p-8 border border-white/10 shadow-xl hover:shadow-2xl hover:shadow-sunset-500/20 transition-all duration-500 hover:scale-105 group relative overflow-hidden h-full flex flex-col">
-                <div className="absolute inset-0 bg-gradient-to-br from-sunset-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <ScrollAnimation delay={200}>
+              <div className="glass-swipe bg-gradient-to-br from-white to-neutral-50 backdrop-blur-md rounded-lg p-8 border border-neutral-200 shadow-xl hover:shadow-2xl hover:shadow-primary-500/20 transition-all duration-500 hover:scale-105 group relative overflow-hidden h-full flex flex-col">
+                <div className="absolute inset-0 bg-gradient-to-br from-accent-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative z-10 flex flex-col h-full">
-                  <div className="w-16 h-16 bg-gradient-to-br from-[#ff7e5f] to-sunset-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg hover:rotate-12 transition-transform duration-300 group-hover:scale-110">
-                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-accent-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg hover:rotate-12 transition-transform duration-300 group-hover:scale-110">
+                    <svg className="w-8 h-8 text-neutral-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-sunset-300 transition-colors duration-300">No Design Skills Needed</h3>
-                  <p className="text-sunset-200 text-sm leading-relaxed">If you can describe it, you can create it. Our AI understands natural language—no complex tools or design experience required.</p>
+                  <h3 className="text-xl font-bold text-neutral-900 mb-3 group-hover:text-accent-600 transition-colors duration-300">No Design Skills Needed</h3>
+                  <p className="text-neutral-600 text-sm leading-relaxed">If you can describe it, you can create it. Our AI understands natural language—no complex tools or design experience required.</p>
                 </div>
               </div>
             </ScrollAnimation>
 
             {/* Professional Quality */}
-            <ScrollAnimation delay={500} type="fade-up" duration={900}>
-              <div className="glass-swipe bg-gradient-to-br from-midnight-900/30 to-midnight-950/50 backdrop-blur-md rounded-lg p-8 border border-white/10 shadow-xl hover:shadow-2xl hover:shadow-sunset-500/20 transition-all duration-500 hover:scale-105 group relative overflow-hidden h-full flex flex-col">
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <ScrollAnimation delay={250}>
+              <div className="glass-swipe bg-gradient-to-br from-white to-neutral-50 backdrop-blur-md rounded-lg p-8 border border-neutral-200 shadow-xl hover:shadow-2xl hover:shadow-primary-500/20 transition-all duration-500 hover:scale-105 group relative overflow-hidden h-full flex flex-col">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative z-10 flex flex-col h-full">
-                  <div className="w-16 h-16 bg-gradient-to-br from-[#ff7e5f] to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg hover:rotate-12 transition-transform duration-300 group-hover:scale-110">
-                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg hover:rotate-12 transition-transform duration-300 group-hover:scale-110">
+                    <svg className="w-8 h-8 text-neutral-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-purple-300 transition-colors duration-300">Studio-Quality Results</h3>
-                  <p className="text-sunset-200 text-sm leading-relaxed">Every icon is crafted with precision and polish. High-resolution PNG exports ready for apps, websites, or any professional project.</p>
+                  <h3 className="text-xl font-bold text-neutral-900 mb-3 group-hover:text-blue-500 transition-colors duration-300">Studio-Quality Results</h3>
+                  <p className="text-neutral-600 text-sm leading-relaxed">Every logo is crafted with precision and polish. High-resolution PNG exports ready for business cards, websites, or any professional branding project.</p>
                 </div>
               </div>
             </ScrollAnimation>
 
             {/* Endless Style Options */}
-            <ScrollAnimation delay={600} type="fade-up" duration={900}>
-              <div className="glass-swipe bg-gradient-to-br from-midnight-900/30 to-midnight-950/50 backdrop-blur-md rounded-lg p-8 border border-white/10 shadow-xl hover:shadow-2xl hover:shadow-sunset-500/20 transition-all duration-500 hover:scale-105 group relative overflow-hidden h-full flex flex-col">
+            <ScrollAnimation delay={300}>
+              <div className="glass-swipe bg-gradient-to-br from-white to-neutral-50 backdrop-blur-md rounded-lg p-8 border border-neutral-200 shadow-xl hover:shadow-2xl hover:shadow-primary-500/20 transition-all duration-500 hover:scale-105 group relative overflow-hidden h-full flex flex-col">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative z-10 flex flex-col h-full">
-                  <div className="w-16 h-16 bg-gradient-to-br from-[#ff7e5f] to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg hover:rotate-12 transition-transform duration-300 group-hover:scale-110">
-                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg hover:rotate-12 transition-transform duration-300 group-hover:scale-110">
+                    <svg className="w-8 h-8 text-neutral-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-300 transition-colors duration-300">Endless Style Options</h3>
-                  <p className="text-sunset-200 text-sm leading-relaxed">From modern flat to 3D, minimalist to vintage—choose from 8+ distinct styles that perfectly match your brand aesthetic.</p>
+                  <h3 className="text-xl font-bold text-neutral-900 mb-3 group-hover:text-blue-300 transition-colors duration-300">Endless Style Options</h3>
+                  <p className="text-neutral-600 text-sm leading-relaxed">From modern flat to 3D, minimalist to vintage—choose from 8+ distinct styles that perfectly match your brand aesthetic.</p>
                 </div>
               </div>
             </ScrollAnimation>
 
             {/* Save & Organize */}
             <ScrollAnimation delay={350}>
-              <div className="glass-swipe bg-gradient-to-br from-midnight-900/30 to-midnight-950/50 backdrop-blur-md rounded-lg p-8 border border-white/10 shadow-xl hover:shadow-2xl hover:shadow-sunset-500/20 transition-all duration-500 hover:scale-105 group relative overflow-hidden h-full flex flex-col">
-                <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="glass-swipe bg-gradient-to-br from-white to-neutral-50 backdrop-blur-md rounded-lg p-8 border border-neutral-200 shadow-xl hover:shadow-2xl hover:shadow-primary-500/20 transition-all duration-500 hover:scale-105 group relative overflow-hidden h-full flex flex-col">
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative z-10 flex flex-col h-full">
-                  <div className="w-16 h-16 bg-gradient-to-br from-[#ff7e5f] to-green-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg hover:rotate-12 transition-transform duration-300 group-hover:scale-110">
-                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-16 h-16 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg hover:rotate-12 transition-transform duration-300 group-hover:scale-110">
+                    <svg className="w-8 h-8 text-neutral-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-green-300 transition-colors duration-300">Your Personal Icon Library</h3>
-                  <p className="text-sunset-200 text-sm leading-relaxed">Save and organize your creations in one place. Access all your icons anytime, anywhere—never lose track of custom designs.</p>
+                  <h3 className="text-xl font-bold text-neutral-900 mb-3 group-hover:text-cyan-500 transition-colors duration-300">Your Personal Logo Library</h3>
+                  <p className="text-neutral-600 text-sm leading-relaxed">Save and organize your creations in one place. Access all your logos anytime, anywhere—never lose track of custom designs.</p>
                 </div>
               </div>
             </ScrollAnimation>
 
             {/* Commercial Rights */}
             <ScrollAnimation delay={400}>
-              <div className="glass-swipe bg-gradient-to-br from-midnight-900/30 to-midnight-950/50 backdrop-blur-md rounded-lg p-8 border border-white/10 shadow-xl hover:shadow-2xl hover:shadow-sunset-500/20 transition-all duration-500 hover:scale-105 group relative overflow-hidden h-full flex flex-col">
-                <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="glass-swipe bg-gradient-to-br from-white to-neutral-50 backdrop-blur-md rounded-lg p-8 border border-neutral-200 shadow-xl hover:shadow-2xl hover:shadow-primary-500/20 transition-all duration-500 hover:scale-105 group relative overflow-hidden h-full flex flex-col">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative z-10 flex flex-col h-full">
-                  <div className="w-16 h-16 bg-gradient-to-br from-[#ff7e5f] to-yellow-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg hover:rotate-12 transition-transform duration-300 group-hover:scale-110">
-                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-primary-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg hover:rotate-12 transition-transform duration-300 group-hover:scale-110">
+                    <svg className="w-8 h-8 text-neutral-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-yellow-300 transition-colors duration-300">Full Commercial Rights</h3>
-                  <p className="text-sunset-200 text-sm leading-relaxed">Own everything you create. Use your icons in client projects, products, apps, or websites—without restrictions or licensing fees.</p>
+                  <h3 className="text-xl font-bold text-neutral-900 mb-3 group-hover:text-blue-500 transition-colors duration-300">Full Commercial Rights</h3>
+                  <p className="text-neutral-600 text-sm leading-relaxed">Own everything you create. Use your logos in client projects, products, apps, or websites—without restrictions or licensing fees.</p>
                 </div>
               </div>
             </ScrollAnimation>
@@ -651,20 +745,20 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
       <div className="py-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <div className="container mx-auto text-center">
           <ScrollAnimation>
-            <div className="bg-midnight-900/50 backdrop-blur-sm rounded-lg p-12 border border-midnight-800 hover:shadow-3xl hover:shadow-sunset-500/20 transition-all duration-500 hover:scale-105">
+            <div className="bg-white backdrop-blur-sm rounded-lg p-12 border border-midnight-800 hover:shadow-3xl hover:shadow-primary-500/20 transition-all duration-500 hover:scale-105">
               <ScrollAnimation delay={100}>
-                <h2 className="text-4xl font-bold text-white mb-4">Stop Settling for Generic Icons</h2>
+                <h2 className="text-4xl font-bold text-neutral-900 mb-4">Stop Settling for Generic Logos</h2>
               </ScrollAnimation>
               <ScrollAnimation delay={200}>
-                <p className="text-sunset-200 mb-8 max-w-2xl mx-auto">
-                  Join 500+ designers and developers who've discovered the secret to creating custom icons that perfectly match their vision—in seconds, not hours.
+                <p className="text-neutral-600 mb-8 max-w-2xl mx-auto">
+                  Join 500+ designers and developers who've discovered the secret to creating custom logos that perfectly match their vision—in seconds, not hours.
                 </p>
               </ScrollAnimation>
                               <ScrollAnimation delay={300}>
                 {/* Swirling Border Button */}
-                <div className="inline-block [background:linear-gradient(45deg,#111827,theme(colors.midnight.800)_50%,#111827)_padding-box,conic-gradient(from_var(--border-angle),#FF8A65,#CE93D8,#FFF7ED,#FF8A65)_border-box] rounded-lg border-4 border-transparent animate-border shadow-lg shadow-sunset-500/50 hover:shadow-xl hover:shadow-sunset-500/70 transition-all duration-300">
+                <div className="inline-block [background:linear-gradient(45deg,#FFFFFF,theme(colors.blue.50)_50%,#FFFFFF)_padding-box,conic-gradient(from_var(--border-angle),#3B82F6,#0EA5E9,#60A5FA,#3B82F6)_border-box] rounded-lg border-4 border-transparent animate-border shadow-lg shadow-primary-500/50 hover:shadow-xl hover:shadow-primary-500/70 transition-all duration-300">
                   <SmartGenerateLink 
-                    className="bg-transparent text-white px-12 py-4 rounded-lg font-semibold hover:scale-110 transition-all duration-300 block"
+                    className="bg-transparent text-neutral-900 px-12 py-4 rounded-lg font-semibold hover:scale-110 transition-all duration-300 block"
                     fallbackHref="/#pricing"
                   >
                     Transform Your Ideas Now
@@ -677,17 +771,17 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
       </div>
 
       {/* Pricing Section */}
-      <div id="pricing" className="py-20 bg-midnight-900/30 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+      <div id="pricing" className="py-20 bg-neutral-50 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <ScrollAnimation>
-              <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
-                Professional AI Icon Generation
+              <h2 className="text-4xl lg:text-5xl font-bold text-neutral-900 mb-6">
+                Professional AI Logo Generation
               </h2>
             </ScrollAnimation>
             <ScrollAnimation delay={150}>
-              <p className="text-xl text-sunset-200 mb-8 max-w-3xl mx-auto">
-                High-quality AI-powered icon creation using GPT Image 1 and advanced prompt-to-icon technology. Professional tools deserve professional pricing.
+              <p className="text-xl text-neutral-600 mb-8 max-w-3xl mx-auto">
+                Start with just $5 to test the waters, or save 20% with our yearly plan. High-quality AI-powered logo creation using GPT Image 1 technology.
             </p>
             </ScrollAnimation>
           </div>
@@ -695,9 +789,9 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
           {/* Pricing Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
             
-            {/* Base Plan */}
+            {/* Starter Pack - Credit Refill */}
             <ScrollAnimation delay={200}>
-              <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 backdrop-blur-md rounded-2xl p-8 border border-white/10 shadow-xl hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500 hover:scale-105 relative h-full flex flex-col">
+              <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 backdrop-blur-md rounded-2xl p-8 border border-neutral-200 shadow-xl hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500 hover:scale-105 relative h-full flex flex-col">
                 {/* Credit Refill Badge */}
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                   <div className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
@@ -706,45 +800,45 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
                 </div>
                 
                 <div className="text-center mb-8 mt-4">
-                  <h3 className="text-2xl font-bold text-white mb-2">Base</h3>
-                  <div className="text-4xl font-bold text-white mb-4">
-                    $5<span className="text-lg font-normal text-sunset-200"></span>
+                  <h3 className="text-2xl font-bold text-neutral-900 mb-2">Starter Pack</h3>
+                  <div className="text-4xl font-bold text-neutral-900 mb-4">
+                    $5<span className="text-lg font-normal text-neutral-600"></span>
                   </div>
-                  <p className="text-sunset-200">&nbsp;</p>
+                  <p className="text-neutral-600">&nbsp;</p>
                 </div>
 
                 <ul className="space-y-4 mb-8 flex-1">
-                  <li className="flex items-center text-sunset-200">
+                  <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     25 credits per purchase
                   </li>
-                  <li className="flex items-center text-sunset-200">
+                  <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    GPT Image 1 powered icon generation
+                    GPT Image 1 powered logo generation
                   </li>
-                  <li className="flex items-center text-sunset-200">
+                  <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Multiple style options
+                    All style options
                   </li>
-                  <li className="flex items-center text-sunset-200">
+                  <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     Download as PNG
                   </li>
-                  <li className="flex items-center text-sunset-200">
+                  <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Save icons to your library
+                    Save logos to library
                   </li>
-                  <li className="flex items-center text-sunset-200">
+                  <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
@@ -753,77 +847,77 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
               </ul>
                 
                 <button 
-                  onClick={() => handleCheckout('base')}
-                  disabled={loadingPlan !== null || isPlanDisabled('base')}
-                  className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-3 px-6 rounded-full font-semibold hover:from-green-600 hover:to-emerald-600 transition-all duration-300 text-center block shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                  onClick={() => handleCheckout('starter')}
+                  disabled={loadingPlan !== null || isPlanDisabled('starter')}
+                  className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-neutral-900 py-3 px-6 rounded-full font-semibold hover:from-green-600 hover:to-emerald-600 transition-all duration-300 text-center block shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {loadingPlan === 'base' ? 'Processing...' : getPlanButtonLabel('base', 'Buy Credits')}
+                  {loadingPlan === 'starter' ? 'Processing...' : getPlanButtonLabel('starter', 'Buy Credits')}
                 </button>
               </div>
             </ScrollAnimation>
 
-            {/* Pro Plan */}
+            {/* Pro Monthly Plan */}
             <ScrollAnimation delay={250}>
               <div className="bg-gradient-to-br from-sunset-500/20 to-coral-500/20 backdrop-blur-md rounded-2xl p-8 border-2 border-sunset-500/50 shadow-2xl hover:shadow-3xl hover:shadow-sunset-500/30 transition-all duration-500 hover:scale-105 relative h-full flex flex-col">
                 {/* Popular Badge */}
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <div className="bg-[#ff7e5f] text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
+                  <div className="bg-sunset-500 text-neutral-900 px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
                     Most Popular
                   </div>
                 </div>
                 
                 <div className="text-center mb-8 mt-4">
-                  <h3 className="text-2xl font-bold text-white mb-2">Pro</h3>
-                  <div className="text-4xl font-bold text-white mb-4">
-                    $10<span className="text-lg font-normal text-sunset-200">/month</span>
+                  <h3 className="text-2xl font-bold text-neutral-900 mb-2">Pro Monthly</h3>
+                  <div className="text-4xl font-bold text-neutral-900 mb-4">
+                    $10<span className="text-lg font-normal text-neutral-600">/month</span>
                   </div>
-                  <p className="text-sunset-200">Perfect for professionals</p>
+                  <p className="text-neutral-600">For regular creators</p>
                 </div>
 
                 <ul className="space-y-4 mb-8 flex-1">
-                  <li className="flex items-center text-sunset-200">
+                  <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    100 credits per month
+                    50 credits per month
                   </li>
-                  <li className="flex items-center text-sunset-200">
+                  <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    GPT Image 1 powered icon generation
+                    GPT Image 1 powered logo generation
                   </li>
-                  <li className="flex items-center text-sunset-200">
+                  <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Multiple style options
+                    All style options
                   </li>
-                  <li className="flex items-center text-sunset-200">
+                  <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     Download as PNG
                   </li>
-                  <li className="flex items-center text-sunset-200">
+                  <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Save icons to your library
+                    Save logos to library
                   </li>
-                  <li className="flex items-center text-sunset-200">
+                  <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Icon improvement & iteration
+                    Logo improvement & iteration
                   </li>
-                  <li className="flex items-center text-sunset-200">
+                  <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     Priority support
                   </li>
-                  <li className="flex items-center text-sunset-200">
+                  <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
@@ -832,77 +926,85 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
               </ul>
                 
                 <button 
-                  onClick={() => handleCheckout('pro')}
-                  disabled={loadingPlan !== null || isPlanDisabled('pro')}
-                  className="w-full bg-gradient-to-r from-sunset-500 to-coral-500 text-white py-3 px-6 rounded-full font-semibold hover:from-sunset-600 hover:to-coral-600 transition-all duration-300 text-center block shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                  onClick={() => handleCheckout('proMonthly')}
+                  disabled={loadingPlan !== null || isPlanDisabled('proMonthly')}
+                  className="w-full bg-gradient-to-r from-primary-600 to-accent-500 text-neutral-900 py-3 px-6 rounded-full font-semibold hover:from-sunset-600 hover:to-primary-700 transition-all duration-300 text-center block shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {loadingPlan === 'pro' ? 'Processing...' : getPlanButtonLabel('pro', 'Start with Pro')}
+                  {loadingPlan === 'proMonthly' ? 'Processing...' : getPlanButtonLabel('proMonthly', 'Subscribe Monthly')}
                 </button>
               </div>
             </ScrollAnimation>
 
-            {/* Pro+ Plan */}
-            <ScrollAnimation delay={400} type="fade-up" duration={900}>
-              <div className="bg-gradient-to-br from-midnight-900/30 to-midnight-950/50 backdrop-blur-md rounded-2xl p-8 border border-white/10 shadow-xl hover:shadow-2xl hover:shadow-sunset-500/20 transition-all duration-500 hover:scale-105 relative h-full flex flex-col">
-                <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-white mb-2">Pro+</h3>
-                  <div className="text-4xl font-bold text-white mb-4">
-                    $15<span className="text-lg font-normal text-sunset-200">/month</span>
+            {/* Pro Yearly Plan - Best Value */}
+            <ScrollAnimation delay={300}>
+              <div className="bg-gradient-to-br from-purple-500/20 to-indigo-500/20 backdrop-blur-md rounded-2xl p-8 border-2 border-purple-500/50 shadow-xl hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-500 hover:scale-105 relative h-full flex flex-col">
+                {/* Best Value Badge */}
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-5 py-1.5 rounded-full text-xs font-bold shadow-lg whitespace-nowrap">
+                    Save 20% 🎉
                   </div>
-                  <p className="text-sunset-200">For power users and teams</p>
+                </div>
+                
+                <div className="text-center mb-8 mt-4">
+                  <h3 className="text-2xl font-bold text-neutral-900 mb-2">Pro Yearly</h3>
+                  <div className="text-4xl font-bold text-neutral-900 mb-2">
+                    $96<span className="text-lg font-normal text-neutral-600">/year</span>
+                  </div>
+                  <div className="text-sm text-neutral-500 line-through mb-2">$120/year at monthly rate</div>
+                  <p className="text-neutral-600">Save $24 + get bonus credits!</p>
                 </div>
 
                 <ul className="space-y-4 mb-8 flex-1">
-                  <li className="flex items-center text-sunset-200">
-                    <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <li className="flex items-center text-neutral-600">
+                    <svg className="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    200 credits per month
+                    <span className="font-semibold">700 credits per year</span>
                   </li>
-                  <li className="flex items-center text-sunset-200">
-                    <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <li className="flex items-center text-neutral-600">
+                    <svg className="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Everything in Pro plan
+                    100 bonus credits included 🎁
                   </li>
-                  <li className="flex items-center text-sunset-200">
-                    <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <li className="flex items-center text-neutral-600">
+                    <svg className="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Extended icon library storage
+                    GPT Image 1 powered generation
                   </li>
-                  <li className="flex items-center text-sunset-200">
-                    <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <li className="flex items-center text-neutral-600">
+                    <svg className="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Priority processing
+                    All style options
                   </li>
-                  <li className="flex items-center text-sunset-200">
-                    <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <li className="flex items-center text-neutral-600">
+                    <svg className="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    PNG export options
+                    Logo improvement & iteration
                   </li>
-                  <li className="flex items-center text-sunset-200">
-                    <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <li className="flex items-center text-neutral-600">
+                    <svg className="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Priority support
+                  </li>
+                  <li className="flex items-center text-neutral-600">
+                    <svg className="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     Commercial usage rights
                   </li>
-                  <li className="flex items-center text-sunset-200">
-                    <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    Premium support
-                  </li>
               </ul>
                 
                 <button 
-                  onClick={() => handleCheckout('proPlus')}
-                  disabled={loadingPlan !== null || isPlanDisabled('proPlus')}
+                  onClick={() => handleCheckout('proYearly')}
+                  disabled={loadingPlan !== null || isPlanDisabled('proYearly')}
                   className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 px-6 rounded-full font-semibold hover:from-purple-500 hover:to-indigo-500 transition-all duration-300 text-center block shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {loadingPlan === 'proPlus' ? 'Processing...' : getPlanButtonLabel('proPlus', 'Start with Pro+')}
+                  {loadingPlan === 'proYearly' ? 'Processing...' : getPlanButtonLabel('proYearly', 'Subscribe Yearly')}
                 </button>
               </div>
             </ScrollAnimation>
@@ -914,10 +1016,10 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
           <div className="mb-16">
             <div className="text-center mb-12">
               <ScrollAnimation>
-                <h3 className="text-3xl font-bold text-white mb-4">Frequently Asked Questions</h3>
+                <h3 className="text-3xl font-bold text-neutral-900 mb-4">Frequently Asked Questions</h3>
               </ScrollAnimation>
               <ScrollAnimation delay={100}>
-                <p className="text-sunset-200 max-w-2xl mx-auto">
+                <p className="text-neutral-600 max-w-2xl mx-auto">
                   Got questions? We've got answers. Here are some common questions about our pricing and service.
                 </p>
               </ScrollAnimation>
@@ -926,12 +1028,12 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
             <div className="max-w-3xl mx-auto space-y-4">
               {faqData.map((faq, index) => (
                 <ScrollAnimation key={index} delay={150 + index * 50}>
-                  <div className="bg-gradient-to-br from-midnight-800/40 to-midnight-900/60 backdrop-blur-md rounded-lg border border-sunset-500/20 overflow-hidden shadow-lg hover:shadow-xl hover:border-sunset-500/30 transition-all duration-300">
+                  <div className="bg-gradient-to-br from-white to-blue-50/50 backdrop-blur-md rounded-lg border border-primary-200 overflow-hidden shadow-lg hover:shadow-xl hover:border-primary-300 transition-all duration-300">
                     <button
                       onClick={() => toggleFAQ(index)}
-                      className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-sunset-500/10 transition-colors duration-200"
+                      className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-primary-50 transition-colors duration-200"
                     >
-                      <h4 className="text-lg font-semibold text-white">{faq.question}</h4>
+                      <h4 className="text-lg font-semibold text-neutral-900">{faq.question}</h4>
                       <svg
                         className={`w-5 h-5 text-sunset-300 transition-transform duration-200 ${
                           openFAQ === index ? 'rotate-180' : ''
@@ -948,7 +1050,7 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
                         openFAQ === index ? 'max-h-32 opacity-100 pb-4' : 'max-h-0 opacity-0 overflow-hidden'
                       }`}
                     >
-                      <p className="text-sunset-200">{faq.answer}</p>
+                      <p className="text-neutral-600">{faq.answer}</p>
                     </div>
                   </div>
                 </ScrollAnimation>
@@ -959,23 +1061,23 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
           {/* CTA Section */}
           <div className="text-center">
             <ScrollAnimation>
-              <div className="bg-midnight-900/50 backdrop-blur-sm rounded-lg p-12 border border-midnight-800 hover:shadow-3xl hover:shadow-sunset-500/20 transition-all duration-500 hover:scale-105">
+              <div className="bg-white backdrop-blur-sm rounded-lg p-12 border border-midnight-800 hover:shadow-3xl hover:shadow-primary-500/20 transition-all duration-500 hover:scale-105">
                 <ScrollAnimation delay={100}>
-                  <h3 className="text-3xl font-bold text-white mb-4">Ready to Create Professional Icons?</h3>
+                  <h3 className="text-3xl font-bold text-neutral-900 mb-4">Ready to Create Professional Logos?</h3>
                 </ScrollAnimation>
                 <ScrollAnimation delay={200}>
-                  <p className="text-sunset-200 mb-8 max-w-2xl mx-auto">
-                    Join professionals who are already using AI Icon Maker to create stunning icons for their projects.
+                  <p className="text-neutral-600 mb-8 max-w-2xl mx-auto">
+                    Join professionals who are already using AI Logo Generator to create stunning logos for their projects.
                   </p>
                 </ScrollAnimation>
                 <ScrollAnimation delay={300}>
                   <div className="flex justify-center">
                     <button 
-                      onClick={() => handleCheckout('pro')}
+                      onClick={() => handleCheckout('proMonthly')}
                       disabled={loadingPlan !== null}
-                      className="bg-gradient-to-r from-sunset-500 to-coral-500 text-white px-8 py-3 rounded-full font-semibold hover:from-sunset-600 hover:to-coral-600 transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="bg-gradient-to-r from-primary-600 to-accent-500 text-neutral-900 px-8 py-3 rounded-full font-semibold hover:from-sunset-600 hover:to-primary-700 transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      {loadingPlan === 'pro' ? 'Processing...' : 'Start Your Subscription'}
+                      {loadingPlan === 'proMonthly' ? 'Processing...' : 'Start Your Subscription'}
                     </button>
                   </div>
                 </ScrollAnimation>
@@ -986,46 +1088,54 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
       </div>
 
       {/* Testimonials Section */}
-      <div className="py-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-        <div className="container mx-auto">
+      <div className="py-20 bg-gradient-to-b from-blue-100 via-blue-50 to-white">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
           <div className="text-center mb-16">
             <ScrollAnimation>
               <div className="flex justify-center items-center mb-6">
                 <div className="flex -space-x-2">
-                  <div className="w-10 h-10 bg-gradient-to-br from-sunset-500 to-coral-500 rounded-full flex items-center justify-center text-white font-bold border-2 border-white shadow-lg">D</div>
-                  <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold border-2 border-white shadow-lg">S</div>
-                  <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold border-2 border-white shadow-lg">M</div>
-                  <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold border-2 border-white shadow-lg">A</div>
-                  <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold border-2 border-white shadow-lg">K</div>
-                  <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold border-2 border-white shadow-lg">L</div>
-                  <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-red-500 rounded-full flex items-center justify-center text-white font-bold border-2 border-white shadow-lg">T</div>
+                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=faces" alt="David Richardson" className="w-10 h-10 rounded-full border-2 border-white shadow-lg object-cover" />
+                  <div className="w-10 h-10 rounded-full bg-white border-2 border-white shadow-lg flex items-center justify-center p-1.5">
+                    <img src="/logos/logoipsum-280.svg" alt="TechFlow Studios" className="w-full h-full object-contain" />
+                  </div>
+                  <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=faces" alt="Michael Torres" className="w-10 h-10 rounded-full border-2 border-white shadow-lg object-cover" />
+                  <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=faces" alt="Alex Martinez" className="w-10 h-10 rounded-full border-2 border-white shadow-lg object-cover" />
+                  <div className="w-10 h-10 rounded-full bg-white border-2 border-white shadow-lg flex items-center justify-center p-1.5">
+                    <img src="/logos/logoipsum-381.svg" alt="CloudVault" className="w-full h-full object-contain" />
+                  </div>
+                  <img src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=150&h=150&fit=crop&crop=faces" alt="Kyle Anderson" className="w-10 h-10 rounded-full border-2 border-white shadow-lg object-cover" />
+                  <div className="w-10 h-10 rounded-full bg-white border-2 border-white shadow-lg flex items-center justify-center p-1.5">
+                    <img src="/logos/logoipsum-339.svg" alt="Pixel & Co" className="w-full h-full object-contain" />
+                  </div>
                 </div>
               </div>
-              <p className="text-sunset-200 mb-4">500+ Designers & developers trust AI Icon Maker</p>
-              <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
+              <p className="text-neutral-600 mb-4">500+ Designers & developers trust AI Logo Generator</p>
+              <h2 className="text-4xl lg:text-5xl font-bold text-neutral-900 mb-6">
                 Helping creators streamline their<br />
                 workflow and deliver faster
               </h2>
             </ScrollAnimation>
           </div>
-          
-          {/* Testimonials Carousel */}
+        </div>
+        
+        {/* Testimonials Carousel - Full Width */}
+        <div className="w-full overflow-hidden">
           <TestimonialCarousel />
         </div>
       </div>
 
       {/* Contact Section */}
-      <div id="contact" className="py-20 bg-midnight-900/30 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+      <div id="contact" className="py-20 bg-gradient-to-b from-white via-blue-50 to-blue-100 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <ScrollAnimation>
-              <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
+              <h2 className="text-4xl lg:text-5xl font-bold text-neutral-900 mb-6">
                 Get in Touch
               </h2>
             </ScrollAnimation>
             <ScrollAnimation delay={100}>
-              <p className="text-xl text-sunset-200 mb-8 max-w-3xl mx-auto">
-                Have questions about AI Icon Maker? Need help with your subscription? We're here to help you create amazing icons.
+              <p className="text-xl text-neutral-600 mb-8 max-w-3xl mx-auto">
+                Have questions about AI Logo Generator? Need help with your subscription? We're here to help you create amazing logos.
               </p>
             </ScrollAnimation>
           </div>
@@ -1033,41 +1143,41 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
           <div className="max-w-2xl mx-auto">
             {/* Contact Form */}
             <ScrollAnimation delay={200}>
-              <div className="bg-gradient-to-br from-midnight-900/50 to-midnight-950/70 backdrop-blur-md rounded-2xl p-8 border border-white/10 shadow-xl">
-                <h3 className="text-2xl font-bold text-white mb-6">Send us a message</h3>
+              <div className="bg-white/80 backdrop-blur-xl rounded-2xl p-8 border border-blue-200/50 shadow-xl">
+                <h3 className="text-2xl font-bold text-neutral-900 mb-6">Send us a message</h3>
                 <form ref={contactFormRef} className="space-y-6" onSubmit={handleContactSubmit}>
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-sunset-200 mb-2">
+                    <label htmlFor="name" className="block text-sm font-medium text-neutral-600 mb-2">
                       Name
                     </label>
                     <input
                       type="text"
                       id="name"
                       name="name"
-                      className="w-full bg-midnight-800/50 border border-midnight-700 rounded-lg p-3 text-white placeholder-sunset-300/50 focus:outline-none focus:border-sunset-400 focus:ring-2 focus:ring-sunset-400/20 transition-all duration-300"
+                      className="w-full bg-white/90 border border-neutral-200 rounded-lg p-3 text-neutral-900 placeholder-neutral-400 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-300"
                       placeholder="Your name"
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-sunset-200 mb-2">
+                    <label htmlFor="email" className="block text-sm font-medium text-neutral-600 mb-2">
                       Email
                     </label>
                     <input
                       type="email"
                       id="email"
                       name="email"
-                      className="w-full bg-midnight-800/50 border border-midnight-700 rounded-lg p-3 text-white placeholder-sunset-300/50 focus:outline-none focus:border-sunset-400 focus:ring-2 focus:ring-sunset-400/20 transition-all duration-300"
+                      className="w-full bg-white/90 border border-neutral-200 rounded-lg p-3 text-neutral-900 placeholder-neutral-400 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-300"
                       placeholder="your@email.com"
                     />
                   </div>
                   <div>
-                    <label htmlFor="subject" className="block text-sm font-medium text-sunset-200 mb-2">
+                    <label htmlFor="subject" className="block text-sm font-medium text-neutral-600 mb-2">
                       Subject
                     </label>
                     <select
                       id="subject"
                       name="subject"
-                      className="w-full bg-midnight-800/50 border border-midnight-700 rounded-lg p-3 text-white focus:outline-none focus:border-sunset-400 focus:ring-2 focus:ring-sunset-400/20 transition-all duration-300"
+                      className="w-full bg-white/90 border border-neutral-200 rounded-lg p-3 text-neutral-900 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-300"
                     >
                       <option value="">Select a topic</option>
                       <option value="general">General Question</option>
@@ -1078,20 +1188,20 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
                     </select>
                   </div>
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-sunset-200 mb-2">
+                    <label htmlFor="message" className="block text-sm font-medium text-neutral-600 mb-2">
                       Message
                     </label>
                     <textarea
                       id="message"
                       name="message"
                       rows={5}
-                      className="w-full bg-midnight-800/50 border border-midnight-700 rounded-lg p-3 text-white placeholder-sunset-300/50 focus:outline-none focus:border-sunset-400 focus:ring-2 focus:ring-sunset-400/20 transition-all duration-300 resize-none"
+                      className="w-full bg-white/90 border border-neutral-200 rounded-lg p-3 text-neutral-900 placeholder-neutral-400 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-300 resize-none"
                       placeholder="Tell us how we can help you..."
                     ></textarea>
                   </div>
                   {/* Success/Error Messages */}
                   {submitStatus === 'success' && (
-                    <div className="bg-green-500/20 border border-green-500/50 rounded-lg p-4 text-green-300">
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-green-700">
                       <div className="flex items-center">
                         <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -1102,7 +1212,7 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
                   )}
                   
                   {submitStatus === 'error' && (
-                    <div className="bg-red-500/20 border border-red-500/50 rounded-lg p-4 text-red-300">
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">
                       <div className="flex items-center">
                         <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -1115,11 +1225,11 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-gradient-to-r from-sunset-500 to-coral-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-sunset-600 hover:to-coral-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                    className="w-full bg-gradient-to-r from-primary-600 to-accent-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-primary-700 hover:to-accent-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                   >
                     {isSubmitting ? (
                       <div className="flex items-center justify-center">
-                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-neutral-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
@@ -1142,4 +1252,3 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
     </div>
   );
 }
-
