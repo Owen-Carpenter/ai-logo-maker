@@ -47,6 +47,8 @@ export default function LogoDisplayPanel({
   const dalleThoughts = useState<string>('');
   const thoughtsContainerRef = useRef<HTMLDivElement>(null);
   const [userHasScrolledUp, setUserHasScrolledUp] = useState(false);
+  const [showExpandedImage, setShowExpandedImage] = useState(false);
+  const [expandedImageUrl, setExpandedImageUrl] = useState<string>('');
 
   // Since we're only using PNG images now, we don't need SVG extraction logic
   useEffect(() => {
@@ -291,7 +293,14 @@ export default function LogoDisplayPanel({
                     </p>
                   </div>
                 )}
-                <div className={`${mobileCompactMode ? 'w-32 h-32' : 'w-64 h-64 lg:w-80 lg:h-80'} bg-white border-2 border-neutral-200 rounded-xl ${mobileCompactMode ? 'p-4' : 'p-8 lg:p-12'} hover:border-primary-300 transition-all duration-200 flex flex-col items-center justify-center group shadow-lg hover:shadow-xl`}>
+                <div 
+                  className={`${mobileCompactMode ? 'w-32 h-32' : 'w-64 h-64 lg:w-80 lg:h-80'} bg-white border-2 border-neutral-200 rounded-xl ${mobileCompactMode ? 'p-4' : 'p-8 lg:p-12'} hover:border-primary-300 transition-all duration-200 flex flex-col items-center justify-center group shadow-lg hover:shadow-xl cursor-pointer`}
+                  onClick={() => {
+                    const imageUrl = generatedImages.length > 0 ? generatedImages[0] : selectedLogoUrl;
+                    setExpandedImageUrl(imageUrl);
+                    setShowExpandedImage(true);
+                  }}
+                >
                   <img
                     src={generatedImages.length > 0 ? generatedImages[0] : selectedLogoUrl}
                     alt={generatedImages.length > 0 ? "Improved logo" : "Logo to improve"}
@@ -475,6 +484,34 @@ export default function LogoDisplayPanel({
                 Copy this SVG code to use your logo in any web project or design tool.
               </p>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Expanded Image Modal */}
+      {showExpandedImage && (
+        <div 
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+          onClick={() => setShowExpandedImage(false)}
+        >
+          <div 
+            className="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowExpandedImage(false)}
+              className="absolute top-4 right-4 text-white hover:text-neutral-300 transition-colors bg-black/50 hover:bg-black/70 rounded-full p-2 z-10"
+              title="Close"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <img
+              src={expandedImageUrl}
+              alt="Expanded logo view"
+              className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
+            />
           </div>
         </div>
       )}
