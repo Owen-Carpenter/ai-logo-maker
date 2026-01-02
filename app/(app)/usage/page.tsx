@@ -118,7 +118,7 @@ function UsagePageContent() {
                 </div>
               </div>
 
-              {/* Icons in Library */}
+              {/* Logos in Library */}
               <div className="bg-white border border-neutral-200 rounded-xl backdrop-blur-sm p-6 hover:shadow-xl hover:shadow-primary-500/10 transition-all duration-300 hover:scale-105 hover:border-primary-400">
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-12 h-12 bg-gradient-to-r from-primary-600 to-accent-500 rounded-xl flex items-center justify-center">
@@ -134,7 +134,7 @@ function UsagePageContent() {
                       <div className="w-8 h-8 border-2 border-sunset-400 border-t-transparent rounded-full animate-spin"></div>
                     ) : savedIconsCount}
                   </h3>
-                  <p className="text-neutral-600 text-sm">Icons Saved</p>
+                  <p className="text-neutral-600 text-sm">Logos Saved</p>
                 </div>
               </div>
 
@@ -221,7 +221,7 @@ function UsagePageContent() {
                         <span className="text-primary-600 font-semibold">Usage Alert</span>
                       </div>
                       <p className="text-neutral-600 text-sm">
-                        You've used {Math.round(usagePercentage)}% of your credits. Consider upgrading your plan for more icons.
+                        You've used {Math.round(usagePercentage)}% of your credits. Consider upgrading your plan for more logos.
                       </p>
                     </div>
                   )}
@@ -231,7 +231,7 @@ function UsagePageContent() {
                   <Crown className="h-12 w-12 text-primary-600 mx-auto mb-4" />
                   <h3 className="text-lg font-semibold text-primary-600 mb-2">No Active Subscription</h3>
                   <p className="text-neutral-600 text-sm mb-4">
-                    Subscribe to start tracking your icon generation usage and unlock unlimited creativity.
+                    Subscribe to start tracking your logo generation usage and unlock unlimited creativity.
                   </p>
                   <Link 
                     href="/account" 
@@ -277,7 +277,7 @@ function UsagePageContent() {
                       <div className="flex items-center justify-between">
                         <span className="text-neutral-600">Plan Features:</span>
                         <span className="text-neutral-900">
-                          {isUnlimited ? 'Unlimited Icons' : `${totalCredits} Credits/Month`}
+                          {isUnlimited ? 'Unlimited Logos' : `${totalCredits} Credits/Month`}
                         </span>
                       </div>
 
@@ -334,7 +334,7 @@ function UsagePageContent() {
                   href="/generate" 
                   className="bg-gradient-to-r from-primary-600 to-accent-500 text-neutral-900 px-8 py-3 rounded-xl font-semibold hover:from-primary-700 hover:to-accent-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
                 >
-                  Generate More Icons
+                  Generate More Logos
                 </Link>
                 <Link 
                   href="/account" 
@@ -363,15 +363,15 @@ function UsagePageContent() {
                   <ul className="space-y-3 text-neutral-600 text-sm">
                     <li className="flex items-start">
                       <span className="text-primary-600 mr-2">•</span>
-                      Be specific in your icon descriptions for better results
+                      Be specific in your logo descriptions for better results
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary-600 mr-2">•</span>
-                      Use the "Improve Icon" feature to refine existing icons
+                      Use the "Improve Logo" feature to refine existing logos
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary-600 mr-2">•</span>
-                      Save your favorite icons to the library for later use
+                      Save your favorite logos to the library for later use
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary-600 mr-2">•</span>
@@ -384,19 +384,19 @@ function UsagePageContent() {
                   <ul className="space-y-3 text-neutral-600 text-sm">
                     <li className="flex items-start">
                       <span className="text-primary-600 mr-2">•</span>
-                      Base plan: 25 credits/month ($5)
+                      Starter Pack: 25 credits (one-time) for $5
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary-600 mr-2">•</span>
-                      Pro plan: 100 credits/month ($10)
+                      Pro Monthly: 50 credits/month for $10
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary-600 mr-2">•</span>
-                      Pro+ plan: 200 credits/month ($15)
+                      Pro Yearly: 700 credits/year for $96 (save 20%)
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary-600 mr-2">•</span>
-                      Credits reset monthly on your renewal date
+                      Monthly subscriptions reset on your renewal date
                     </li>
                   </ul>
                 </div>
