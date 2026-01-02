@@ -182,7 +182,7 @@ function AccountPageContent() {
 
                     {userData?.usage?.total_generations !== undefined && (
                       <div className="flex items-center justify-between">
-                        <span className="text-neutral-600">Total Generated:</span>
+                        <span className="text-neutral-600">Total Used:</span>
                         <span className="text-neutral-900 font-semibold">
                           {userData.usage.total_generations}
                         </span>
