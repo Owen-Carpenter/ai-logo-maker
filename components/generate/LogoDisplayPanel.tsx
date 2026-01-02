@@ -188,6 +188,28 @@ export default function LogoDisplayPanel({
             <h2 className="text-lg font-semibold text-neutral-900">Generated Logos</h2>
             <p className="text-neutral-600 text-sm">Choose an action below each logo: Improve it or Download it</p>
           </div>
+          <div className="flex items-center gap-2">
+            {isImprovementMode && onExitImprovementMode && (
+              <button
+                onClick={onExitImprovementMode}
+                className="text-neutral-400 hover:text-neutral-900 transition-colors p-1"
+                title="Back to Original Logos"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+            )}
+            <button
+              onClick={onReset}
+              className="text-neutral-400 hover:text-neutral-900 transition-colors p-1"
+              title="Start New Logo"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -401,14 +423,6 @@ export default function LogoDisplayPanel({
           data-walkthrough="action-buttons"
           className="p-4 lg:p-6 border-t border-neutral-200 space-y-3 bg-white relative z-30 shadow-lg"
         >
-          {isImprovementMode && onExitImprovementMode && (
-            <button
-              onClick={onExitImprovementMode}
-              className="w-full bg-primary-500/20 hover:bg-primary-500/30 text-primary-700 py-2 px-4 rounded-lg font-semibold transition-colors border border-primary-500/30 hover:border-primary-500/50"
-            >
-              ← Back to Original Logos
-            </button>
-          )}
           {isImprovementMode ? null : (
             <button
               onClick={onRegenerate}
@@ -417,15 +431,6 @@ export default function LogoDisplayPanel({
               Generate Different Variations
             </button>
           )}
-          <button
-            onClick={onReset}
-            className="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg font-semibold transition-colors border border-red-600 hover:border-red-700 flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-            </svg>
-            Start New Logo
-          </button>
         </div>
       )}
 
