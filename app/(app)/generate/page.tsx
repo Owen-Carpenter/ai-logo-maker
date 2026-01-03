@@ -518,12 +518,12 @@ function GeneratePageContent() {
   };
 
   return (
-    <div className="min-h-screen h-screen bg-gradient-to-br from-white via-blue-50 to-blue-100 flex flex-col lg:flex-row relative overflow-auto lg:overflow-hidden">
+    <div className="min-h-screen h-screen bg-white lg:bg-gradient-to-br lg:from-white lg:via-blue-50 lg:to-blue-100 flex flex-col lg:flex-row relative overflow-auto lg:overflow-hidden">
       {/* Sidebar Navigation - Responsive */}
               <Sidebar currentPage="generate" onStartWalkthrough={handleStartWalkthrough} isGenerating={isGenerating} />
 
       {/* Main Content Area with Seamless Transition */}
-      <div className="flex-1 relative overflow-auto lg:overflow-hidden h-full">
+      <div className="flex-1 relative overflow-auto lg:overflow-hidden h-full bg-white lg:bg-transparent">
         <ToastContainer toasts={toasts} onClose={removeToast} />
         
         {/* Success Message Overlay */}
@@ -607,7 +607,7 @@ function GeneratePageContent() {
           showHeroView ? 'opacity-0 scale-110' : 'opacity-100 scale-100'
         }`}>
           {/* Mobile Layout: Different views based on state */}
-          <div className="lg:hidden w-full h-full">
+          <div className="lg:hidden w-full h-full bg-white">
             {isGenerating ? (
               // Mobile: Show only LogoDisplayPanel during generation
               <LogoDisplayPanel
@@ -628,8 +628,8 @@ function GeneratePageContent() {
               />
             ) : isImprovementMode ? (
               // Mobile: Show compact LogoDisplayPanel at top, ChatPanel takes remaining space
-              <div className="flex flex-col h-full">
-                <div className="h-auto flex-shrink-0 py-4">
+              <div className="flex flex-col h-full bg-white">
+                <div className="h-auto flex-shrink-0 bg-white">
                   <LogoDisplayPanel
                     generatedImages={generatedImages}
                     isGenerating={isGenerating}
@@ -648,7 +648,7 @@ function GeneratePageContent() {
                     mobileCompactMode={true}
                   />
                 </div>
-                <div className="flex-1 flex flex-col min-h-0">
+                <div className="flex-1 flex flex-col min-h-0 bg-white">
                   <ChatPanel
                     currentPrompt={currentPrompt}
                     setCurrentPrompt={setCurrentPrompt}
@@ -685,8 +685,8 @@ function GeneratePageContent() {
               />
             ) : (
               // Mobile: Show LogoDisplayPanel + ChatPanel when user can interact freely
-              <div className="flex flex-col h-full">
-                <div className="flex-1 flex flex-col min-h-0">
+              <div className="flex flex-col h-full bg-white">
+                <div className="flex-1 flex flex-col min-h-0 bg-white">
                   <LogoDisplayPanel
                     generatedImages={generatedImages}
                     isGenerating={isGenerating}
@@ -704,7 +704,7 @@ function GeneratePageContent() {
                     currentColor="#000000"
                   />
                 </div>
-                <div className="h-80 flex-shrink-0">
+                <div className="h-80 flex-shrink-0 bg-white">
                   <ChatPanel
                     currentPrompt={currentPrompt}
                     setCurrentPrompt={setCurrentPrompt}

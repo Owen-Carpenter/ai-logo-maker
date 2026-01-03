@@ -82,10 +82,10 @@ export default function ChatPanel({
   return (
       <div 
         data-walkthrough="chat-panel"
-        className="w-full lg:w-96 lg:flex-shrink-0 bg-white backdrop-blur-sm flex flex-col border-r-0 lg:border-r border-b lg:border-b-0 border-neutral-200 h-full lg:h-full lg:min-h-0"
+        className="w-full lg:w-96 lg:flex-shrink-0 bg-white backdrop-blur-sm flex flex-col border-r-0 lg:border-r border-b-0 lg:border-b-0 border-neutral-200 h-full lg:h-full lg:min-h-0"
       >
       {/* Chat Header */}
-      <div className="px-6 py-4 border-b border-neutral-200 bg-white/50 backdrop-blur-sm">
+      <div className="px-6 py-4 border-b border-neutral-200 bg-white backdrop-blur-sm">
         <div className="flex items-center space-x-3">
           <div className="flex-1">
             <h2 className="text-lg font-semibold text-neutral-900">
