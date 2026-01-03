@@ -259,12 +259,14 @@ export default function HomePage() {
                     className="bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 rounded-lg px-2 py-1 text-neutral-700 text-xs focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-200 transition-colors [&>option]:bg-white [&>option]:text-neutral-900 [&>option]:border-none"
                   >
                     <option value="modern">Modern</option>
-                    <option value="flat">Flat</option>
-                    <option value="line-art">Line Art</option>
-                    <option value="3d">3D</option>
-                    <option value="vintage">Vintage</option>
-                    <option value="neon">Neon</option>
+                    <option value="gaming">Gaming</option>
+                    <option value="corporate">Corporate</option>
+                    <option value="creative">Creative</option>
                     <option value="minimalist">Minimalist</option>
+                    <option value="bold">Bold</option>
+                    <option value="elegant">Elegant</option>
+                    <option value="tech">Tech</option>
+                    <option value="vintage">Vintage</option>
                     <option value="hand-drawn">Hand Drawn</option>
                   </select>
                 </div>
