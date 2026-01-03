@@ -184,13 +184,13 @@ export default function LogoDisplayPanel({
       className="flex-1 flex flex-col h-full min-h-0 relative bg-white"
     >
       {/* Results Header */}
-      <div className="px-6 py-4 border-b border-neutral-200 bg-white relative z-10 shadow-sm">
+      <div className="px-6 py-4 border-b border-neutral-200 bg-white relative z-[10001] shadow-sm">
         <div className="flex items-center space-x-3">
           <div className="flex-1">
             <h2 className="text-lg font-semibold text-neutral-900">Generated Logos</h2>
             <p className="text-neutral-600 text-sm">Choose an action below each logo: Improve it or Download it</p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 lg:gap-2 pr-14 lg:pr-0">
             {isImprovementMode && onExitImprovementMode && (
               <button
                 onClick={onExitImprovementMode}
