@@ -576,12 +576,14 @@ function GeneratePageContent() {
                       className="bg-neutral-100 hover:bg-neutral-200 text-neutral-700 hover:text-neutral-900 transition-all duration-300 text-xs sm:text-sm px-2 py-1 sm:px-3 sm:py-1.5 rounded-full border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-primary-200 [&>option]:bg-white [&>option]:text-neutral-900"
                     >
                       <option value="modern">Modern</option>
-                      <option value="flat">Flat</option>
-                      <option value="line-art">Line Art</option>
-                      <option value="3d">3D</option>
-                      <option value="vintage">Vintage</option>
-                      <option value="neon">Neon</option>
+                      <option value="gaming">Gaming</option>
+                      <option value="corporate">Corporate</option>
+                      <option value="creative">Creative</option>
                       <option value="minimalist">Minimalist</option>
+                      <option value="bold">Bold</option>
+                      <option value="elegant">Elegant</option>
+                      <option value="tech">Tech</option>
+                      <option value="vintage">Vintage</option>
                       <option value="hand-drawn">Hand Drawn</option>
                     </select>
                   </div>

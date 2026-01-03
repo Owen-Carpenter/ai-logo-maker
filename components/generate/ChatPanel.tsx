@@ -209,12 +209,14 @@ export default function ChatPanel({
               className="flex-1 bg-white border border-neutral-200 rounded-lg px-2 py-2 text-neutral-900 text-xs focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors [&>option]:bg-white [&>option]:text-neutral-900 [&>option]:border-none disabled:opacity-50 shadow-sm"
             >
               <option value="modern">Modern</option>
-              <option value="flat">Flat</option>
-              <option value="line-art">Line Art</option>
-              <option value="3d">3D</option>
-              <option value="vintage">Vintage</option>
-              <option value="neon">Neon</option>
+              <option value="gaming">Gaming</option>
+              <option value="corporate">Corporate</option>
+              <option value="creative">Creative</option>
               <option value="minimalist">Minimalist</option>
+              <option value="bold">Bold</option>
+              <option value="elegant">Elegant</option>
+              <option value="tech">Tech</option>
+              <option value="vintage">Vintage</option>
               <option value="hand-drawn">Hand Drawn</option>
             </select>
           </div>
