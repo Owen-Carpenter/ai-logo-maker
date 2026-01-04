@@ -23,7 +23,7 @@ export default function CookiePolicy() {
             <section>
               <h2 className="text-2xl font-semibold mb-4">2. How We Use Cookies</h2>
               <div className="text-neutral-700 space-y-2">
-                <p>AI Logo Generator uses cookies and similar technologies to:</p>
+                <p>AI Logo Builder uses cookies and similar technologies to:</p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
                   <li>Keep you signed in to your account</li>
                   <li>Remember your preferences and settings</li>
@@ -178,7 +178,7 @@ export default function CookiePolicy() {
                 <p>If you have any questions about our use of cookies or this Cookie Policy, please contact us at:</p>
                 <ul className="list-none space-y-2 ml-4 mt-4">
                   <li><strong>Email:</strong> privacy@ailogomaker.com</li>
-                  <li><strong>Address:</strong> AI Logo Generator, Privacy Department</li>
+                  <li><strong>Address:</strong> AI Logo Builder, Privacy Department</li>
                 </ul>
                 <p className="mt-4">For more information about our data practices, please see our <a href="/privacy" className="text-primary-600 hover:text-primary-700 underline">Privacy Policy</a>.</p>
               </div>

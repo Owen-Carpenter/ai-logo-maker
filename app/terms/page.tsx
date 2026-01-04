@@ -16,14 +16,14 @@ export default function TermsOfService() {
             <section>
               <h2 className="text-2xl font-semibold mb-4">1. Acceptance of Terms</h2>
               <div className="text-neutral-700">
-                <p>By accessing and using AI Logo Generator ("the Service"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.</p>
+                <p>By accessing and using AI Logo Builder ("the Service"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.</p>
               </div>
             </section>
 
             <section>
               <h2 className="text-2xl font-semibold mb-4">2. Description of Service</h2>
               <div className="text-neutral-700 space-y-2">
-                <p>AI Logo Generator provides artificial intelligence-powered logo generation services. Our service allows users to:</p>
+                <p>AI Logo Builder provides artificial intelligence-powered logo generation services. Our service allows users to:</p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
                   <li>Generate custom logos using AI technology</li>
                   <li>Access and manage their logo library</li>
@@ -89,7 +89,7 @@ export default function TermsOfService() {
                 <p>You own the icons generated through our service and may use them for any legal purpose, including commercial use, without attribution requirements.</p>
                 
                 <h3 className="text-lg font-medium text-neutral-900">Service Content</h3>
-                <p>The AI Logo Generator service, including our AI models, software, and website content, is protected by copyright and other intellectual property laws. You may not copy, modify, or distribute our service content.</p>
+                <p>The AI Logo Builder service, including our AI models, software, and website content, is protected by copyright and other intellectual property laws. You may not copy, modify, or distribute our service content.</p>
                 
                 <h3 className="text-lg font-medium text-neutral-900">User-Submitted Content</h3>
                 <p>By submitting prompts or other content, you grant us a license to use this content to provide and improve our service.</p>
@@ -123,7 +123,7 @@ export default function TermsOfService() {
                 <p>Our service is provided "as is" without warranties of any kind, either express or implied. We do not warrant that the service will be error-free or uninterrupted.</p>
                 
                 <h3 className="text-lg font-medium text-neutral-900">Limitation of Liability</h3>
-                <p>To the maximum extent permitted by law, AI Logo Generator shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the service.</p>
+                <p>To the maximum extent permitted by law, AI Logo Builder shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the service.</p>
               </div>
             </section>
 
@@ -159,7 +159,7 @@ export default function TermsOfService() {
                 <p>If you have any questions about these Terms of Service, please contact us at:</p>
                 <ul className="list-none space-y-2 ml-4 mt-4">
                   <li><strong>Email:</strong> legal@ailogomaker.com</li>
-                  <li><strong>Address:</strong> AI Logo Generator, Legal Department</li>
+                  <li><strong>Address:</strong> AI Logo Builder, Legal Department</li>
                 </ul>
               </div>
             </section>

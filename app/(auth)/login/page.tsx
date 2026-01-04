@@ -48,7 +48,7 @@ export default function LoginPage() {
                 }}
               />
             </div>
-            <span className="text-2xl font-bold text-neutral-900">AI Logo Generator</span>
+            <span className="text-2xl font-bold text-neutral-900">AI Logo Builder</span>
           </Link>
           <h2 className="text-3xl font-bold text-neutral-900">
             Welcome back

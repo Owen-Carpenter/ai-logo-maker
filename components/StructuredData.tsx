@@ -2,7 +2,7 @@ export default function StructuredData() {
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: 'AI Logo Generator',
+    name: 'AI Logo Builder',
     applicationCategory: 'DesignApplication',
     operatingSystem: 'Web',
     offers: [
@@ -47,7 +47,7 @@ export default function StructuredData() {
   const organizationData = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'AI Logo Generator',
+    name: 'AI Logo Builder',
     url: 'https://ai-icon-maker.com',
     logo: 'https://ai-icon-maker.com/images/AI-Logo-Generator-Logo.png',
     description: 'Professional AI-powered logo generation platform for designers and developers',
@@ -57,7 +57,7 @@ export default function StructuredData() {
   const websiteData = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'AI Logo Generator',
+    name: 'AI Logo Builder',
     url: 'https://ai-icon-maker.com',
     description: 'Create professional-grade logos with AI',
     potentialAction: {

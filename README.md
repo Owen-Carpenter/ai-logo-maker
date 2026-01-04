@@ -1,8 +1,8 @@
-# 🎨 AI Logo Generator
+# 🎨 AI Logo Builder
 
 **[https://ai-logo-maker.com](https://ai-logo-maker.com)**
 
-**Make something iconic.** AI Logo Generator is the premier AI-powered logo generation platform for creating stunning, professional-grade brand identities in seconds. Perfect for designers, developers, founders, and creative professionals who need high-quality logos instantly.
+**Make something iconic.** AI Logo Builder is the premier AI-powered logo generation platform for creating stunning, professional-grade brand identities in seconds. Perfect for designers, developers, founders, and creative professionals who need high-quality logos instantly.
 
 ![Next.js](https://img.shields.io/badge/Next.js-15.3-000000?style=for-the-badge&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3B82F6?style=for-the-badge&logo=typescript)
@@ -13,7 +13,7 @@
 
 ---
 
-## 🚀 Why AI Logo Generator?
+## 🚀 Why AI Logo Builder?
 
 Stop wasting hours with generic logo templates or expensive designers. Just describe your vision, and watch our AI create unique, professional brand identities in seconds. From concept to production-ready logo in one conversation.
 

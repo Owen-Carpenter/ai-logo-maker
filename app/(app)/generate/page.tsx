@@ -531,7 +531,7 @@ function GeneratePageContent() {
           <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-[10000] bg-green-500/10 backdrop-blur-sm border border-green-500/20 rounded-lg p-4 mx-4 flex flex-col sm:flex-row items-start sm:items-center gap-3 shadow-xl">
             <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />
             <div>
-              <p className="text-green-400 font-semibold">Payment successful! Welcome to AI Logo Generator!</p>
+              <p className="text-green-400 font-semibold">Payment successful! Welcome to AI Logo Builder!</p>
               <p className="text-green-300 text-sm mt-1">Your subscription is now active. Start creating amazing logos below!</p>
             </div>
           </div>

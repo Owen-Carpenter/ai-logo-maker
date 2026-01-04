@@ -132,7 +132,7 @@ export default function PrivacyPolicy() {
                 <p>If you have any questions about this Privacy Policy or our data practices, please contact us at:</p>
                 <ul className="list-none space-y-2 ml-4 mt-4">
                   <li><strong>Email:</strong> privacy@ailogomaker.com</li>
-                  <li><strong>Address:</strong> AI Logo Generator, Privacy Department</li>
+                  <li><strong>Address:</strong> AI Logo Builder, Privacy Department</li>
                 </ul>
               </div>
             </section>

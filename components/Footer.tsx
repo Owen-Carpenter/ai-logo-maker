@@ -12,7 +12,7 @@ export default function Footer() {
           <div className="space-y-4">
             <Link href="/" className="flex items-center space-x-2 group">
               <Logo width={32} height={32} className="group-hover:scale-110 transition-transform duration-300" />
-              <span className="text-xl font-bold text-neutral-900">AI Logo Generator</span>
+              <span className="text-xl font-bold text-neutral-900">AI Logo Builder</span>
             </Link>
             <p className="text-neutral-600 max-w-sm">
               Create stunning, professional logos with the power of AI. 
@@ -26,7 +26,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li>
                 <Link href="/ai-logo-generator" className="text-neutral-600 hover:text-primary-600 transition-colors duration-300">
-                  AI Logo Generator
+                  AI Logo Builder
                 </Link>
               </li>
               <li>
@@ -106,7 +106,7 @@ export default function Footer() {
         <div className="border-t border-gray-200/20 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-gray-300 text-sm">
-              © {currentYear} AI Logo Generator. All rights reserved.
+              © {currentYear} AI Logo Builder. All rights reserved.
             </div>
             <div className="flex space-x-6 text-sm">
               <Link href="/privacy" className="text-neutral-600 hover:text-primary-600 transition-colors duration-300">

@@ -11,8 +11,8 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   metadataBase: new URL('https://ai-icon-maker.com'),
   title: {
-    default: 'AI Logo Generator - Create Professional Logos with AI',
-    template: '%s | AI Logo Generator'
+    default: 'AI Logo Builder - Create Professional Logos with AI',
+    template: '%s | AI Logo Builder'
   },
   description: 'Create professional-grade logos with AI-powered generation using GPT Image 1. Perfect for designers, developers, and content creators. Multiple styles, instant downloads, and personal library storage.',
   keywords: [
@@ -75,9 +75,9 @@ export const metadata: Metadata = {
     'unique logo generator',
     'custom AI logos',
   ],
-  authors: [{ name: 'AI Logo Generator' }],
-  creator: 'AI Logo Generator',
-  publisher: 'AI Logo Generator',
+  authors: [{ name: 'AI Logo Builder' }],
+  creator: 'AI Logo Builder',
+  publisher: 'AI Logo Builder',
   verification: {
     google: 'EFS5qxq_vRGUABjbt4LNQPlrLjtGyolIolAmwfMgGzw',
   },
@@ -101,15 +101,15 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://ai-icon-maker.com',
-    title: 'AI Logo Generator - Create Professional Logos with AI',
+    title: 'AI Logo Builder - Create Professional Logos with AI',
     description: 'Create professional-grade logos with AI-powered generation using GPT Image 1. Perfect for designers, developers, and content creators.',
-    siteName: 'AI Logo Generator',
+    siteName: 'AI Logo Builder',
     images: [
       {
         url: '/images/AI-Logo-Generator-Logo.png',
         width: 1200,
         height: 630,
-        alt: 'AI Logo Generator - Professional AI Logo Generation',
+        alt: 'AI Logo Builder - Professional AI Logo Generation',
       },
     ],
   },

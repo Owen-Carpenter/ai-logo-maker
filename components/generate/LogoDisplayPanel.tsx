@@ -224,7 +224,7 @@ export default function LogoDisplayPanel({
                 <div className="w-10 h-10 animate-spin mt-4">
                   <img 
                     src="/images/AI-Logo-Generator-Logo.png" 
-                    alt="AI Logo Maker" 
+                    alt="AI Logo Builder" 
                     className="w-full h-full object-contain"
                   />
                 </div>

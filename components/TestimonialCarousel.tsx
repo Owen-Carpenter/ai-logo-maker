@@ -16,7 +16,7 @@ interface Testimonial {
 const topRowTestimonials: Testimonial[] = [
   {
     id: '1',
-    quote: "AI Logo Generator completely transformed our branding workflow. We generated our entire logo suite in under an hour - something that would have taken weeks with traditional designers. The quality is outstanding and our clients love the results.",
+    quote: "AI Logo Builder completely transformed our branding workflow. We generated our entire logo suite in under an hour - something that would have taken weeks with traditional designers. The quality is outstanding and our clients love the results.",
     name: "David Richardson",
     title: "Lead Designer",
     company: "TechFlow Studios",
@@ -40,7 +40,7 @@ const topRowTestimonials: Testimonial[] = [
   },
   {
     id: '3',
-    quote: "We use AI Logo Generator for all our client projects now. The PNG exports are pristine, the turnaround is instant, and the AI consistently delivers professional-grade results. ROI has been phenomenal - we've saved over $50K in design costs this year alone.",
+    quote: "We use AI Logo Builder for all our client projects now. The PNG exports are pristine, the turnaround is instant, and the AI consistently delivers professional-grade results. ROI has been phenomenal - we've saved over $50K in design costs this year alone.",
     name: "Michael Torres",
     title: "Founder & CEO",
     company: "StartupLaunch",
@@ -79,7 +79,7 @@ const topRowTestimonials: Testimonial[] = [
 const bottomRowTestimonials: Testimonial[] = [
   {
     id: '6',
-    quote: "We needed a complete icon set for our mobile app - 18 unique icons in total. With AI Logo Generator, we had everything designed, refined, and export-ready in 2 hours. Traditional design would've taken 2 weeks minimum. Absolutely incredible.",
+    quote: "We needed a complete icon set for our mobile app - 18 unique icons in total. With AI Logo Builder, we had everything designed, refined, and export-ready in 2 hours. Traditional design would've taken 2 weeks minimum. Absolutely incredible.",
     name: "Alex Martinez",
     title: "Head of Product",
     company: "CloudSync",
@@ -127,7 +127,7 @@ const bottomRowTestimonials: Testimonial[] = [
   },
   {
     id: '10',
-    quote: "My entire creative team now uses AI Logo Generator exclusively. The natural language interface makes iteration effortless, and the results consistently exceed our expectations. Best design investment we've made this year, hands down.",
+    quote: "My entire creative team now uses AI Logo Builder exclusively. The natural language interface makes iteration effortless, and the results consistently exceed our expectations. Best design investment we've made this year, hands down.",
     name: "Pixel & Co",
     title: "Creative Studio",
     company: "Los Angeles, CA",
