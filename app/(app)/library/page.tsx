@@ -169,10 +169,7 @@ export default function LibraryPage() {
           {/* Header */}
           <div className="px-6 sm:px-8 lg:px-12 py-8 text-center">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-900 mb-4 leading-tight">
-              Your Logo 
-              <span className="inline-flex items-center mx-1 sm:mx-2">
-                <span className="text-2xl sm:text-3xl lg:text-4xl">📚</span>
-              </span>
+              Logo{' '}
               <span className="bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">Library</span>
             </h1>
             <p className="text-base sm:text-lg lg:text-xl text-neutral-700 mb-8 max-w-2xl mx-auto px-4">
