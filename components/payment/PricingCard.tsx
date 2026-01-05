@@ -112,12 +112,14 @@ export default function PricingCard({ plan, currentPlan, isPopular, variant = 'l
         <h3 className="text-2xl font-bold text-neutral-900 mb-2">{planData.name}</h3>
         <div className={plan === 'proYearly' ? 'mb-2' : 'mb-4'}>
           <span className="text-4xl font-bold text-neutral-900">${planData.price}</span>
-          {planData.isOneTime ? (
+          {'isOneTime' in planData && planData.isOneTime ? (
             <span className="text-lg font-normal text-neutral-600"></span>
-          ) : planData.interval === 'year' ? (
+          ) : 'interval' in planData && planData.interval === 'year' ? (
             <span className="text-lg font-normal text-neutral-600">/year</span>
-          ) : (
+          ) : 'interval' in planData && planData.interval === 'month' ? (
             <span className="text-lg font-normal text-neutral-600">/month</span>
+          ) : (
+            <span className="text-lg font-normal text-neutral-600"></span>
           )}
         </div>
         {plan === 'proYearly' && (
