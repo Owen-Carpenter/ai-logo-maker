@@ -59,10 +59,15 @@ export default function Navbar({ variant = 'marketing' }: NavbarProps) {
     };
   }, []);
 
-  // Auto-hide navbar on scroll
+  // Auto-hide navbar on scroll and close mobile menu when scrolling up
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
+      
+      // Close mobile menu when scrolling up
+      if (isMenuOpen && currentScrollY < lastScrollY && currentScrollY > 10) {
+        setIsMenuOpen(false);
+      }
       
       // Show navbar when at top, scrolling up, or hovering
       if (currentScrollY < 10) {
@@ -94,7 +99,7 @@ export default function Navbar({ variant = 'marketing' }: NavbarProps) {
     return () => {
       window.removeEventListener('scroll', throttledHandleScroll);
     };
-  }, [lastScrollY]);
+  }, [lastScrollY, isMenuOpen]);
 
   // Show navbar on hover when hidden
   useEffect(() => {
@@ -132,6 +137,9 @@ export default function Navbar({ variant = 'marketing' }: NavbarProps) {
   const navigationLinks = getNavigationLinks();
 
   const handleLinkClick = (link: any, e: React.MouseEvent) => {
+    // Close mobile menu when a link is clicked
+    setIsMenuOpen(false);
+    
     if (link.onClick) {
       e.preventDefault();
       link.onClick();
@@ -264,6 +272,7 @@ export default function Navbar({ variant = 'marketing' }: NavbarProps) {
                       key={link.href}
                       className="text-neutral-700 hover:text-primary-600 transition-all duration-300 font-medium px-4 py-3 rounded-2xl hover:bg-primary-50 border border-transparent hover:border-primary-200"
                       fallbackHref="/#pricing"
+                      onClick={() => setIsMenuOpen(false)}
                     >
                       {link.label}
                     </SmartGenerateLink>

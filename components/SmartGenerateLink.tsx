@@ -7,6 +7,7 @@ interface SmartGenerateLinkProps {
   children: React.ReactNode;
   className?: string;
   fallbackHref?: string; // Deprecated - kept for backwards compatibility but no longer used
+  onClick?: () => void;
 }
 
 /**
@@ -17,11 +18,12 @@ interface SmartGenerateLinkProps {
 export default function SmartGenerateLink({ 
   children, 
   className = '',
-  fallbackHref = '/#pricing' // Kept for backwards compatibility
+  fallbackHref = '/#pricing', // Kept for backwards compatibility
+  onClick
 }: SmartGenerateLinkProps) {
   // Always link to generate page - let the generate page handle auth flow
   return (
-    <Link href="/generate" className={className}>
+    <Link href="/generate" className={className} onClick={onClick}>
       {children}
     </Link>
   );
