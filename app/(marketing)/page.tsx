@@ -200,29 +200,80 @@ export default function HomePage() {
       <div className="w-full h-screen px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-gradient-to-b from-white via-blue-50 to-blue-100 relative overflow-visible animate-fade-in flex items-center">
 
         
-        {/* Floating Logo Icons - Organic motion with depth animation */}
-        <div className="absolute top-24 left-16 w-16 h-16 bg-white rounded-2xl p-3 shadow-lg opacity-30 animate-float-organic-1 hover:scale-125 hover:rotate-12 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '0s'}}>
-          <img src="/logos/logoipsum-280.svg" alt="Logo" className="w-full h-full object-contain" />
+        {/* Floating Logo Icons - Eye-catching with animated saber border effect */}
+        {/* Desktop: Show all 6 logos, Mobile: Show only 2-3 for less clutter */}
+        <div className="hidden md:block absolute top-24 left-16 w-20 h-20 aspect-square opacity-70 animate-float-organic-1 hover:scale-135 hover:rotate-12 transition-all duration-500 cursor-pointer will-change-transform group" style={{animationDelay: '0s'} as React.CSSProperties}>
+          <div className="rounded-2xl border-[3px] border-transparent shadow-xl hover:shadow-2xl hover:shadow-primary-500/40 transition-all duration-500" style={{
+            background: 'linear-gradient(45deg, #FFFFFF, #EFF6FF 50%, #FFFFFF) padding-box, conic-gradient(from calc(var(--border-angle) + 0deg), #FFFFFF 0%, #FFFFFF 60%, #3B82F6 60%, #0EA5E9 75%, #60A5FA 85%, #FFFFFF 85%, #FFFFFF 100%) border-box',
+            animation: 'border 4s linear infinite'
+          } as React.CSSProperties}>
+            <div className="bg-gradient-to-br from-white to-primary-50 rounded-xl p-3 relative aspect-square">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-500/10 to-accent-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <img src="/logos/logoipsum-280.svg" alt="Logo" className="w-full h-full object-contain relative z-10" />
+            </div>
+          </div>
         </div>
         
-        <div className="absolute top-48 right-32 w-12 h-12 bg-white rounded-xl p-2 shadow-lg opacity-30 animate-float-organic-3 hover:scale-125 hover:-rotate-12 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '2.3s'}}>
-          <img src="/logos/logoipsum-381.svg" alt="Logo" className="w-full h-full object-contain" />
+        <div className="hidden lg:block absolute top-48 right-32 w-14 h-14 aspect-square opacity-70 animate-float-organic-3 hover:scale-135 hover:-rotate-12 transition-all duration-500 cursor-pointer will-change-transform group" style={{animationDelay: '2.3s'} as React.CSSProperties}>
+          <div className="rounded-xl border-[3px] border-transparent shadow-xl hover:shadow-2xl hover:shadow-accent-500/40 transition-all duration-500" style={{
+            background: 'linear-gradient(45deg, #FFFFFF, #EFF6FF 50%, #FFFFFF) padding-box, conic-gradient(from calc(var(--border-angle) + 90deg), #FFFFFF 0%, #FFFFFF 60%, #0EA5E9 60%, #3B82F6 75%, #60A5FA 85%, #FFFFFF 85%, #FFFFFF 100%) border-box',
+            animation: 'border 4s linear infinite'
+          } as React.CSSProperties}>
+            <div className="bg-gradient-to-br from-white to-accent-50 rounded-lg p-2 relative aspect-square">
+              <div className="absolute inset-0 bg-gradient-to-br from-accent-500/10 to-primary-500/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <img src="/logos/logoipsum-381.svg" alt="Logo" className="w-full h-full object-contain relative z-10" />
+            </div>
+          </div>
         </div>
         
-        <div className="absolute top-36 left-1/3 w-14 h-14 bg-white rounded-xl p-2.5 shadow-lg opacity-30 animate-float-organic-2 hover:scale-125 hover:rotate-6 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '1.2s'}}>
-          <img src="/logos/logoipsum-339.svg" alt="Logo" className="w-full h-full object-contain" />
+        {/* Mobile: Show this one in top-right */}
+        <div className="absolute top-20 right-8 md:top-36 md:left-1/3 w-12 h-12 md:w-16 md:h-16 aspect-square opacity-65 md:opacity-70 animate-float-organic-2 hover:scale-135 hover:rotate-6 transition-all duration-500 cursor-pointer will-change-transform group" style={{animationDelay: '1.2s'} as React.CSSProperties}>
+          <div className="rounded-xl md:rounded-2xl border-[3px] border-transparent shadow-xl hover:shadow-2xl hover:shadow-primary-500/40 transition-all duration-500" style={{
+            background: 'linear-gradient(45deg, #FFFFFF, #EFF6FF 50%, #FFFFFF) padding-box, conic-gradient(from calc(var(--border-angle) + 180deg), #FFFFFF 0%, #FFFFFF 60%, #3B82F6 60%, #0EA5E9 75%, #60A5FA 85%, #FFFFFF 85%, #FFFFFF 100%) border-box',
+            animation: 'border 4s linear infinite'
+          } as React.CSSProperties}>
+            <div className="bg-gradient-to-br from-white to-primary-50 rounded-lg md:rounded-xl p-2 md:p-3 relative aspect-square">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-500/10 to-accent-500/10 rounded-lg md:rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <img src="/logos/logoipsum-339.svg" alt="Logo" className="w-full h-full object-contain relative z-10" />
+            </div>
+          </div>
         </div>
         
-        <div className="absolute bottom-48 left-24 w-12 h-12 bg-white rounded-xl p-2 shadow-lg opacity-30 animate-float-organic-1 hover:scale-125 hover:-rotate-6 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '3.8s'}}>
-          <img src="/logos/logoipsum-413.svg" alt="Logo" className="w-full h-full object-contain" />
+        <div className="hidden md:block absolute bottom-48 left-24 w-14 h-14 aspect-square opacity-70 animate-float-organic-1 hover:scale-135 hover:-rotate-6 transition-all duration-500 cursor-pointer will-change-transform group" style={{animationDelay: '3.8s'} as React.CSSProperties}>
+          <div className="rounded-xl border-[3px] border-transparent shadow-xl hover:shadow-2xl hover:shadow-accent-500/40 transition-all duration-500" style={{
+            background: 'linear-gradient(45deg, #FFFFFF, #EFF6FF 50%, #FFFFFF) padding-box, conic-gradient(from calc(var(--border-angle) + 270deg), #FFFFFF 0%, #FFFFFF 60%, #0EA5E9 60%, #3B82F6 75%, #60A5FA 85%, #FFFFFF 85%, #FFFFFF 100%) border-box',
+            animation: 'border 4s linear infinite'
+          } as React.CSSProperties}>
+            <div className="bg-gradient-to-br from-white to-accent-50 rounded-lg p-2 relative aspect-square">
+              <div className="absolute inset-0 bg-gradient-to-br from-accent-500/10 to-primary-500/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <img src="/logos/logoipsum-413.svg" alt="Logo" className="w-full h-full object-contain relative z-10" />
+            </div>
+          </div>
         </div>
         
-        <div className="absolute bottom-36 right-1/4 w-14 h-14 bg-white rounded-xl p-2.5 shadow-lg opacity-30 animate-float-organic-3 hover:scale-125 hover:rotate-12 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '1.7s'}}>
-          <img src="/logos/logoipsum-405.svg" alt="Logo" className="w-full h-full object-contain" />
+        {/* Mobile: Show this one in bottom-left */}
+        <div className="absolute bottom-32 left-6 md:bottom-36 md:right-1/4 w-12 h-12 md:w-16 md:h-16 aspect-square opacity-65 md:opacity-70 animate-float-organic-3 hover:scale-135 hover:rotate-12 transition-all duration-500 cursor-pointer will-change-transform group" style={{animationDelay: '1.7s'} as React.CSSProperties}>
+          <div className="rounded-xl md:rounded-2xl border-[3px] border-transparent shadow-xl hover:shadow-2xl hover:shadow-primary-500/40 transition-all duration-500" style={{
+            background: 'linear-gradient(45deg, #FFFFFF, #EFF6FF 50%, #FFFFFF) padding-box, conic-gradient(from calc(var(--border-angle) + 45deg), #FFFFFF 0%, #FFFFFF 60%, #3B82F6 60%, #0EA5E9 75%, #60A5FA 85%, #FFFFFF 85%, #FFFFFF 100%) border-box',
+            animation: 'border 4s linear infinite'
+          } as React.CSSProperties}>
+            <div className="bg-gradient-to-br from-white to-primary-50 rounded-lg md:rounded-xl p-2 md:p-3 relative aspect-square">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-500/10 to-accent-500/10 rounded-lg md:rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <img src="/logos/logoipsum-405.svg" alt="Logo" className="w-full h-full object-contain relative z-10" />
+            </div>
+          </div>
         </div>
         
-        <div className="absolute top-1/3 right-20 w-12 h-12 bg-white rounded-xl p-2 shadow-lg opacity-30 animate-float-organic-2 hover:scale-125 hover:-rotate-12 hover:!opacity-20 transition-all duration-700 cursor-pointer will-change-transform" style={{animationDelay: '0.6s'}}>
-          <img src="/logos/logoipsum-340.svg" alt="Logo" className="w-full h-full object-contain" />
+        <div className="hidden xl:block absolute top-1/3 right-20 w-14 h-14 aspect-square opacity-70 animate-float-organic-2 hover:scale-135 hover:-rotate-12 transition-all duration-500 cursor-pointer will-change-transform group" style={{animationDelay: '0.6s'} as React.CSSProperties}>
+          <div className="rounded-xl border-[3px] border-transparent shadow-xl hover:shadow-2xl hover:shadow-accent-500/40 transition-all duration-500" style={{
+            background: 'linear-gradient(45deg, #FFFFFF, #EFF6FF 50%, #FFFFFF) padding-box, conic-gradient(from calc(var(--border-angle) + 135deg), #FFFFFF 0%, #FFFFFF 60%, #0EA5E9 60%, #3B82F6 75%, #60A5FA 85%, #FFFFFF 85%, #FFFFFF 100%) border-box',
+            animation: 'border 4s linear infinite'
+          } as React.CSSProperties}>
+            <div className="bg-gradient-to-br from-white to-accent-50 rounded-lg p-2 relative aspect-square">
+              <div className="absolute inset-0 bg-gradient-to-br from-accent-500/10 to-primary-500/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <img src="/logos/logoipsum-340.svg" alt="Logo" className="w-full h-full object-contain relative z-10" />
+            </div>
+          </div>
         </div>
         <div className="flex flex-col items-center justify-center text-center w-full relative z-10">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-900 mb-4 leading-tight">
