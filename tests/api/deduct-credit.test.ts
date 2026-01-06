@@ -74,11 +74,11 @@ describe('POST /api/deduct-credit', () => {
     expect(result.status).toBe(200)
     const body = await result.json()
     expect(body.success).toBe(true)
-    expect(body.credits_deducted).toBe(1)
+    expect(body.credits_deducted).toBe(3)
     expect(body.remaining_tokens).toBeGreaterThanOrEqual(0)
   })
 
-  it('should deduct 3 credits for icon improvement', async () => {
+  it('should deduct 1 credit for icon improvement', async () => {
     const request = createMockRequest({
       prompt: 'make it blue',
       style: 'modern',
@@ -91,7 +91,7 @@ describe('POST /api/deduct-credit', () => {
     expect(result.status).toBe(200)
     const body = await result.json()
     expect(body.success).toBe(true)
-    expect(body.credits_deducted).toBe(3)
+    expect(body.credits_deducted).toBe(1)
   })
 
   it('should return 403 when user has insufficient credits', async () => {

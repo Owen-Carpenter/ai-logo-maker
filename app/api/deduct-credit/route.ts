@@ -60,8 +60,8 @@ export async function POST(request: NextRequest) {
     const monthlyLimit = subscription?.monthly_token_limit || 5
     const remaining = Math.max(0, monthlyLimit - totalUsed)
     
-    // Logo improvements cost 3 credits (because we pass image as input), new generations cost 1 credit
-    const creditsNeeded = isImprovement ? 3 : 1
+    // Initial logo generation costs 3 credits, improvements cost 1 credit each
+    const creditsNeeded = isImprovement ? 1 : 3
     
     if (remaining < creditsNeeded) {
       return NextResponse.json(

@@ -204,9 +204,9 @@ function GeneratePageContent() {
       const creditData = await creditResponse.json();
 
       if (!creditResponse.ok || !creditData?.success) {
-        const creditsNeeded = isImprovementMode ? 3 : 1;
+        const creditsNeeded = isImprovementMode ? 1 : 3;
         const errorMsg = creditData?.error?.includes('Insufficient credits') 
-          ? `You need ${creditsNeeded} credits but only have ${creditData?.remaining_tokens || 0}. ${isImprovementMode ? 'Logo improvements cost 3 credits.' : ''}`
+          ? `You need ${creditsNeeded} credit${creditsNeeded > 1 ? 's' : ''} but only have ${creditData?.remaining_tokens || 0}. ${isImprovementMode ? 'Logo improvements cost 1 credit.' : 'Initial logo generation costs 3 credits.'}`
           : creditData?.error || 'Failed to deduct credit. Please try again.';
         error(
           'Credit Deduction Failed',
@@ -399,7 +399,7 @@ function GeneratePageContent() {
         invalidateCache();
         await refreshUserData(true);
         
-        const creditsUsed = creditData.credits_deducted || (isImprovementMode ? 3 : 1);
+        const creditsUsed = creditData.credits_deducted || (isImprovementMode ? 1 : 3);
         success(
           isImprovementMode ? 'Logo Improved!' : 'Logos Generated!', 
           isImprovementMode 

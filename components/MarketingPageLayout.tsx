@@ -113,7 +113,7 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
     },
     {
       question: "How do credits work?",
-      answer: "Each logo generation uses 1 credit and creates multiple variations. Logo improvements use 3 credits. The Starter Pack gives you 25 credits to try the service. Monthly gives you 50 credits/month, and Yearly gives you 700 credits/year (100 bonus credits included!)."
+      answer: "Initial logo generation uses 3 credits and creates multiple variations. Logo improvements use 1 credit each. The Starter Pack gives you 25 credits to try the service. Monthly gives you 50 credits/month, and Yearly gives you 700 credits/year (100 bonus credits included!)."
     },
     {
       question: "Can I cancel my subscription anytime?",

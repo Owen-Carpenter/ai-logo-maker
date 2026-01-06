@@ -45,7 +45,7 @@ Choose the plan that fits your needs:
 - **Pro** - 100 credits/month - Most popular for professionals and freelancers. Generate up to 100 logos monthly.
 - **Pro+** - 200 credits/month - For agencies, teams, and high-volume users who need maximum generation capacity.
 
-Each logo generation costs 1 credit. Logo improvements cost 3 credits.
+Initial logo generation costs 3 credits. Logo improvements cost 1 credit each.
 
 Check out our [pricing page](https://ai-logo-maker.com/#pricing) for full details and features.
 
