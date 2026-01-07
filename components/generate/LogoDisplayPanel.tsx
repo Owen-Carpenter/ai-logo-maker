@@ -49,6 +49,7 @@ export default function LogoDisplayPanel({
   const [userHasScrolledUp, setUserHasScrolledUp] = useState(false);
   const [showExpandedImage, setShowExpandedImage] = useState(false);
   const [expandedImageUrl, setExpandedImageUrl] = useState<string>('');
+  const [selectedLogoIndex, setSelectedLogoIndex] = useState<number | null>(null);
 
   // Since we're only using PNG images now, we don't need SVG extraction logic
   useEffect(() => {
@@ -57,6 +58,8 @@ export default function LogoDisplayPanel({
     } else {
       setExtractedSvgCodes([]);
     }
+    // Reset selected logo when new images are generated
+    setSelectedLogoIndex(null);
   }, [generatedImages]);
 
   // Function to save logo to library
@@ -188,7 +191,7 @@ export default function LogoDisplayPanel({
         <div className="flex items-center space-x-3">
           <div className="flex-1">
             <h2 className="text-lg font-semibold text-neutral-900">Generated Logos</h2>
-            <p className="text-neutral-600 text-sm">Choose an action below each logo: Improve it or Download it</p>
+            <p className="text-neutral-600 text-sm">Click on a logo to select it, then choose to improve or download it</p>
           </div>
           <div className="flex items-center gap-2 lg:gap-2 pr-14 lg:pr-0">
             {isImprovementMode && onExitImprovementMode && (
@@ -353,39 +356,66 @@ export default function LogoDisplayPanel({
                 )}
               </div>
             ) : (
-              // Show all generated logos in grid
-              <div className="inline-grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
-                {generatedImages.map((image, index) => (
-                  <div
-                    key={index}
-                    className="aspect-square bg-white border-2 border-neutral-200 rounded-xl p-4 lg:p-6 hover:border-primary-300 transition-all duration-200 flex flex-col items-center justify-center hover:scale-105 relative shadow-lg hover:shadow-xl"
-                  >
-                    <div 
-                      onClick={() => onImproveLogo(image)}
-                      className="w-full h-full cursor-pointer flex items-center justify-center"
+              // Show all generated logos in grid - click to select, then show actions
+              <div className="w-full">
+                <div className="inline-grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mb-6">
+                  {generatedImages.map((image, index) => (
+                    <div
+                      key={index}
+                      onClick={() => setSelectedLogoIndex(selectedLogoIndex === index ? null : index)}
+                      className={`aspect-square bg-white border-2 rounded-xl p-4 lg:p-6 transition-all duration-200 flex flex-col items-center justify-center hover:scale-105 relative shadow-lg hover:shadow-xl cursor-pointer ${
+                        selectedLogoIndex === index 
+                          ? 'border-primary-500 ring-4 ring-primary-200' 
+                          : 'border-neutral-200 hover:border-primary-300'
+                      }`}
                     >
                       <img
                         src={image}
                         alt={`Generated logo ${index + 1}`}
-                        className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-200"
+                        className="w-full h-full object-contain transition-transform duration-200"
                       />
+                      {selectedLogoIndex === index && (
+                        <div className="absolute top-2 right-2 bg-primary-500 text-white rounded-full p-1.5 shadow-lg">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                        </div>
+                      )}
                     </div>
-                    
-                    {/* Simplified Action Buttons - Only essential actions */}
-                    <div className="mt-3 w-full flex gap-2">
+                  ))}
+                </div>
+                
+                {/* Action Buttons - Only show when a logo is selected */}
+                {selectedLogoIndex !== null && generatedImages[selectedLogoIndex] && (
+                  <div className="flex flex-col items-center space-y-4 mt-6">
+                    <div className="text-center mb-2">
+                      <p className="text-neutral-600 text-sm font-medium">Logo {selectedLogoIndex + 1} selected</p>
+                    </div>
+                    <div className="flex gap-3 w-full max-w-md">
+                      <button
+                        onClick={() => onImproveLogo(generatedImages[selectedLogoIndex])}
+                        className="flex-1 bg-gradient-to-r from-primary-600 to-accent-500 hover:from-primary-700 hover:to-accent-600 text-white py-3 px-6 rounded-lg font-semibold hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+                        title="Improve Logo"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                        Improve
+                      </button>
+                      
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
-                          openSaveModal(image);
+                          openSaveModal(generatedImages[selectedLogoIndex]);
                         }}
-                        disabled={savingLogoId === image}
-                        className="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 px-3 rounded-lg text-xs font-medium transition-colors border border-green-600 hover:border-green-700 flex items-center justify-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
+                        disabled={savingLogoId === generatedImages[selectedLogoIndex]}
+                        className="flex-1 bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-lg font-medium transition-colors border border-green-600 hover:border-green-700 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
                         title="Save to Library"
                       >
-                        {savingLogoId === image ? (
-                          <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin"></div>
+                        {savingLogoId === generatedImages[selectedLogoIndex] ? (
+                          <div className="w-4 h-4 border border-white border-t-transparent rounded-full animate-spin"></div>
                         ) : (
-                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
                           </svg>
                         )}
@@ -395,19 +425,25 @@ export default function LogoDisplayPanel({
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
-                          handleDownload(image);
+                          handleDownload(generatedImages[selectedLogoIndex]);
                         }}
-                        className="flex-1 bg-gradient-to-r from-primary-600 to-accent-500 hover:from-primary-700 hover:to-accent-600 text-white py-2 px-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300 text-xs flex items-center justify-center gap-1 shadow-md hover:shadow-lg"
+                        className="flex-1 bg-gradient-to-r from-primary-600 to-accent-500 hover:from-primary-700 hover:to-accent-600 text-white py-3 px-6 rounded-lg font-semibold hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
                         title="Download PNG"
                       >
-                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
-                        PNG
+                        Download
                       </button>
                     </div>
                   </div>
-                ))}
+                )}
+                
+                {selectedLogoIndex === null && (
+                  <div className="text-center mt-6">
+                    <p className="text-neutral-500 text-sm">Click on a logo above to improve or download it</p>
+                  </div>
+                )}
               </div>
             )}
           </div>
