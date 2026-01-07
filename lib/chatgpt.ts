@@ -192,7 +192,7 @@ export async function generateIconsWithChatGPT(request: IconGenerationRequest): 
           // Use standard generation endpoint for new icons
           // Use "high" quality for professional logo generation
           // Supported values are: 'low', 'medium', 'high', and 'auto'
-          const imageQuality = process.env.OPENAI_IMAGE_QUALITY || "high";
+          const imageQuality = process.env.OPENAI_IMAGE_QUALITY || "auto";
           const imageSize = process.env.OPENAI_IMAGE_SIZE || "1024x1024";
           
           response = await openai.images.generate({
