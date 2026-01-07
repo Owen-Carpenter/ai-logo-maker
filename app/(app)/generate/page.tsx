@@ -44,6 +44,8 @@ function GeneratePageContent() {
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [resetConversation, setResetConversation] = useState(false);
   const [showResetConfirmDialog, setShowResetConfirmDialog] = useState(false);
+  const [showNavigationConfirmDialog, setShowNavigationConfirmDialog] = useState(false);
+  const [pendingNavigation, setPendingNavigation] = useState<string | null>(null);
   
   // Walkthrough state
   const { isActive: isWalkthroughActive, startWalkthrough, completeWalkthrough, skipWalkthrough } = useWalkthrough();
@@ -105,8 +107,8 @@ function GeneratePageContent() {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (isGenerating) {
         e.preventDefault();
-        e.returnValue = ''; // Chrome requires returnValue to be set
-        return ''; // Some browsers display this message
+        e.returnValue = 'Your logo is currently being generated. If you leave now, your progress will be lost and you\'ll lose the credits you\'ve already spent.'; // Chrome requires returnValue to be set
+        return e.returnValue; // Some browsers display this message
       }
     };
 
@@ -114,6 +116,48 @@ function GeneratePageContent() {
 
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [isGenerating]);
+
+  // Intercept browser navigation (back/forward buttons) and programmatic navigation during generation
+  useEffect(() => {
+    if (!isGenerating) return;
+
+    const handlePopState = (e: PopStateEvent) => {
+      // Prevent back/forward navigation when generating
+      window.history.pushState(null, '', window.location.href);
+      setPendingNavigation('back');
+      setShowNavigationConfirmDialog(true);
+    };
+
+    // Intercept all link clicks on the page
+    const handleLinkClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const link = target.closest('a[href]') as HTMLAnchorElement;
+      
+      if (link && link.href) {
+        // Check if it's an internal navigation (same origin)
+        const linkUrl = new URL(link.href);
+        const currentUrl = new URL(window.location.href);
+        
+        // Only intercept internal navigation
+        if (linkUrl.origin === currentUrl.origin && linkUrl.pathname !== currentUrl.pathname) {
+          e.preventDefault();
+          e.stopPropagation();
+          setPendingNavigation(linkUrl.pathname + linkUrl.search);
+          setShowNavigationConfirmDialog(true);
+        }
+      }
+    };
+
+    // Push current state to prevent back navigation
+    window.history.pushState(null, '', window.location.href);
+    window.addEventListener('popstate', handlePopState);
+    document.addEventListener('click', handleLinkClick, true); // Use capture phase
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      document.removeEventListener('click', handleLinkClick, true);
     };
   }, [isGenerating]);
 
@@ -794,6 +838,31 @@ function GeneratePageContent() {
           performReset();
         }}
         onCancel={() => setShowResetConfirmDialog(false)}
+        variant="warning"
+      />
+
+      {/* Navigation Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={showNavigationConfirmDialog}
+        title="Leave Page During Generation?"
+        message="Your logo is currently being generated. If you leave now, your progress will be lost and you'll lose the credits you've already spent. Are you sure you want to leave this page?"
+        confirmText="Leave Page"
+        cancelText="Stay on Page"
+        onConfirm={() => {
+          setShowNavigationConfirmDialog(false);
+          if (pendingNavigation === 'back') {
+            router.back();
+          } else if (pendingNavigation === 'forward') {
+            router.forward();
+          } else if (pendingNavigation) {
+            router.push(pendingNavigation);
+          }
+          setPendingNavigation(null);
+        }}
+        onCancel={() => {
+          setShowNavigationConfirmDialog(false);
+          setPendingNavigation(null);
+        }}
         variant="warning"
       />
     </div>
