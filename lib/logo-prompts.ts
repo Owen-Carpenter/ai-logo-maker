@@ -18,24 +18,19 @@ export interface PromptContext {
 export function getInitialReasoningPrompt(context: PromptContext): string {
   const { prompt, style, count } = context;
   
-  return `You are an expert logo designer using GPT Image 1.5. A user wants to create ${count} professional, brand-ready logos for "${prompt}" in ${style} style.
+  // Optimized prompt - shorter to reduce token costs while maintaining quality
+  return `Create ${count} professional logos for "${prompt}" in ${style} style.
 
-CRITICAL REQUIREMENTS:
-- TRANSPARENT PNG BACKGROUND - completely transparent, no background elements
-- PROFESSIONAL DESIGN - memorable, scalable, and distinctive brand identity
-- CLEAN COMPOSITION - well-balanced elements that work at various sizes
-- BRAND-READY - suitable for business use, marketing materials, and digital applications
-- HIGH CONTRAST - clear visibility at small and large sizes
-- STYLE CONSISTENCY - all variations should maintain the ${style} aesthetic
+Requirements: transparent PNG background, memorable design, scalable, brand-ready.
 
-Please provide a brief reasoning process explaining:
-1. How you'll create a professional, brand-ready logo for "${prompt}"
-2. Your approach to ensuring completely transparent backgrounds
-3. Design choices that make it memorable and distinctive
-4. How you'll ensure scalability and versatility across different applications
-5. Color and typography considerations for the ${style} style
+Briefly explain:
+1. Design approach for "${prompt}"
+2. Transparent background method
+3. Memorable/distinctive elements
+4. Scalability considerations
+5. Color/typography for ${style} style
 
-Keep this concise and focused on creating a professional brand identity.`;
+Keep concise.`;
 }
 
 /**
@@ -57,31 +52,27 @@ export function getImprovementReasoningPrompt(context: PromptContext): string {
     ? 'IMPORTANT: The color change must be visually obvious and match exactly what was requested.'
     : '';
   
-  return `You are an expert logo designer using GPT Image 1.5. A user wants to refine an existing logo based on their cumulative feedback: "${prompt}" in ${style} style.
+  // Optimized prompt - shorter to reduce token costs
+  return `Refine existing logo with feedback: "${prompt}" in ${style} style.
 
-CRITICAL REQUIREMENTS:
-- TRANSPARENT PNG BACKGROUND - completely transparent, no background elements
-- PROFESSIONAL DESIGN - maintain brand identity while applying improvements
-- CLEAN COMPOSITION - well-balanced elements that work at various sizes
-- BRAND-READY - suitable for business use, marketing materials, and digital applications
-- HIGH CONTRAST - clear visibility at small and large sizes
-- STYLE CONSISTENCY - maintain the ${style} aesthetic
+Requirements: transparent PNG, maintain brand identity, scalable, brand-ready.
 
-Please provide a brief reasoning process explaining:
-1. How you'll refine the existing logo based on ALL the feedback: "${allImprovements}"
-2. Your approach to ensuring completely transparent backgrounds
-3. Design choices that maintain brand identity while applying improvements - ${colorNote}
-4. How you'll ensure the logo remains scalable and versatile after the changes
-5. How you'll keep the same core brand concept and recognizable elements while applying ALL the requested modifications together
+Briefly explain:
+1. Refinement approach for: "${allImprovements}"
+2. Transparent background method
+3. Brand identity preservation - ${colorNote}
+4. Scalability after changes
+5. Keeping core concept while applying all modifications
 
-IMPORTANT: You are REFINING an existing logo with CUMULATIVE improvements, not creating a new one. Keep the same core brand concept and recognizable elements, but apply ALL the requested modifications together (color, style adjustments, composition, etc.). ${colorImportance}`;
+Refine existing logo, don't create new. Apply all changes together. ${colorImportance}`;
 }
 
 /**
  * Generate system prompt for logo design reasoning
  */
 export function getSystemPrompt(): string {
-  return "You are an expert logo designer specializing in professional, brand-ready logos with transparent PNG backgrounds. You create memorable, scalable logos that work for businesses, brands, and digital applications. Focus on distinctive designs, clear composition, and versatile brand identities that maintain clarity at all sizes.";
+  // Optimized system prompt - shorter to reduce token costs
+  return "Expert logo designer creating professional, brand-ready logos with transparent PNG backgrounds. Focus on memorable, scalable designs for business use.";
 }
 
 /**

@@ -99,8 +99,8 @@ export async function generateIconsWithChatGPT(request: IconGenerationRequest): 
               content: reasoningPrompt
             }
           ],
-          temperature: 0.8,
-          max_tokens: 1000,
+          temperature: 0.7, // Reduced from 0.8 for more consistent, cost-effective responses
+          max_tokens: 500, // Reduced from 1000 to cut costs by ~50% while maintaining quality
           stream: true
         });
 
@@ -177,21 +177,30 @@ export async function generateIconsWithChatGPT(request: IconGenerationRequest): 
           // Convert the source image URL to a File object
           const imageFile = await urlToFile(sourceImageUrl, 'source-logo.png');
           
+          // Use environment variable for image size, default to 1024x1024
+          // Note: Edit endpoint supports different sizes than generate
+          const imageSize = process.env.OPENAI_IMAGE_SIZE || "1024x1024";
+          
           response = await openai.images.edit({
             model: "gpt-image-1.5", // Use GPT Image 1.5 model
             image: imageFile,
             prompt: imagePrompt,
             n: 1,
-            size: "1024x1024"
+            size: imageSize as "256x256" | "512x512" | "1024x1024" | "1536x1024" | "1024x1536" | "auto" | null | undefined
           });
         } else {
           // Use standard generation endpoint for new icons
+          // Use "standard" quality instead of "hd" to reduce costs by ~50%
+          // Quality is still excellent for logos, "hd" is mainly for photorealistic images
+          const imageQuality = process.env.OPENAI_IMAGE_QUALITY || "standard";
+          const imageSize = process.env.OPENAI_IMAGE_SIZE || "1024x1024";
+          
           response = await openai.images.generate({
             model: "gpt-image-1.5", // Use GPT Image 1.5 model
             prompt: imagePrompt,
             n: 1,
-            size: "1024x1024",
-            quality: "high" //for development mode
+            size: imageSize as "256x256" | "512x512" | "1024x1024" | "1792x1024" | "1024x1792",
+            quality: imageQuality as "standard" | "hd" // "standard" is ~50% cheaper than "hd"
           });
         }
 
