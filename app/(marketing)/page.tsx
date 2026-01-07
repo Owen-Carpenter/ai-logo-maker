@@ -106,44 +106,20 @@ export default function HomePage() {
 
   const faqData = [
     {
-      question: "What AI technology powers the logo generation?",
-      answer: "We use GPT Image 1, one of the most advanced AI image generation models available, combined with our proprietary prompt-to-logo technology. This ensures professional-grade, visually stunning logos that match your brand vision. Our AI understands natural language descriptions and converts them into high-quality logo designs in seconds."
+      question: "Do I own the logos I generate?",
+      answer: "Absolutely! You have full ownership and commercial rights to all logos you generate. No licensing fees, attribution requirements, or usage restrictions. Use them for websites, apps, products, marketing materials, client work—any commercial or personal purpose."
     },
     {
       question: "How does the credit system work?",
-      answer: "Credits are used to generate and improve logos. Initial logo generation costs 3 credits and creates multiple variations for you to choose from. Logo improvements and iterations cost 1 credit each. The Starter Pack ($5) gives you 25 credits as a one-time purchase. Pro Monthly ($10/month) provides 50 credits per month that renew automatically. Pro Yearly ($96/year) gives you 700 credits per year, including 100 bonus credits, saving you 20% compared to monthly billing."
+      answer: "Start with our Starter Pack at $5 for 25 credits—perfect for trying the service. Pro Monthly ($10/month) gives you 50 credits per month that roll over. Pro Yearly ($96/year) provides 700 credits upfront plus 100 bonus credits, saving you 20%. Logo generation costs 3 credits and creates multiple variations. Improvements cost 1 credit each."
     },
     {
-      question: "Can I cancel my subscription anytime?",
-      answer: "Yes! Monthly subscriptions can be cancelled at any time through your account settings or the customer portal. You'll retain access to all features and your remaining credits until the end of your current billing period. The Starter Pack is a one-time credit purchase with no recurring charges—you can buy it as many times as needed. Yearly subscriptions can be cancelled but are non-refundable after the initial purchase."
+      question: "Can I cancel anytime?",
+      answer: "Yes! Cancel monthly subscriptions anytime with no penalties. You'll keep access to all features and remaining credits until the end of your billing period. The Starter Pack is a one-time purchase with no recurring charges—buy credits whenever you need them."
     },
     {
-      question: "Do I own the logos I generate?",
-      answer: "Absolutely! All logos generated with AI Logo Builder are yours to use for any commercial or personal purpose. You have full ownership and commercial rights—no additional licensing fees, attribution requirements, or usage restrictions. Use them for websites, apps, products, marketing materials, client work, or any other purpose you need."
-    },
-    {
-      question: "What file formats are available for download?",
-      answer: "All logos are available for download as high-resolution PNG files, perfect for use across digital and print media. PNG format ensures your logos maintain quality at any size and work seamlessly on websites, business cards, social media, presentations, and more."
-    },
-    {
-      question: "Can I improve or modify logos after generation?",
-      answer: "Yes! Pro Monthly and Pro Yearly subscribers can use our AI-powered logo improvement feature. Simply describe the changes you want (e.g., 'make it more modern' or 'add a gradient'), and our AI will refine your logo. Each improvement costs 1 credit. You can iterate as many times as needed until you're completely satisfied with your design."
-    },
-    {
-      question: "What happens to my unused credits?",
-      answer: "For Starter Pack purchases, credits never expire—use them whenever you need. For Pro Monthly subscriptions, unused credits roll over to the next month, so you never lose value. Pro Yearly subscribers get all 700 credits upfront and can use them throughout the year at their own pace."
-    },
-    {
-      question: "Is there a free trial or free tier?",
-      answer: "We offer the Starter Pack at just $5 for 25 credits, which is perfect for trying out the service. This one-time purchase lets you generate multiple logos and experience the full power of our AI logo builder without any subscription commitment. There's no free tier, but the Starter Pack is an affordable way to test the platform."
-    },
-    {
-      question: "What styles and design options are available?",
-      answer: "Our AI supports 10+ distinct logo styles including Modern, Gaming, Corporate, Creative, Minimalist, Bold, Elegant, Tech, Vintage, and Hand-drawn. You can specify your preferred style when generating logos, and our AI will create designs that match your brand aesthetic perfectly."
-    },
-    {
-      question: "How do I access my generated logos?",
-      answer: "All your generated logos are automatically saved to your personal logo library. You can access them anytime by logging into your account and navigating to the Library section. From there, you can view, download, or generate improvements for any of your saved logos."
+      question: "What makes this different from other logo makers?",
+      answer: "Our AI-powered platform uses advanced GPT Image 1 technology to understand natural language descriptions and generate professional logos in seconds. No design skills needed—just describe your vision. You get multiple variations per generation, can iterate with AI-powered improvements, and access your logos forever in your personal library."
     }
   ];
 
