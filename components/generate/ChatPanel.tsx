@@ -198,29 +198,6 @@ export default function ChatPanel({
       {/* Input Area */}
       <div className="p-4 border-t border-neutral-200 bg-white/50 backdrop-blur-sm">
         <form onSubmit={handleSubmit} className="space-y-3">
-          
-          {/* Style Controls */}
-          <div className="flex gap-2">
-            <select 
-              data-walkthrough="style-selector"
-              value={style}
-              onChange={(e) => setStyle(e.target.value)}
-              disabled={isGenerating || (!hasUserTakenAction && generatedImages.length > 0 && !isImprovementMode)}
-              className="flex-1 bg-white border border-neutral-200 rounded-lg px-2 py-2 text-neutral-900 text-xs focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors [&>option]:bg-white [&>option]:text-neutral-900 [&>option]:border-none disabled:opacity-50 shadow-sm"
-            >
-              <option value="modern">Modern</option>
-              <option value="gaming">Gaming</option>
-              <option value="corporate">Corporate</option>
-              <option value="creative">Creative</option>
-              <option value="minimalist">Minimalist</option>
-              <option value="bold">Bold</option>
-              <option value="elegant">Elegant</option>
-              <option value="tech">Tech</option>
-              <option value="vintage">Vintage</option>
-              <option value="hand-drawn">Hand Drawn</option>
-            </select>
-          </div>
-
           {/* Message Input */}
           <div className="flex gap-2">
             <input
