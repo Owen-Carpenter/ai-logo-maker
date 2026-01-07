@@ -366,7 +366,7 @@ export default function HomePage() {
       </div>
 
       {/* Demo Section - Now with title/subtitle below the video */}
-      <div className="pt-[40rem] pb-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-gradient-to-b from-blue-100 via-blue-50 to-white">
+      <div className="pt-[35rem] pb-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 bg-gradient-to-b from-blue-100 via-blue-50 to-white">
         <div className="container mx-auto text-center">
           {/* Title and subtitle positioned below the video */}
           <ScrollAnimation delay={300} type="scale" duration={1200}>
