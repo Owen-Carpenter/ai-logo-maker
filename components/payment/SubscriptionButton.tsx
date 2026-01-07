@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import { Loader2 } from 'lucide-react';
+import { useAuth } from '../../contexts/AuthContext';
+import { useRouter } from 'next/navigation';
 
 interface SubscriptionButtonProps {
   priceId: string;
@@ -24,9 +26,23 @@ export default function SubscriptionButton({
 }: SubscriptionButtonProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const { user, loading: authLoading } = useAuth();
+  const router = useRouter();
 
   const handleCheckout = async () => {
     if (disabled) {
+      return;
+    }
+
+    // Check if user is authenticated
+    if (authLoading) {
+      setError('Checking authentication...');
+      return;
+    }
+
+    if (!user) {
+      // Redirect to register page if not logged in
+      router.push('/register?redirect=checkout');
       return;
     }
 

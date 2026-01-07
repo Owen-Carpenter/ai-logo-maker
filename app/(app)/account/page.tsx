@@ -51,6 +51,7 @@ function AccountPageContent() {
   useEffect(() => {
     const success = searchParams.get('success');
     const subscriptionRequired = searchParams.get('subscription_required');
+    const canceled = searchParams.get('canceled');
     const error = searchParams.get('error');
 
     if (success === 'true') {
@@ -64,6 +65,17 @@ function AccountPageContent() {
     if (subscriptionRequired === 'true') {
       setShowSubscriptionRequired(true);
       setTimeout(() => setShowSubscriptionRequired(false), 8000);
+    }
+    
+    if (canceled === 'true') {
+      // Clear any loading states and show canceled message
+      setShowError('');
+      // Remove the canceled parameter from URL to prevent re-triggering
+      if (window.history.replaceState) {
+        const url = new URL(window.location.href);
+        url.searchParams.delete('canceled');
+        window.history.replaceState({}, '', url.toString());
+      }
     }
     
     if (error) {
@@ -110,6 +122,13 @@ function AccountPageContent() {
           {showError && (
             <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 mb-6 flex items-center shadow-lg">
               <p className="text-red-700 font-medium">{showError}</p>
+            </div>
+          )}
+
+          {/* Canceled Message */}
+          {searchParams.get('canceled') === 'true' && (
+            <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4 mb-6 flex items-center shadow-lg">
+              <p className="text-blue-700 font-medium">Checkout was canceled. You can try again whenever you're ready.</p>
             </div>
           )}
 

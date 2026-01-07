@@ -18,7 +18,7 @@ export default function HomePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const contactFormRef = useRef<HTMLFormElement>(null);
-  const { userData } = useAuth();
+  const { user, userData } = useAuth();
   const currentPlan = userData?.subscription?.plan_type ?? null;
   const currentPlanPriority = getPlanPriority(currentPlan);
 
@@ -130,6 +130,13 @@ export default function HomePage() {
   const handleCheckout = async (planType: string) => {
     if (loadingPlan || isPlanDisabled(planType)) return;
     
+    // Check if user is authenticated before checkout
+    if (!user) {
+      // Redirect to register page if not logged in
+      window.location.href = '/register?redirect=checkout';
+      return;
+    }
+    
     setLoadingPlan(planType);
     try {
       const response = await fetch('/api/stripe/checkout', {
@@ -144,15 +151,16 @@ export default function HomePage() {
 
       if (response.ok && data.url) {
         window.location.href = data.url;
+      } else if (response.status === 401) {
+        // Authentication error - redirect to register
+        window.location.href = '/register?redirect=checkout';
       } else {
-        // If not authenticated, redirect to register
-        window.location.href = '/register';
+        // Other error - show message
+        console.error('Checkout error:', data.error);
+        setLoadingPlan(null);
       }
     } catch (error) {
       console.error('Checkout error:', error);
-      // Fallback to registration
-      window.location.href = '/register';
-    } finally {
       setLoadingPlan(null);
     }
   };
