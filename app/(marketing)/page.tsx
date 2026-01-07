@@ -1079,24 +1079,19 @@ export default function HomePage() {
               <ScrollAnimation>
                 <h3 className="text-3xl font-bold text-neutral-900 mb-4">Frequently Asked Questions</h3>
               </ScrollAnimation>
-              <ScrollAnimation delay={100}>
-                <p className="text-neutral-600 max-w-2xl mx-auto">
-                  Got questions? We've got answers. Here are some common questions about our pricing and service.
-                </p>
-              </ScrollAnimation>
             </div>
 
             <div className="max-w-3xl mx-auto space-y-4">
               {faqData.map((faq, index) => (
-                <ScrollAnimation key={index} delay={150 + index * 50}>
-                  <div className="bg-gradient-to-br from-white to-blue-50/50 backdrop-blur-md rounded-lg border border-primary-200 overflow-hidden shadow-lg hover:shadow-xl hover:border-primary-300 transition-all duration-300">
+                <ScrollAnimation key={index} delay={100 + index * 50}>
+                  <div className="bg-white rounded-lg border border-neutral-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
                     <button
                       onClick={() => toggleFAQ(index)}
-                      className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-primary-50 transition-colors duration-200"
+                      className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-neutral-50 transition-colors duration-200"
                     >
-                      <h4 className="text-lg font-semibold text-neutral-900">{faq.question}</h4>
+                      <h4 className="text-lg font-semibold text-neutral-900 pr-4">{faq.question}</h4>
                       <svg
-                        className={`w-5 h-5 text-sunset-300 transition-transform duration-200 ${
+                        className={`w-5 h-5 text-neutral-400 flex-shrink-0 transition-transform duration-200 ${
                           openFAQ === index ? 'rotate-180' : ''
                         }`}
                         fill="none"
@@ -1108,7 +1103,7 @@ export default function HomePage() {
                     </button>
                     <div
                       className={`px-6 transition-all duration-300 ease-in-out ${
-                        openFAQ === index ? 'max-h-96 opacity-100 pb-4' : 'max-h-0 opacity-0 overflow-hidden'
+                        openFAQ === index ? 'max-h-96 opacity-100 pb-5' : 'max-h-0 opacity-0 overflow-hidden'
                       }`}
                     >
                       <p className="text-neutral-600 leading-relaxed">{faq.answer}</p>
