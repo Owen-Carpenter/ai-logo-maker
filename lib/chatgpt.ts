@@ -190,9 +190,9 @@ export async function generateIconsWithChatGPT(request: IconGenerationRequest): 
           });
         } else {
           // Use standard generation endpoint for new icons
-          // Use "standard" quality instead of "hd" to reduce costs by ~50%
-          // Quality is still excellent for logos, "hd" is mainly for photorealistic images
-          const imageQuality = process.env.OPENAI_IMAGE_QUALITY || "standard";
+          // Use "high" quality for professional logo generation
+          // Supported values are: 'low', 'medium', 'high', and 'auto'
+          const imageQuality = process.env.OPENAI_IMAGE_QUALITY || "high";
           const imageSize = process.env.OPENAI_IMAGE_SIZE || "1024x1024";
           
           response = await openai.images.generate({
@@ -200,7 +200,7 @@ export async function generateIconsWithChatGPT(request: IconGenerationRequest): 
             prompt: imagePrompt,
             n: 1,
             size: imageSize as "256x256" | "512x512" | "1024x1024" | "1792x1024" | "1024x1792",
-            quality: imageQuality as "standard" | "hd" // "standard" is ~50% cheaper than "hd"
+            quality: imageQuality as "low" | "medium" | "high" | "auto"
           });
         }
 
