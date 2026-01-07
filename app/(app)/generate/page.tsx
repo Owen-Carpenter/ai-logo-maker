@@ -13,6 +13,7 @@ import { ToastContainer } from '../../../components/ui/Toast';
 import Walkthrough, { useWalkthrough } from '../../../components/Walkthrough';
 import { generatePageSteps } from '../../../lib/walkthrough-steps';
 import SubscriptionGate from '../../../components/SubscriptionGate';
+import ConfirmDialog from '../../../components/ui/ConfirmDialog';
 
 function GeneratePageContent() {
   const { user, hasActiveSubscription, loading, refreshUserData, invalidateCache } = useAuth();
@@ -42,6 +43,7 @@ function GeneratePageContent() {
   const [style, setStyle] = useState('modern');
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [resetConversation, setResetConversation] = useState(false);
+  const [showResetConfirmDialog, setShowResetConfirmDialog] = useState(false);
   
   // Walkthrough state
   const { isActive: isWalkthroughActive, startWalkthrough, completeWalkthrough, skipWalkthrough } = useWalkthrough();
@@ -496,6 +498,17 @@ function GeneratePageContent() {
   };
 
   const handleReset = () => {
+    // If generation is in progress, show confirmation dialog
+    if (isGenerating) {
+      setShowResetConfirmDialog(true);
+      return;
+    }
+    
+    // Proceed with reset
+    performReset();
+  };
+
+  const performReset = () => {
     // Start transition animation back to hero view
     setIsTransitioning(true);
     setTimeout(() => {
@@ -767,6 +780,21 @@ function GeneratePageContent() {
         isActive={isWalkthroughActive}
         onComplete={completeWalkthrough}
         onSkip={skipWalkthrough}
+      />
+
+      {/* Reset Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={showResetConfirmDialog}
+        title="Stop Logo Generation?"
+        message="Your logo is currently being generated. If you stop now, your progress will be lost and you'll lose the credits you've already spent. Are you sure you want to continue?"
+        confirmText="Stop Generation"
+        cancelText="Continue Generating"
+        onConfirm={() => {
+          setShowResetConfirmDialog(false);
+          performReset();
+        }}
+        onCancel={() => setShowResetConfirmDialog(false)}
+        variant="warning"
       />
     </div>
   );
