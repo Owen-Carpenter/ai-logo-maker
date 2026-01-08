@@ -184,10 +184,10 @@ export default function LogoDisplayPanel({
   return (
     <div 
       data-walkthrough="results-panel"
-      className="flex-1 flex flex-col h-full min-h-0 relative bg-white"
+      className="flex-1 flex flex-col h-full min-h-0 relative bg-gradient-to-b from-white via-blue-50 to-blue-100"
     >
       {/* Results Header */}
-      <div className="px-6 py-4 border-b border-neutral-200 bg-white relative z-[10001]">
+      <div className="px-6 py-4 border-b border-neutral-200 bg-gradient-to-r from-white to-blue-50/50 backdrop-blur-sm relative z-[10001]">
         <div className="flex items-center space-x-3">
           <div className="flex-1">
             <h2 className="text-lg font-semibold text-neutral-900">Generated Logos</h2>
@@ -219,7 +219,7 @@ export default function LogoDisplayPanel({
       </div>
 
       {/* Results Content */}
-      <div className="flex-1 p-4 lg:p-8 lg:min-h-0 relative z-10 overflow-y-auto bg-white lg:bg-gradient-to-b lg:from-white lg:to-neutral-50">
+      <div className="flex-1 p-4 lg:p-8 lg:min-h-0 relative z-10 overflow-y-auto bg-transparent">
         {isGenerating ? (
           <div className="flex flex-col items-center justify-center min-h-96 space-y-6 py-8">
             {isGenerating && (
@@ -466,7 +466,7 @@ export default function LogoDisplayPanel({
       {generatedImages.length > 0 && (
         <div 
           data-walkthrough="action-buttons"
-          className="p-4 lg:p-6 border-t border-neutral-200 space-y-3 bg-white relative z-30"
+          className="p-4 lg:p-6 border-t border-neutral-200 space-y-3 bg-gradient-to-t from-blue-50 to-transparent backdrop-blur-sm relative z-30"
         >
           {isImprovementMode ? null : (
             <button
