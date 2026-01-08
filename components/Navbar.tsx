@@ -163,23 +163,23 @@ export default function Navbar({ variant = 'marketing' }: NavbarProps) {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-      <div className="w-full px-6 py-4">
-        <div className="flex items-center justify-center">
+      <div className="w-full px-4 md:px-6 py-4">
+        <div className="flex items-center justify-center max-w-full">
           {/* Centered Navigation Container */}
-          <div className="flex items-center bg-white/70 backdrop-blur-2xl rounded-3xl shadow-xl border border-blue-200/50 px-8 py-4">
+          <div className="flex items-center bg-white/70 backdrop-blur-2xl rounded-3xl shadow-xl border border-blue-200/50 px-4 md:px-6 lg:px-8 py-3 md:py-4 min-w-0 max-w-full">
             {/* Logo - Clickable to go home */}
-            <Link href="/" className="flex items-center space-x-2 group mr-8">
-              <Logo width={32} height={32} className="group-hover:scale-105 transition-transform duration-200" />
-              <span className="text-lg font-semibold text-neutral-900">AI Logo Builder</span>
+            <Link href="/" className="flex items-center space-x-2 group mr-4 md:mr-6 lg:mr-8 flex-shrink-0">
+              <Logo width={32} height={32} className="group-hover:scale-105 transition-transform duration-200 flex-shrink-0" />
+              <span className="text-base md:text-lg font-semibold text-neutral-900 whitespace-nowrap">AI Logo Builder</span>
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-6">
+            <div className="hidden md:flex items-center space-x-3 lg:space-x-6 flex-shrink-0">
               {navigationLinks.map((link) => (
                 link.isSmartLink ? (
                   <SmartGenerateLink
                     key={link.href}
-                    className="text-neutral-700 hover:text-primary-600 transition-all duration-300 font-medium px-4 py-2.5 rounded-2xl hover:bg-primary-50 border border-transparent hover:border-primary-200"
+                    className="text-neutral-700 hover:text-primary-600 transition-all duration-300 font-medium px-3 md:px-4 py-2 md:py-2.5 rounded-2xl hover:bg-primary-50 border border-transparent hover:border-primary-200 whitespace-nowrap text-sm md:text-base"
                     fallbackHref="/#pricing"
                   >
                     {link.label}
@@ -189,7 +189,7 @@ export default function Navbar({ variant = 'marketing' }: NavbarProps) {
                     key={link.href}
                     href={link.href} 
                     onClick={(e) => handleLinkClick(link, e)}
-                    className="text-neutral-700 hover:text-primary-600 transition-all duration-300 font-medium px-4 py-2.5 rounded-2xl hover:bg-primary-50 border border-transparent hover:border-primary-200"
+                    className="text-neutral-700 hover:text-primary-600 transition-all duration-300 font-medium px-3 md:px-4 py-2 md:py-2.5 rounded-2xl hover:bg-primary-50 border border-transparent hover:border-primary-200 whitespace-nowrap text-sm md:text-base"
                   >
                     {link.label}
                   </Link>
@@ -198,15 +198,15 @@ export default function Navbar({ variant = 'marketing' }: NavbarProps) {
             </div>
 
             {/* Desktop Actions */}
-            <div className="hidden md:flex items-center space-x-4 ml-8">
+            <div className="hidden md:flex items-center space-x-2 lg:space-x-4 ml-4 md:ml-6 lg:ml-8 flex-shrink-0">
               {user ? (
                 <div className="relative" ref={dropdownRef}>
                   <button 
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="flex items-center space-x-2 text-neutral-700 hover:text-primary-600 transition-all duration-300 font-medium px-4 py-2.5 rounded-2xl hover:bg-primary-50 border border-transparent hover:border-primary-200"
+                    className="flex items-center space-x-2 text-neutral-700 hover:text-primary-600 transition-all duration-300 font-medium px-3 md:px-4 py-2 md:py-2.5 rounded-2xl hover:bg-primary-50 border border-transparent hover:border-primary-200 whitespace-nowrap"
                   >
-                    <span className="text-sm">{user.email}</span>
-                    <svg className={`w-4 h-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <span className="text-xs md:text-sm truncate max-w-[80px] lg:max-w-[120px]">{user.email}</span>
+                    <svg className={`w-3 h-3 md:w-4 md:h-4 transition-transform duration-300 flex-shrink-0 ${isDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
@@ -232,12 +232,12 @@ export default function Navbar({ variant = 'marketing' }: NavbarProps) {
                 </div>
               ) : (
                 <>
-                  <Link href="/login" className="text-neutral-700 hover:text-primary-600 transition-all duration-300 font-medium px-4 py-2.5 rounded-2xl hover:bg-primary-50 border border-transparent hover:border-primary-200">
+                  <Link href="/login" className="text-neutral-700 hover:text-primary-600 transition-all duration-300 font-medium px-3 md:px-4 py-2 md:py-2.5 rounded-2xl hover:bg-primary-50 border border-transparent hover:border-primary-200 whitespace-nowrap text-sm md:text-base">
                     Login
                   </Link>
                   <Link 
                     href="/register" 
-                    className="bg-gradient-to-r from-primary-600 to-accent-500 text-white px-6 py-2.5 rounded-2xl font-medium hover:from-primary-700 hover:to-accent-600 transition-all duration-300 shadow-md hover:shadow-lg"
+                    className="bg-gradient-to-r from-primary-600 to-accent-500 text-white px-4 md:px-5 lg:px-6 py-2 md:py-2.5 rounded-2xl font-medium hover:from-primary-700 hover:to-accent-600 transition-all duration-300 shadow-md hover:shadow-lg whitespace-nowrap flex-shrink-0 text-sm md:text-base"
                   >
                     Sign up
                   </Link>
