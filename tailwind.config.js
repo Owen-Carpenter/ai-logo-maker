@@ -299,7 +299,7 @@ module.exports = {
         'fade-in-left': 'fade-in-left 0.8s ease-out forwards',
         'fade-in-right': 'fade-in-right 0.8s ease-out forwards',
         'scale-in': 'scale-in 0.8s ease-out forwards',
-        'border': 'border 4s linear infinite',
+        'border': 'border 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'float': 'float 6s ease-in-out infinite',
         'fade-in': 'fade-in 1.2s ease-out forwards',
         'float-organic-1': 'float-organic-1 12s cubic-bezier(0.4, 0, 0.6, 1) infinite',
