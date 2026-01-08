@@ -190,30 +190,14 @@ function GeneratePageContent() {
       return;
     }
 
-    // For improvement mode, build upon the existing prompt and conversation context
+    // For improvement mode, use only the current improvement instruction
+    // The source image already contains all previous improvements, so we don't need to concatenate
     let finalPrompt = prompt.trim();
-    if (isImprovementMode) {
-      // Get the original prompt from conversation history (first user message)
-      const originalUserMessage = conversationHistory.find(msg => msg.type === 'user' && !msg.isImprovement);
-      const originalPrompt = originalUserMessage?.content || '';
-      
-      // Get all improvement requests from conversation history
-      const improvementMessages = conversationHistory.filter(msg => msg.type === 'user' && msg.isImprovement);
-      
-      // Build cumulative context
-      if (originalPrompt) {
-        // Clean the original prompt (remove " - " parts if they exist)
-        const cleanOriginalPrompt = originalPrompt.split(' - ')[0].split(', but')[0];
-        
-        // Combine all previous improvements with the new one
-        const allImprovements = [...improvementMessages.map(msg => msg.content), prompt.trim()];
-        
-        // Create a contextual improvement prompt that includes all previous improvements
-        finalPrompt = `${cleanOriginalPrompt}, ${allImprovements.join(', and ')}`;
-      } else {
-        // Fallback if no original prompt found
-        finalPrompt = prompt.trim();
-      }
+    
+    // Ensure prompt doesn't exceed 200 characters (API limit)
+    if (finalPrompt.length > 200) {
+      // Truncate to 197 characters and add ellipsis
+      finalPrompt = finalPrompt.substring(0, 197) + '...';
     }
 
     setCurrentPrompt(finalPrompt);
@@ -429,13 +413,13 @@ function GeneratePageContent() {
           setHasUserTakenAction(false); // Reset action flag for new icons
         }
         
-        // Add assistant response to conversation history
+        // Add assistant response to conversation history with more conversational message
         handleAddToConversation({
           id: Date.now().toString() + '_assistant',
           type: 'assistant',
           content: isImprovementMode 
-            ? `Logo improved!`
-            : `Generated ${data.icons.length} logos!`,
+            ? `I've improved your logo based on your request! The updated version is ready for you to review. Would you like me to make any other adjustments?`
+            : `Perfect! I've created ${data.icons.length} unique logo variation${data.icons.length > 1 ? 's' : ''} for you. Each one has been optimized with a transparent background and is ready to use. Take a look and let me know which one you'd like to use or if you'd like me to make any improvements!`,
           timestamp: new Date(),
           isImprovement: isImprovementMode
         });
@@ -721,6 +705,7 @@ function GeneratePageContent() {
                     conversationHistory={conversationHistory}
                     resetConversation={resetConversation}
                     mobileCompactMode={true}
+                    streamedThoughts={streamedThoughts}
                   />
                 </div>
               </div>
@@ -776,6 +761,7 @@ function GeneratePageContent() {
                     hasUserTakenAction={hasUserTakenAction}
                     conversationHistory={conversationHistory}
                     resetConversation={resetConversation}
+                    streamedThoughts={streamedThoughts}
                   />
                 </div>
               </div>
@@ -796,6 +782,7 @@ function GeneratePageContent() {
               hasUserTakenAction={hasUserTakenAction}
               conversationHistory={conversationHistory}
               resetConversation={resetConversation}
+              streamedThoughts={streamedThoughts}
             />
 
             <LogoDisplayPanel

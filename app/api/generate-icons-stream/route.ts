@@ -18,6 +18,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Validate prompt length (200 character limit)
+    if (prompt.length > 200) {
+      return NextResponse.json(
+        { error: 'Prompt too long. Maximum 200 characters.' },
+        { status: 400 }
+      );
+    }
+
     // Create a ReadableStream for streaming thoughts
     const encoder = new TextEncoder();
     let isClosed = false;
