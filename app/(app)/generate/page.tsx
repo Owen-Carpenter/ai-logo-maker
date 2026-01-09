@@ -46,9 +46,21 @@ function GeneratePageContent() {
   const [showResetConfirmDialog, setShowResetConfirmDialog] = useState(false);
   const [showNavigationConfirmDialog, setShowNavigationConfirmDialog] = useState(false);
   const [pendingNavigation, setPendingNavigation] = useState<string | null>(null);
+  const [showContent, setShowContent] = useState(false);
   
   // Walkthrough state
   const { isActive: isWalkthroughActive, startWalkthrough, completeWalkthrough, skipWalkthrough } = useWalkthrough();
+
+  // Don't block rendering if loading takes too long - show content after 3 seconds
+  useEffect(() => {
+    if (!loading) {
+      setShowContent(true);
+    } else {
+      // Show content after 3 seconds even if still loading
+      const timer = setTimeout(() => setShowContent(true), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [loading]);
 
   // All useEffect hooks must be called before any conditional returns
   useEffect(() => {
@@ -161,8 +173,8 @@ function GeneratePageContent() {
     };
   }, [isGenerating]);
 
-  // Show loading state only for authenticated users checking their subscription
-  if (user && loading) {
+  // Show loading state only for authenticated users checking their subscription (but only if we haven't shown content yet)
+  if (user && loading && !showContent) {
     return <Loading text="Loading your workspace..." />;
   }
 
