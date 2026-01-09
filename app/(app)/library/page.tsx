@@ -69,28 +69,8 @@ export default function LibraryPage() {
     } catch (error) {
       console.error('Error fetching logos:', error);
       setError('Failed to load your logos. Please try again.');
-      
-      // Fallback to mock data for demonstration
-      setSavedLogos([
-        {
-          id: '1',
-          name: 'AI Logo Builder Logo',
-          image_url: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMTMuMDkgOC4yNkwyMCA5TDEzLjA5IDE1Ljc0TDEyIDIyTDEwLjkxIDE1Ljc0TDQgOUwxMC45MSA4LjI2TDEyIDJaIiBmaWxsPSIjRkY2QzAwIi8+Cjwvc3ZnPgo=',
-          created_at: '2024-01-15',
-          tags: ['logo', 'brand', 'ai'],
-          format: 'PNG' as const,
-          is_favorite: false
-        },
-        {
-          id: '2',
-          name: 'Heart Logo',
-          image_url: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIwLjg0IDQuNjFhNS41IDUuNSAwIDAgMC03Ljc4IDBMMTIgNS42N2wtMS4wNi0xLjA2YTUuNSA1LjUgMCAwIDAtNy43OCA3Ljc4bDEuMDYgMS4wNkwxMiAyMWw3Ljc4LTcuNzggMS4wNi0xLjA2YTUuNSA1LjUgMCAwIDAtNy43OC03Ljc4eiIgZmlsbD0iI0ZGNkM2QyIvPgo8L3N2Zz4K',
-          created_at: '2024-01-14',
-          tags: ['love', 'like', 'favorite'],
-          format: 'PNG' as const,
-          is_favorite: true
-        }
-      ]);
+      // Don't set mock data on error - let the error state display
+      setSavedLogos([]);
     } finally {
       setIsLoadingLogos(false);
     }
@@ -283,7 +263,41 @@ export default function LibraryPage() {
 
           {/* Logos Grid/List */}
           <div className="px-6 sm:px-8 lg:px-12 pb-32">
-            {filteredLogos.length > 0 ? (
+            {isLoadingLogos ? (
+              <div className={viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6' : 'space-y-4'}>
+                {[...Array(10)].map((_, index) => (
+                  <div key={index} className={`bg-white border border-neutral-200 rounded-xl backdrop-blur-sm animate-pulse ${viewMode === 'list' ? 'flex items-center p-4' : 'p-6 flex flex-col'}`}>
+                    {viewMode === 'grid' ? (
+                      <>
+                        <div className="bg-neutral-200 rounded-xl p-4 mb-4 flex items-center justify-center h-24">
+                          <div className="w-12 h-12 bg-neutral-300 rounded-lg"></div>
+                        </div>
+                        <div className="bg-neutral-200 rounded h-4 mb-2 w-3/4"></div>
+                        <div className="bg-neutral-200 rounded h-3 mb-4 w-1/2 ml-auto"></div>
+                        <div className="flex gap-1 mt-auto">
+                          <div className="flex-1 bg-neutral-200 rounded-md h-8"></div>
+                          <div className="bg-neutral-200 rounded-md w-8 h-8"></div>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="bg-neutral-200 rounded-xl p-3 mr-4 w-16 h-16 flex items-center justify-center">
+                          <div className="w-8 h-8 bg-neutral-300 rounded-lg"></div>
+                        </div>
+                        <div className="flex-1">
+                          <div className="bg-neutral-200 rounded h-4 w-2/3 mb-2"></div>
+                          <div className="bg-neutral-200 rounded h-3 w-1/3"></div>
+                        </div>
+                        <div className="flex gap-1">
+                          <div className="bg-neutral-200 rounded-md h-8 w-24"></div>
+                          <div className="bg-neutral-200 rounded-md w-8 h-8"></div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : filteredLogos.length > 0 ? (
               <div className={viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6' : 'space-y-4'}>
                 {filteredLogos.map((logo) => (
                   <div key={logo.id} className={`bg-white border border-neutral-200 rounded-xl backdrop-blur-sm hover:shadow-xl hover:shadow-primary-500/20 transition-all duration-300 hover:scale-105 hover:border-primary-400 ${viewMode === 'list' ? 'flex items-center p-4' : 'p-6 flex flex-col'}`}>
@@ -360,6 +374,24 @@ export default function LibraryPage() {
                     )}
                   </div>
                 ))}
+              </div>
+            ) : error ? (
+              <div className="text-center py-16">
+                <div className="bg-white border border-red-200 rounded-2xl p-12 max-w-md mx-auto backdrop-blur-sm">
+                  <div className="w-16 h-16 bg-red-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-neutral-900 text-xl font-semibold mb-3">Error Loading Logos</h3>
+                  <p className="text-neutral-600 mb-8 leading-relaxed">{error}</p>
+                  <button
+                    onClick={fetchLogos}
+                    className="inline-flex items-center bg-gradient-to-r from-primary-600 to-accent-500 hover:from-primary-700 hover:to-accent-600 text-neutral-900 px-8 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+                  >
+                    Try Again
+                  </button>
+                </div>
               </div>
             ) : (
               <div className="text-center py-16">
