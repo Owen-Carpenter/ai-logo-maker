@@ -196,38 +196,45 @@ function AccountPageContent() {
                   </span>
                 </div>
                 
-                {isPaidPlan ? (
-                  <>
-                    <div className="flex items-center justify-between">
-                      <span className="text-neutral-600">Credits Remaining:</span>
-                      <span className="flex items-center text-neutral-900 font-semibold">
-                        <Logo width={24} height={24} className="mr-2" />
-                        {userData?.usage?.tokens_remaining || 0}
-                        {userData?.subscription?.plan_type === 'enterprise' && (
-                          <span className="ml-1 text-xs bg-purple-500/20 text-purple-700 px-2 py-0.5 rounded">
-                            Enterprise
-                          </span>
-                        )}
+                <div className="flex items-center justify-between">
+                  <span className="text-neutral-600">Credits Remaining:</span>
+                  <span className="flex items-center text-neutral-900 font-semibold">
+                    <Logo width={24} height={24} className="mr-2" />
+                    {userData?.usage?.tokens_remaining ?? userData?.subscription?.monthly_token_limit ?? 5}
+                    {userData?.subscription?.plan_type === 'enterprise' && (
+                      <span className="ml-1 text-xs bg-purple-500/20 text-purple-700 px-2 py-0.5 rounded">
+                        Enterprise
                       </span>
-                    </div>
-
-                    {userData?.usage?.total_generations !== undefined && (
-                      <div className="flex items-center justify-between">
-                        <span className="text-neutral-600">Total Used:</span>
-                        <span className="text-neutral-900 font-semibold">
-                          {userData.usage.total_generations}
-                        </span>
-                      </div>
                     )}
-                  </>
-                ) : (
-                  <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4 shadow-lg">
+                  </span>
+                </div>
+
+                {userData?.usage?.tokens_used_this_month !== undefined && (
+                  <div className="flex items-center justify-between">
+                    <span className="text-neutral-600">Credits Used:</span>
+                    <span className="text-neutral-900 font-semibold">
+                      {userData.usage.tokens_used_this_month} / {userData?.subscription?.monthly_token_limit ?? 5}
+                    </span>
+                  </div>
+                )}
+
+                {userData?.usage?.total_generations !== undefined && (
+                  <div className="flex items-center justify-between">
+                    <span className="text-neutral-600">Total Generations:</span>
+                    <span className="text-neutral-900 font-semibold">
+                      {userData.usage.total_generations}
+                    </span>
+                  </div>
+                )}
+
+                {!isPaidPlan && (
+                  <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4 shadow-lg mt-4">
                     <div className="flex items-center mb-2">
                       <Crown className="h-5 w-5 text-orange-600 mr-2" />
-                      <span className="text-orange-700 font-semibold">Access Required</span>
+                      <span className="text-orange-700 font-semibold">Subscription Required</span>
                     </div>
                     <p className="text-neutral-600 text-sm">
-                      Subscribe to start generating custom logos with AI. Choose from our flexible plans below to unlock unlimited creativity.
+                      Subscribe to unlock more credits and generate unlimited logos with AI. Choose from our flexible plans below.
                     </p>
                   </div>
                 )}

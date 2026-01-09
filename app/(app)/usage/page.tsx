@@ -21,6 +21,18 @@ function UsagePageContent() {
     avgPerDay: 0
   });
   const [loadingIconCount, setLoadingIconCount] = useState(true);
+  const [showContent, setShowContent] = useState(false);
+
+  // Don't block rendering if loading takes too long - show content after 3 seconds
+  useEffect(() => {
+    if (!loading) {
+      setShowContent(true);
+    } else {
+      // Show content after 3 seconds even if still loading
+      const timer = setTimeout(() => setShowContent(true), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [loading]);
 
   // Authentication check - redirect if not logged in
   useEffect(() => {
@@ -55,8 +67,8 @@ function UsagePageContent() {
     fetchIconCount();
   }, [user]);
 
-  // Show loading while checking authentication
-  if (loading || !user) {
+  // Show loading while checking authentication (but only if we haven't shown content yet)
+  if ((loading || !user) && !showContent) {
     return <Loading text="Loading usage data..." />;
   }
 
