@@ -35,6 +35,7 @@ export default function LibraryPage() {
   const [logoToDelete, setLogoToDelete] = useState<SavedLogo | null>(null);
   const [showImageModal, setShowImageModal] = useState(false);
   const [selectedLogo, setSelectedLogo] = useState<SavedLogo | null>(null);
+  const [showContent, setShowContent] = useState(false);
 
   // Debounce search term
   useEffect(() => {
@@ -145,8 +146,18 @@ export default function LibraryPage() {
     }
   };
 
+  // Add timeout fallback for loading state
+  useEffect(() => {
+    if (!loading && !isLoadingLogos) {
+      setShowContent(true);
+    } else {
+      // Show content after 3 seconds even if still loading
+      const timer = setTimeout(() => setShowContent(true), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [loading, isLoadingLogos]);
 
-  if (loading || isLoadingLogos) {
+  if ((loading || isLoadingLogos) && !showContent) {
     return <Loading text="Loading your logo library..." />;
   }
 

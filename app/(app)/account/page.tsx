@@ -21,6 +21,7 @@ function AccountPageContent() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showSubscriptionRequired, setShowSubscriptionRequired] = useState(false);
   const [showError, setShowError] = useState('');
+  const [showContent, setShowContent] = useState(false);
   
   const currentPlan = userData?.subscription?.plan_type ?? null;
   const currentPlanPriority = getPlanPriority(currentPlan);
@@ -58,7 +59,7 @@ function AccountPageContent() {
       setShowSuccess(true);
       // Invalidate cache and force refresh user data after successful payment
       invalidateCache();
-      refreshUserData(true);
+      refreshUserData(true).catch(err => console.error('Error refreshing user data:', err));
       setTimeout(() => setShowSuccess(false), 5000);
     }
     
@@ -86,7 +87,18 @@ function AccountPageContent() {
     }
   }, [searchParams, refreshUserData, invalidateCache]);
 
-  if (loading) {
+  // Don't block rendering if loading takes too long - show content after 3 seconds
+  useEffect(() => {
+    if (!loading) {
+      setShowContent(true);
+    } else {
+      // Show content after 3 seconds even if still loading
+      const timer = setTimeout(() => setShowContent(true), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [loading]);
+
+  if (loading && !showContent) {
     return <Loading text="Loading your account..." />;
   }
 

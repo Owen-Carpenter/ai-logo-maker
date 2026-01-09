@@ -97,6 +97,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Get initial session and verify user
     const initAuth = async () => {
+      // Add timeout fallback to prevent infinite loading
+      const timeoutId = setTimeout(() => {
+        console.warn('Auth initialization timeout, setting loading to false')
+        setLoading(false)
+      }, 10000) // 10 second timeout
+      
       try {
         const { session } = await authService.getCurrentSession()
         setSession(session)
@@ -108,6 +114,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           
           // Stop loading immediately after we have the user
           // Fetch user data in the background without blocking
+          clearTimeout(timeoutId)
           setLoading(false)
           
           if (authenticatedUser) {
@@ -117,11 +124,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             )
           }
         } else {
+          clearTimeout(timeoutId)
           setUser(null)
           setLoading(false)
         }
       } catch (error) {
         console.error('Error initializing auth:', error)
+        clearTimeout(timeoutId)
         setUser(null)
         setSession(null)
         setLoading(false)
@@ -207,28 +216,45 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const signOut = async () => {
-    setLoading(true)
-    const result = await authService.signOut()
-    
-    // Clear all state immediately
-    setUser(null)
-    setUserData(null)
-    setHasActiveSubscription(false)
-    setSession(null)
-    
-    // Clear cache
-    if (user) {
-      apiCache.invalidate(`user_profile_${user.id}`)
+    try {
+      setLoading(true)
+      const result = await authService.signOut()
+      
+      // Clear all state immediately
+      setUser(null)
+      setUserData(null)
+      setHasActiveSubscription(false)
+      setSession(null)
+      
+      // Clear cache
+      if (user) {
+        apiCache.invalidate(`user_profile_${user.id}`)
+      }
+      
+      // Redirect to home page immediately after sign out
+      if (typeof window !== 'undefined') {
+        window.location.href = '/'
+      }
+      
+      return result
+    } catch (error) {
+      console.error('Error during sign out:', error)
+      // Always clear state and reset loading, even on error
+      setUser(null)
+      setUserData(null)
+      setHasActiveSubscription(false)
+      setSession(null)
+      setLoading(false)
+      
+      // Still redirect on error
+      if (typeof window !== 'undefined') {
+        window.location.href = '/'
+      }
+      throw error
+    } finally {
+      // Ensure loading is always reset
+      setLoading(false)
     }
-    
-    setLoading(false)
-    
-    // Redirect to home page immediately after sign out
-    if (typeof window !== 'undefined') {
-      window.location.href = '/'
-    }
-    
-    return result
   }
 
   const resetPassword = async (email: string) => {
