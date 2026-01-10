@@ -5,14 +5,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const currentDate = new Date()
 
   return [
-    // Public pages - highest priority
+    // Homepage - highest priority
     {
       url: baseUrl,
       lastModified: currentDate,
       changeFrequency: 'weekly',
-      priority: 1,
+      priority: 1.0,
     },
-    // SEO Landing Pages - high priority for organic traffic
+    
+    // SEO Landing Pages - high priority for organic traffic (main content pages)
     {
       url: `${baseUrl}/ai-logo-generator`,
       lastModified: currentDate,
@@ -43,20 +44,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.9,
     },
-    // Auth pages
+    
+    // Auth pages - lower priority, users may need to access but not main content
     {
       url: `${baseUrl}/login`,
       lastModified: currentDate,
       changeFrequency: 'monthly',
-      priority: 0.8,
+      priority: 0.5,
     },
     {
       url: `${baseUrl}/register`,
       lastModified: currentDate,
       changeFrequency: 'monthly',
-      priority: 0.8,
+      priority: 0.5,
     },
-    // Legal pages
+    
+    // Legal & Policy pages - required but low priority
     {
       url: `${baseUrl}/privacy`,
       lastModified: currentDate,
@@ -69,31 +72,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'yearly',
       priority: 0.3,
     },
-    // Protected pages - still include for SEO but lower priority
     {
-      url: `${baseUrl}/generate`,
+      url: `${baseUrl}/cookies`,
       lastModified: currentDate,
-      changeFrequency: 'daily',
-      priority: 0.9,
+      changeFrequency: 'yearly',
+      priority: 0.3,
     },
-    {
-      url: `${baseUrl}/library`,
-      lastModified: currentDate,
-      changeFrequency: 'daily',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/account`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/usage`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.5,
-    },
+    
+    // Note: Protected pages (generate, library, account, usage) are excluded from sitemap
+    // as they have robots: { index: false } and require authentication.
+    // These pages redirect to login for non-authenticated users, so they're not ideal for SEO indexing.
   ]
 }
 
