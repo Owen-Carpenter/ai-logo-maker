@@ -1,7 +1,9 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'AI Logo Builder',
+  title: {
+    absolute: 'AI Logo Builder',
+  },
   description: 'Generate stunning, professional-grade logos in seconds with AI-powered technology. Choose from multiple styles, download instantly, and save to your personal library. Starting at just $5/month for 25 credits.',
   keywords: ['AI logo generator', 'create logos online', 'AI design tool', 'professional logo maker', 'GPT Image 1 logos', 'PNG logo download', 'logo generation service', 'AI graphics tool', 'brand logo creator', 'business logo maker'],
   openGraph: {
