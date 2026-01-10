@@ -14,28 +14,28 @@ export default function SubscriptionGate({
   description = "You need an active subscription to access this feature."
 }: SubscriptionGateProps) {
   return (
-    <div className="min-h-screen bg-dark-gradient flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-neutral-100 to-neutral-200 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
-        <div className="bg-white/10 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8 text-center">
+        <div className="bg-white rounded-2xl shadow-2xl border border-neutral-200 p-8 text-center">
           <div className="mb-6">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-orange-500/20 rounded-full mb-4">
-              <Lock className="h-8 w-8 text-orange-400" />
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-orange-500/10 rounded-full mb-4">
+              <Lock className="h-8 w-8 text-orange-600" />
             </div>
-            <h1 className="text-2xl font-bold text-white mb-2">{title}</h1>
-            <p className="text-gray-300">{description}</p>
+            <h1 className="text-3xl font-bold text-neutral-900 mb-3">{title}</h1>
+            <p className="text-neutral-600 text-base leading-relaxed">{description}</p>
           </div>
 
-          <div className="space-y-4 mb-8">
-            <div className="flex items-center text-left p-4 bg-white/5 rounded-lg">
-              <Crown className="h-5 w-5 text-orange-400 mr-3 flex-shrink-0" />
-              <span className="text-gray-300 text-sm">
-                Generate unlimited AI icons with premium plans
+          <div className="space-y-3 mb-8">
+            <div className="flex items-start text-left p-4 bg-neutral-50 rounded-lg border border-neutral-100">
+              <Crown className="h-5 w-5 text-orange-600 mr-3 flex-shrink-0 mt-0.5" />
+              <span className="text-neutral-700 text-sm leading-relaxed">
+                Generate unlimited AI logos with premium plans
               </span>
             </div>
             
-            <div className="flex items-center text-left p-4 bg-white/5 rounded-lg">
-              <Zap className="h-5 w-5 text-yellow-400 mr-3 flex-shrink-0" />
-              <span className="text-gray-300 text-sm">
+            <div className="flex items-start text-left p-4 bg-neutral-50 rounded-lg border border-neutral-100">
+              <Zap className="h-5 w-5 text-yellow-600 mr-3 flex-shrink-0 mt-0.5" />
+              <span className="text-neutral-700 text-sm leading-relaxed">
                 High-resolution downloads without watermarks
               </span>
             </div>
@@ -44,14 +44,14 @@ export default function SubscriptionGate({
           <div className="space-y-3">
             <Link
               href="/account"
-              className="block w-full bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl"
+              className="block w-full bg-gradient-to-r from-primary-600 to-accent-500 hover:from-primary-700 hover:to-accent-600 text-neutral-900 px-6 py-3 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02]"
             >
               View Subscription Plans
             </Link>
             
             <Link
               href="/"
-              className="block w-full bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-lg font-semibold transition-colors border border-white/20 hover:border-white/40"
+              className="block w-full text-neutral-600 hover:text-neutral-900 px-6 py-2 text-sm font-medium transition-colors"
             >
               Back to Home
             </Link>

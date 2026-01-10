@@ -1,8 +1,8 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Generate Icons',
-  description: 'Create custom AI-generated icons with our powerful icon generator. Describe your icon idea and let AI bring it to life with multiple style options.',
+  title: 'Generate Logos',
+  description: 'Create custom AI-generated logos with our powerful logo generator. Describe your logo idea and let AI bring it to life with multiple style options.',
   robots: {
     index: false,
     follow: true,

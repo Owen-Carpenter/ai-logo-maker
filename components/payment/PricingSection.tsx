@@ -13,7 +13,7 @@ interface PricingSectionProps {
 export default function PricingSection({ 
   currentPlan = '', 
   title = "Choose Your Plan",
-  subtitle = "Select the perfect plan for your icon creation needs"
+  subtitle = "Select the perfect plan for your logo creation needs"
 }: PricingSectionProps) {
   return (
     <section className="py-16">
