@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://ai-icon-maker.com'
+  const baseUrl = 'https://ai-logo-builder.com'
   const currentDate = new Date()
 
   return [

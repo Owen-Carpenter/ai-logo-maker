@@ -9,12 +9,12 @@ import { ErrorBoundary } from '../components/ErrorBoundary'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://ai-icon-maker.com'),
+  metadataBase: new URL('https://ai-logo-builder.com'),
   title: {
-    default: 'AI Logo Builder - Create Professional Logos with AI',
+    default: 'AI Logo Builder - Create Professional Logos with AI in Seconds',
     template: '%s | AI Logo Builder'
   },
-  description: 'Create professional-grade logos with AI-powered generation using GPT Image 1. Perfect for designers, developers, and content creators. Multiple styles, instant downloads, and personal library storage.',
+  description: 'Generate professional-grade logos instantly with AI-powered technology. Create custom logos for your business, brand, or startup in seconds. Multiple styles, high-resolution PNG downloads, and full commercial rights. Starting at just $5.',
   keywords: [
     // Primary Keywords
     'AI logo generator',
@@ -27,32 +27,38 @@ export const metadata: Metadata = {
     'logo creator online',
     'AI graphics generator',
     'logo design tool',
+    'professional logo maker',
+    'business logo generator',
+    'company logo maker',
+    'startup logo creator',
+    'custom logo generator',
     
     // Technology-specific
-    'GPT logo generator',
-    'ChatGPT logo maker',
+    'GPT Image 1 logo generator',
     'AI powered logo design',
     'machine learning logo creator',
     'neural network logo generator',
+    'artificial intelligence logo maker',
     
     // Use Case Keywords
-    'business logo generator',
-    'company logo maker',
     'brand logo generator',
-    'startup logo creator',
     'social media logo maker',
     'app logo generator',
     'website logo creator',
-    'professional logo maker',
+    'ecommerce logo maker',
+    'restaurant logo generator',
+    'tech startup logo creator',
+    'agency logo maker',
     
     // Feature-based Keywords
     'PNG logo generator',
     'transparent background logos',
-    'custom logo generator',
-    'professional logo maker',
+    'high resolution logo generator',
     'commercial use logos',
     'royalty free logo generator',
     'brand identity generator',
+    'logo improvement tool',
+    'logo iteration generator',
     
     // Platform/User-specific
     'logo maker for developers',
@@ -60,6 +66,8 @@ export const metadata: Metadata = {
     'logo creator for startups',
     'logo maker for businesses',
     'logo generator for brands',
+    'logo maker for entrepreneurs',
+    'logo generator for agencies',
     
     // Action-oriented
     'create logos online',
@@ -67,6 +75,8 @@ export const metadata: Metadata = {
     'make logos instantly',
     'design logos with AI',
     'build custom logos',
+    'generate logo free',
+    'create logo online free',
     
     // Quality descriptors
     'high quality logo generator',
@@ -74,10 +84,14 @@ export const metadata: Metadata = {
     'modern logo maker',
     'unique logo generator',
     'custom AI logos',
+    'premium logo generator',
+    'studio quality logos',
   ],
   authors: [{ name: 'AI Logo Builder' }],
   creator: 'AI Logo Builder',
   publisher: 'AI Logo Builder',
+  category: 'Design Software',
+  classification: 'AI Logo Generation Tool',
   verification: {
     google: 'EFS5qxq_vRGUABjbt4LNQPlrLjtGyolIolAmwfMgGzw',
   },
@@ -100,21 +114,34 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://ai-icon-maker.com',
-    title: 'AI Logo Builder - Create Professional Logos with AI',
-    description: 'Create professional-grade logos with AI-powered generation using GPT Image 1. Perfect for designers, developers, and content creators.',
+    url: 'https://ai-logo-builder.com',
+    title: 'AI Logo Builder - Create Professional Logos with AI in Seconds',
+    description: 'Generate professional-grade logos instantly with AI-powered technology. Create custom logos for your business, brand, or startup. Multiple styles, high-resolution PNG downloads, and full commercial rights.',
     siteName: 'AI Logo Builder',
     images: [
       {
         url: '/images/AI-Logo-Generator-Logo.png',
         width: 1200,
         height: 630,
-        alt: 'AI Logo Builder - Professional AI Logo Generation',
+        alt: 'AI Logo Builder - Professional AI Logo Generation Platform',
       },
     ],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AI Logo Builder - Create Professional Logos with AI',
+    description: 'Generate professional-grade logos instantly with AI-powered technology. Multiple styles, high-resolution downloads, and full commercial rights.',
+    images: ['/images/AI-Logo-Generator-Logo.png'],
+    creator: '@ailogobuilder',
+  },
   alternates: {
-    canonical: 'https://ai-icon-maker.com',
+    canonical: 'https://ai-logo-builder.com',
+  },
+  other: {
+    'application-name': 'AI Logo Builder',
+    'apple-mobile-web-app-title': 'AI Logo Builder',
+    'apple-mobile-web-app-capable': 'yes',
+    'mobile-web-app-capable': 'yes',
   },
 }
 
