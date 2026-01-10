@@ -40,7 +40,7 @@ export default function Loading({ text = 'Loading...', size = 'md' }: LoadingPro
         {/* Site Name */}
         <div className="text-center">
           <h2 className={`${textSizeClasses[size]} font-semibold text-white mb-2`}>
-            AI Icon Maker
+            AI Logo Builder
           </h2>
           <p className={`${size === 'sm' ? 'text-xs' : 'text-sm'} text-sunset-200 animate-pulse`}>
             {text}

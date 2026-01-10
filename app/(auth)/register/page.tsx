@@ -64,7 +64,7 @@ export default function RegisterPage() {
             <div className="w-12 h-12 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
               <img 
                 src="/images/AI-Logo-Generator-Logo.png" 
-                alt="AI Icon Maker" 
+                alt="AI Logo Builder" 
                 className="w-full h-full object-contain"
                 onError={(e) => {
                   console.error('Logo failed to load:', e);

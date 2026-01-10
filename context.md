@@ -1,4 +1,4 @@
-# AI Icon Maker - App Blueprint Context File
+# AI Logo Builder - App Blueprint Context File
 
 ## 1. Project Breakdown
 

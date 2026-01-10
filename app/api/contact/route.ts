@@ -38,9 +38,9 @@ export async function POST(request: NextRequest) {
 
     // Send email using Resend
     const { data, error } = await resend.emails.send({
-      from: 'AI Icon Maker <noreply@contact.ai-icon-maker.com>',
+      from: 'AI Logo Builder <noreply@contact.ai-logo-builder.com>',
       to: [contactEmail],
-      subject: subject || 'Contact from AI Icon Maker',
+      subject: subject || 'Contact from AI Logo Builder',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #333; border-bottom: 2px solid #ff7e5f; padding-bottom: 10px;">
@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
           
           <div style="margin-top: 20px; padding: 15px; background-color: #e8f4fd; border-radius: 8px;">
             <p style="margin: 0; color: #666; font-size: 14px;">
-              This message was sent from the AI Icon Maker contact form.
+              This message was sent from the AI Logo Builder contact form.
             </p>
           </div>
         </div>
@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
         ${message}
         
         ---
-        This message was sent from the AI Icon Maker contact form.
+        This message was sent from the AI Logo Builder contact form.
       `,
     })
 

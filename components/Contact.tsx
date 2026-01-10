@@ -31,7 +31,7 @@ export default function Contact() {
           </ScrollAnimation>
           <ScrollAnimation delay={100}>
             <p className="text-sunset-200 max-w-2xl mx-auto">
-              Have questions about AI Icon Maker? We'd love to hear from you. 
+              Have questions about AI Logo Builder? We'd love to hear from you. 
               Send us a message and we'll respond as soon as possible.
             </p>
           </ScrollAnimation>
