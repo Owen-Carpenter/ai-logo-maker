@@ -67,33 +67,13 @@ export default function AuthCallback() {
         
         subscription = authSubscription;
         
-        // Set a timeout as fallback
+        // Set a timeout as fallback - if no auth state change after 8 seconds, show error
         redirectTimeout = setTimeout(() => {
           if (!mounted || hasRedirected) return;
-          
-          // Try one more time with a timeout on getSession
-          Promise.race([
-            supabase.auth.getSession(),
-            new Promise((_, reject) => setTimeout(() => reject(new Error('getSession timeout')), 2000))
-          ]).then((result: any) => {
-            if (!mounted || hasRedirected) return;
-            
-            const { data: sessionData } = result;
-            
-            if (sessionData?.session) {
-              hasRedirected = true;
-              window.location.href = '/generate';
-            } else {
-              setError('Authentication timed out. Please try again.');
-              setLoading(false);
-            }
-          }).catch((err) => {
-            console.error('Timeout check error:', err);
-            if (!mounted || hasRedirected) return;
-            setError('Authentication timed out. Please try again.');
-            setLoading(false);
-          });
-        }, 5000);
+          console.error('Auth callback timeout - no auth state change detected');
+          setError('Authentication timed out. Please try logging in again.');
+          setLoading(false);
+        }, 8000);
       } catch (err) {
         console.error('Unexpected error during OAuth callback:', err);
         if (!mounted) return;
