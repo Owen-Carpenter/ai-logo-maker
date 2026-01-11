@@ -76,10 +76,10 @@ function UsagePageContent() {
   }
 
   const isPaidPlan = hasActiveSubscription;
-  const creditsUsed = userData?.usage?.tokens_used_this_month || 0;
-  const creditsRemaining = userData?.usage?.tokens_remaining || 0;
-  const totalCredits = userData?.subscription?.monthly_token_limit || 5;
-  const usagePercentage = userData?.usage?.usage_percentage || 0;
+  const creditsUsed = user ? (userData?.usage?.tokens_used_this_month || 0) : 0;
+  const creditsRemaining = user ? (userData?.usage?.tokens_remaining || 0) : 0;
+  const totalCredits = user ? (userData?.subscription?.monthly_token_limit || 0) : 0;
+  const usagePercentage = user ? (userData?.usage?.usage_percentage || 0) : 0;
 
   // Calculate usage statistics
   const planType = userData?.subscription?.plan_type || 'free';
