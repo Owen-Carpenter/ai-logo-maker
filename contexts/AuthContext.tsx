@@ -107,22 +107,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const { session } = await authService.getCurrentSession()
         setSession(session)
         
-        if (session) {
-          // Use getUser() to get authenticated user instead of session.user
-          const { user: authenticatedUser } = await authService.getCurrentUser()
-          setUser(authenticatedUser)
+        if (session && session.user) {
+          // Use session.user directly to avoid extra network call
+          setUser(session.user)
           
           // Stop loading immediately after we have the user
           // Fetch user data in the background without blocking
           clearTimeout(timeoutId)
           setLoading(false)
           
-          if (authenticatedUser) {
-            // Fetch in background, don't await
-            fetchUserData(authenticatedUser.id, true).catch(err => 
-              console.error('Background user data fetch failed:', err)
-            )
-          }
+          // Fetch in background, don't await
+          fetchUserData(session.user.id, true).catch(err => 
+            console.error('Background user data fetch failed:', err)
+          )
         } else {
           clearTimeout(timeoutId)
           setUser(null)
@@ -142,41 +139,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Listen for auth changes
     const { data: { subscription } } = authService.onAuthStateChange(
       async (event, session) => {
-        console.log('Auth state changed:', event)
+        console.log('Auth state changed:', event, session?.user?.id ? 'with user' : 'no user')
         setSession(session)
         
-        if (session) {
-          // For SIGNED_IN and TOKEN_REFRESHED events, verify the user
-          // For other events, we can trust the session from the event
-          if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
-            try {
-              const { user: authenticatedUser } = await authService.getCurrentUser()
-              setUser(authenticatedUser)
-              
-              if (authenticatedUser) {
-                // Fetch user data in background, don't block
-                fetchUserData(authenticatedUser.id, true).catch(err => 
-                  console.error('Background user data fetch failed:', err)
-                )
-              }
-            } catch (error) {
-              console.error('Error getting authenticated user:', error)
-              setUser(null)
-              setUserData(null)
-              setHasActiveSubscription(false)
-            }
-          }
-          // For SIGNED_OUT event, session will be null so this won't run
+        if (session && session.user) {
+          // Always update user from session for any auth event
+          // This ensures we stay in sync with Supabase auth state
+          setUser(session.user)
+          
+          // Fetch user data in background for all session changes
+          fetchUserData(session.user.id, true).catch(err => 
+            console.error('Background user data fetch failed:', err)
+          )
         } else {
+          // No session or no user - clear everything
           setUser(null)
           setUserData(null)
           setHasActiveSubscription(false)
         }
         
         setLoading(false)
-        
-        // Don't auto-redirect after sign-in - let the page handle it or user navigate manually
-        // This prevents unwanted redirects and gives users control
       }
     )
 
