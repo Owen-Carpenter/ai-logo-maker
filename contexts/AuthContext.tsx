@@ -101,18 +101,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const timeoutId = setTimeout(() => {
         console.warn('Auth initialization timeout, setting loading to false')
         setLoading(false)
-        setUser(null)
-        setSession(null)
-      }, 5000) // 5 second timeout (reduced from 10)
+      }, 10000) // 10 second timeout
       
       try {
-        // Use Promise.race to add timeout to getSession call
-        const sessionPromise = authService.getCurrentSession()
-        const timeoutPromise = new Promise<{ session: null, error: any }>((_, reject) => 
-          setTimeout(() => reject(new Error('Session fetch timeout')), 4000)
-        )
-        
-        const { session } = await Promise.race([sessionPromise, timeoutPromise])
+        const { session } = await authService.getCurrentSession()
         setSession(session)
         
         if (session) {

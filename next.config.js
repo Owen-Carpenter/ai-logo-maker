@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  serverActions: {
-    allowedOrigins: ['localhost:3000'],
+  experimental: {
+    serverActions: {
+      allowedOrigins: ['localhost:3000'],
+    },
   },
   images: {
     domains: ['supabase.co'],
