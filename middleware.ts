@@ -81,8 +81,15 @@ export async function middleware(req: NextRequest) {
 
   // Allow callback routes to pass through without any redirects
   if (isCallbackRoute) {
+    // Still refresh session to keep cookies up to date
+    await supabase.auth.getSession()
     return response
   }
+
+  // Refresh the session on every request to keep cookies up to date
+  // This is important in Next.js 16 to maintain session state
+  // This ensures auth cookies are refreshed on every navigation
+  await supabase.auth.getSession()
 
   // Only verify user for protected routes to avoid unnecessary network calls
   let user = null
