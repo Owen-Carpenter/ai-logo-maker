@@ -126,18 +126,22 @@ export default function LibraryPage() {
     }
   };
 
-  // Add timeout fallback for loading state
+  // Show content immediately if user is logged out, or after loading completes, or after timeout
   useEffect(() => {
     if (!loading && !isLoadingLogos) {
       setShowContent(true);
+    } else if (!user) {
+      // If no user and still loading, show content immediately (user is logged out)
+      setShowContent(true);
     } else {
-      // Show content after 3 seconds even if still loading
+      // Show content after 3 seconds even if still loading (for logged-in users)
       const timer = setTimeout(() => setShowContent(true), 3000);
       return () => clearTimeout(timer);
     }
-  }, [loading, isLoadingLogos]);
+  }, [loading, isLoadingLogos, user]);
 
-  if ((loading || isLoadingLogos) && !showContent) {
+  // Show loading only for logged-in users who haven't shown content yet
+  if ((loading || isLoadingLogos) && user && !showContent) {
     return <Loading text="Loading your logo library..." />;
   }
 

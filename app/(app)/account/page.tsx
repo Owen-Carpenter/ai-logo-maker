@@ -87,18 +87,21 @@ function AccountPageContent() {
     }
   }, [searchParams, refreshUserData, invalidateCache]);
 
-  // Don't block rendering if loading takes too long - show content after 3 seconds
+  // Show content immediately if user is logged out, or after loading completes, or after timeout
   useEffect(() => {
     if (!loading) {
       setShowContent(true);
+    } else if (!user) {
+      // If no user and still loading, show content immediately (user is logged out)
+      setShowContent(true);
     } else {
-      // Show content after 3 seconds even if still loading
+      // Show content after 3 seconds even if still loading (for logged-in users)
       const timer = setTimeout(() => setShowContent(true), 3000);
       return () => clearTimeout(timer);
     }
-  }, [loading]);
+  }, [loading, user]);
 
-  if (loading && !showContent) {
+  if (loading && !showContent && user) {
     return <Loading text="Loading your account..." />;
   }
 
@@ -200,7 +203,7 @@ function AccountPageContent() {
                   <span className="text-neutral-600">Credits Remaining:</span>
                   <span className="flex items-center text-neutral-900 font-semibold">
                     <Logo width={24} height={24} className="mr-2" />
-                    {userData?.usage?.tokens_remaining ?? userData?.subscription?.monthly_token_limit ?? 5}
+                    {user ? (userData?.usage?.tokens_remaining ?? userData?.subscription?.monthly_token_limit ?? 0) : 0}
                     {userData?.subscription?.plan_type === 'enterprise' && (
                       <span className="ml-1 text-xs bg-purple-500/20 text-purple-700 px-2 py-0.5 rounded">
                         Enterprise
@@ -209,11 +212,11 @@ function AccountPageContent() {
                   </span>
                 </div>
 
-                {userData?.usage?.tokens_used_this_month !== undefined && (
+                {user && userData?.usage?.tokens_used_this_month !== undefined && (
                   <div className="flex items-center justify-between">
                     <span className="text-neutral-600">Credits Used:</span>
                     <span className="text-neutral-900 font-semibold">
-                      {userData.usage.tokens_used_this_month} / {userData?.subscription?.monthly_token_limit ?? 5}
+                      {userData.usage.tokens_used_this_month} / {userData?.subscription?.monthly_token_limit ?? 0}
                     </span>
                   </div>
                 )}

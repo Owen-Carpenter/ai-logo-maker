@@ -23,23 +23,26 @@ function UsagePageContent() {
   const [loadingIconCount, setLoadingIconCount] = useState(true);
   const [showContent, setShowContent] = useState(false);
 
-  // Don't block rendering if loading takes too long - show content after 3 seconds
+  // Show content immediately if user is logged out, or after loading completes, or after timeout
   useEffect(() => {
     if (!loading) {
       setShowContent(true);
+    } else if (!user) {
+      // If no user and still loading, show content immediately (user is logged out)
+      setShowContent(true);
     } else {
-      // Show content after 3 seconds even if still loading
+      // Show content after 3 seconds even if still loading (for logged-in users)
       const timer = setTimeout(() => setShowContent(true), 3000);
       return () => clearTimeout(timer);
     }
-  }, [loading]);
+  }, [loading, user]);
 
-  // Authentication check - redirect if not logged in
+  // Authentication check - redirect if not logged in (only after we've determined there's no user)
   useEffect(() => {
-    if (!loading && !user) {
+    if (!loading && !user && showContent) {
       router.push('/register?redirect=/usage');
     }
-  }, [user, loading, router]);
+  }, [user, loading, router, showContent]);
 
   // Fetch saved icons count
   useEffect(() => {
@@ -67,8 +70,8 @@ function UsagePageContent() {
     fetchIconCount();
   }, [user]);
 
-  // Show loading while checking authentication (but only if we haven't shown content yet)
-  if ((loading || !user) && !showContent) {
+  // Show loading while checking authentication (but only for logged-in users who haven't shown content yet)
+  if (loading && user && !showContent) {
     return <Loading text="Loading usage data..." />;
   }
 
