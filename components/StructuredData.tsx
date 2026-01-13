@@ -32,15 +32,15 @@ export default function StructuredData() {
       {
         '@type': 'Offer',
         name: 'Pro Yearly',
-        price: '249.00',
+        price: '200.00',
         priceCurrency: 'USD',
         priceSpecification: {
           '@type': 'UnitPriceSpecification',
-          price: '249.00',
+          price: '200.00',
           priceCurrency: 'USD',
           billingDuration: 'P1Y',
         },
-        description: '600 credits per year (50 credits per month) for AI logo generation',
+        description: '600 credits per year (50 credits per month) for AI logo generation - save $40/year',
         availability: 'https://schema.org/InStock',
       },
     ],

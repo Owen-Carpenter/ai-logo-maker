@@ -335,11 +335,11 @@ function getPlanTypeFromPriceId(priceId: string): string {
 function getCreditsForPlan(planType: string): number {
   switch (planType) {
     case 'starter':
-      return 25 // Starter pack: $5 one-time for 25 credits
+      return 25 // Starter pack: $10 one-time for 25 credits
     case 'proMonthly':
-      return 50 // Pro Monthly: $10/month for 50 credits
+      return 50 // Pro Monthly: $20/month for 50 credits
     case 'proYearly':
-      return 700 // Pro Yearly: $96/year for 700 credits (includes 100 bonus)
+      return 600 // Pro Yearly: $200/year for 600 credits
     default:
       return 0
   }

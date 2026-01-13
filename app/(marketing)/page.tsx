@@ -111,7 +111,7 @@ export default function HomePage() {
     },
     {
       question: "How does the credit system work?",
-      answer: "Start with our Starter Pack at $10 for 25 credits—perfect for trying the service. Pro Monthly ($20/month) gives you 50 credits per month that roll over. Pro Yearly ($249/year) provides 600 credits (50 per month), billed annually at the same monthly rate. Logo generation costs 3 credits and creates multiple variations. Improvements cost 1 credit each."
+      answer: "Start with our Starter Pack at $10 for 25 credits—perfect for trying the service. Pro Monthly ($20/month) gives you 50 credits per month that roll over. Pro Yearly ($200/year) provides 600 credits (50 per month), saving you $40/year vs monthly. Logo generation costs 3 credits and creates multiple variations. Improvements cost 1 credit each."
     },
     {
       question: "Can I cancel anytime?",
@@ -1015,10 +1015,10 @@ export default function HomePage() {
                 <div className="text-center mb-8 mt-4">
                   <h3 className="text-2xl font-bold text-neutral-900 mb-2">Pro Yearly</h3>
                   <div className="text-4xl font-bold text-neutral-900 mb-2">
-                    $249<span className="text-lg font-normal text-neutral-600">/year</span>
+                    $200<span className="text-lg font-normal text-neutral-600">/year</span>
                   </div>
                   <div className="text-sm text-neutral-500 line-through mb-2">$240/year at monthly rate</div>
-                  <p className="text-neutral-600">Best value - same monthly rate, billed annually!</p>
+                  <p className="text-neutral-600">Best value - save $40/year!</p>
                 </div>
 
                 <ul className="space-y-4 mb-8 flex-1">

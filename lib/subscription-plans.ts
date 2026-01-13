@@ -34,14 +34,14 @@ export const SUBSCRIPTION_PLANS = {
   },
   proYearly: {
     name: 'Pro Yearly',
-    price: 249,
+    price: 200,
     priceId: 'proYearly', // Resolved server-side
     credits: 600,
     interval: 'year',
     features: [
       '600 credits per year',
       '50 credits per month',
-      'Best value - save $31/year',
+      'Best value - save $40/year',
       'GPT Image 1 powered logo generation',
       'All style options',
       'Logo improvement & iteration',

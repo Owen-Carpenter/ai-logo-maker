@@ -113,7 +113,7 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
     },
     {
       question: "How does the credit system work?",
-      answer: "Credits are used to generate and improve logos. Initial logo generation costs 3 credits and creates multiple variations for you to choose from. Logo improvements and iterations cost 1 credit each. The Starter Pack ($10) gives you 25 credits as a one-time purchase. Pro Monthly ($20/month) provides 50 credits per month that renew automatically. Pro Yearly ($249/year) gives you 600 credits per year (50 per month), billed annually at the same monthly rate."
+      answer: "Credits are used to generate and improve logos. Initial logo generation costs 3 credits and creates multiple variations for you to choose from. Logo improvements and iterations cost 1 credit each. The Starter Pack ($10) gives you 25 credits as a one-time purchase. Pro Monthly ($20/month) provides 50 credits per month that renew automatically. Pro Yearly ($200/year) gives you 600 credits per year (50 per month), saving you $40/year vs monthly billing."
     },
     {
       question: "Can I cancel my subscription anytime?",
@@ -1033,10 +1033,10 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
                 <div className="text-center mb-8 mt-4">
                   <h3 className="text-2xl font-bold text-neutral-900 mb-2">Pro Yearly</h3>
                   <div className="text-4xl font-bold text-neutral-900 mb-2">
-                    $249<span className="text-lg font-normal text-neutral-600">/year</span>
+                    $200<span className="text-lg font-normal text-neutral-600">/year</span>
                   </div>
                   <div className="text-sm text-neutral-500 line-through mb-2">$240/year at monthly rate</div>
-                  <p className="text-neutral-600">Best value - same monthly rate, billed annually!</p>
+                  <p className="text-neutral-600">Best value - save $40/year!</p>
                 </div>
 
                 <ul className="space-y-4 mb-8 flex-1">

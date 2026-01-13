@@ -303,7 +303,7 @@ BEGIN
     CASE plan_type
         WHEN 'starter' THEN RETURN 25;
         WHEN 'proMonthly' THEN RETURN 50;
-        WHEN 'proYearly' THEN RETURN 700;
+        WHEN 'proYearly' THEN RETURN 600;
         ELSE RETURN 0;
     END CASE;
 END;
@@ -339,7 +339,7 @@ BEGIN
     v_monthly_limit := CASE p_plan_type
         WHEN 'starter' THEN 25
         WHEN 'proMonthly' THEN 50
-        WHEN 'proYearly' THEN 700
+        WHEN 'proYearly' THEN 600
         ELSE 0
     END;
 
@@ -368,7 +368,7 @@ BEGIN
                 -- New plan has higher base - check if user has refills to preserve
                 v_old_plan_base := CASE v_existing_plan_type
                     WHEN 'proMonthly' THEN 50
-                    WHEN 'proYearly' THEN 700
+                    WHEN 'proYearly' THEN 600
                     ELSE 0
                 END;
                 IF v_existing_limit > v_old_plan_base THEN
