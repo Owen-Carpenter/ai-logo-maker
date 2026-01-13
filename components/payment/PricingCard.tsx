@@ -124,8 +124,8 @@ export default function PricingCard({ plan, currentPlan, isPopular, variant = 'l
         </div>
         {plan === 'proYearly' && (
           <>
-            <div className="text-sm text-neutral-500 line-through mb-2">$120/year at monthly rate</div>
-            <p className="text-neutral-600">Save $24 + get bonus credits!</p>
+            <div className="text-sm text-neutral-500 line-through mb-2">$240/year at monthly rate</div>
+            <p className="text-neutral-600">Best value - same monthly rate, billed annually!</p>
           </>
         )}
         {plan === 'proMonthly' && (

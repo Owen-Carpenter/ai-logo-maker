@@ -113,7 +113,7 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
     },
     {
       question: "How does the credit system work?",
-      answer: "Credits are used to generate and improve logos. Initial logo generation costs 3 credits and creates multiple variations for you to choose from. Logo improvements and iterations cost 1 credit each. The Starter Pack ($5) gives you 25 credits as a one-time purchase. Pro Monthly ($10/month) provides 50 credits per month that renew automatically. Pro Yearly ($96/year) gives you 700 credits per year, including 100 bonus credits, saving you 20% compared to monthly billing."
+      answer: "Credits are used to generate and improve logos. Initial logo generation costs 3 credits and creates multiple variations for you to choose from. Logo improvements and iterations cost 1 credit each. The Starter Pack ($10) gives you 25 credits as a one-time purchase. Pro Monthly ($20/month) provides 50 credits per month that renew automatically. Pro Yearly ($249/year) gives you 600 credits per year (50 per month), billed annually at the same monthly rate."
     },
     {
       question: "Can I cancel my subscription anytime?",
@@ -133,11 +133,11 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
     },
     {
       question: "What happens to my unused credits?",
-      answer: "For Starter Pack purchases, credits never expire—use them whenever you need. For Pro Monthly subscriptions, unused credits roll over to the next month, so you never lose value. Pro Yearly subscribers get all 700 credits upfront and can use them throughout the year at their own pace."
+      answer: "For Starter Pack purchases, credits never expire—use them whenever you need. For Pro Monthly subscriptions, unused credits roll over to the next month, so you never lose value. Pro Yearly subscribers get 600 credits (50 per month) that can be used throughout the year at their own pace."
     },
     {
       question: "Is there a free trial or free tier?",
-      answer: "We offer the Starter Pack at just $5 for 25 credits, which is perfect for trying out the service. This one-time purchase lets you generate multiple logos and experience the full power of our AI logo builder without any subscription commitment. There's no free tier, but the Starter Pack is an affordable way to test the platform."
+      answer: "We offer the Starter Pack at just $10 for 25 credits, which is perfect for trying out the service. This one-time purchase lets you generate multiple logos and experience the full power of our AI logo builder without any subscription commitment. There's no free tier, but the Starter Pack is an affordable way to test the platform."
     },
     {
       question: "What styles and design options are available?",
@@ -866,7 +866,7 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
             </ScrollAnimation>
             <ScrollAnimation delay={150}>
               <p className="text-xl text-neutral-600 mb-8 max-w-3xl mx-auto">
-                Start with just $5 to test the waters, or save 20% with our yearly plan. High-quality AI-powered logo creation using GPT Image 1 technology.
+                Start with just $10 to test the waters, or save with our yearly plan. High-quality AI-powered logo creation using GPT Image 1 technology.
             </p>
             </ScrollAnimation>
           </div>
@@ -887,7 +887,7 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
                 <div className="text-center mb-8 mt-4">
                   <h3 className="text-2xl font-bold text-neutral-900 mb-2">Starter Pack</h3>
                   <div className="text-4xl font-bold text-neutral-900 mb-4">
-                    $5<span className="text-lg font-normal text-neutral-600"></span>
+                    $10<span className="text-lg font-normal text-neutral-600"></span>
                   </div>
                   <p className="text-neutral-600">&nbsp;</p>
                 </div>
@@ -954,7 +954,7 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
                 <div className="text-center mb-8 mt-4">
                   <h3 className="text-2xl font-bold text-neutral-900 mb-2">Pro Monthly</h3>
                   <div className="text-4xl font-bold text-neutral-900 mb-4">
-                    $10<span className="text-lg font-normal text-neutral-600">/month</span>
+                    $20<span className="text-lg font-normal text-neutral-600">/month</span>
                   </div>
                   <p className="text-neutral-600">For regular creators</p>
                 </div>
@@ -1026,17 +1026,17 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
                 {/* Best Value Badge */}
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                   <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-5 py-1.5 rounded-full text-xs font-bold shadow-lg whitespace-nowrap">
-                    Save 20% 🎉
+                    Best Value 🎉
                   </div>
                 </div>
                 
                 <div className="text-center mb-8 mt-4">
                   <h3 className="text-2xl font-bold text-neutral-900 mb-2">Pro Yearly</h3>
                   <div className="text-4xl font-bold text-neutral-900 mb-2">
-                    $96<span className="text-lg font-normal text-neutral-600">/year</span>
+                    $249<span className="text-lg font-normal text-neutral-600">/year</span>
                   </div>
-                  <div className="text-sm text-neutral-500 line-through mb-2">$120/year at monthly rate</div>
-                  <p className="text-neutral-600">Save $24 + get bonus credits!</p>
+                  <div className="text-sm text-neutral-500 line-through mb-2">$240/year at monthly rate</div>
+                  <p className="text-neutral-600">Best value - same monthly rate, billed annually!</p>
                 </div>
 
                 <ul className="space-y-4 mb-8 flex-1">
@@ -1044,13 +1044,13 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
                     <svg className="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <span className="font-semibold">700 credits per year</span>
+                    <span className="font-semibold">600 credits per year</span>
                   </li>
                   <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    100 bonus credits included 🎁
+                    50 credits per month
                   </li>
                   <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">

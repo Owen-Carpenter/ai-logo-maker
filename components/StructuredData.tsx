@@ -10,7 +10,7 @@ export default function StructuredData() {
       {
         '@type': 'Offer',
         name: 'Starter Pack',
-        price: '5.00',
+        price: '10.00',
         priceCurrency: 'USD',
         description: '25 credits one-time purchase for AI logo generation',
         availability: 'https://schema.org/InStock',
@@ -18,11 +18,11 @@ export default function StructuredData() {
       {
         '@type': 'Offer',
         name: 'Pro Monthly',
-        price: '10.00',
+        price: '20.00',
         priceCurrency: 'USD',
         priceSpecification: {
           '@type': 'UnitPriceSpecification',
-          price: '10.00',
+          price: '20.00',
           priceCurrency: 'USD',
           billingDuration: 'P1M',
         },
@@ -32,15 +32,15 @@ export default function StructuredData() {
       {
         '@type': 'Offer',
         name: 'Pro Yearly',
-        price: '96.00',
+        price: '249.00',
         priceCurrency: 'USD',
         priceSpecification: {
           '@type': 'UnitPriceSpecification',
-          price: '96.00',
+          price: '249.00',
           priceCurrency: 'USD',
           billingDuration: 'P1Y',
         },
-        description: '700 credits per year (including 100 bonus credits) for AI logo generation',
+        description: '600 credits per year (50 credits per month) for AI logo generation',
         availability: 'https://schema.org/InStock',
       },
     ],

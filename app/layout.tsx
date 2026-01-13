@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     default: 'AI Logo Builder - Create Professional Logos with AI in Seconds',
     template: '%s | AI Logo Builder'
   },
-  description: 'Generate professional-grade logos instantly with AI-powered technology. Create custom logos for your business, brand, or startup in seconds. Multiple styles, high-resolution PNG downloads, and full commercial rights. Starting at just $5.',
+  description: 'Generate professional-grade logos instantly with AI-powered technology. Create custom logos for your business, brand, or startup in seconds. Multiple styles, high-resolution PNG downloads, and full commercial rights. Starting at just $10 for 25 credits.',
   keywords: [
     // Primary Keywords
     'AI logo generator',

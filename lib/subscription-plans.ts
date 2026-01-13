@@ -2,7 +2,7 @@
 export const SUBSCRIPTION_PLANS = {
   starter: {
     name: 'Starter Pack',
-    price: 5,
+    price: 10,
     priceId: 'starter', // Resolved server-side
     credits: 25,
     isOneTime: true,
@@ -17,7 +17,7 @@ export const SUBSCRIPTION_PLANS = {
   },
   proMonthly: {
     name: 'Pro Monthly',
-    price: 10,
+    price: 20,
     priceId: 'proMonthly', // Resolved server-side
     credits: 50,
     interval: 'month',
@@ -34,14 +34,14 @@ export const SUBSCRIPTION_PLANS = {
   },
   proYearly: {
     name: 'Pro Yearly',
-    price: 96,
+    price: 249,
     priceId: 'proYearly', // Resolved server-side
-    credits: 700,
+    credits: 600,
     interval: 'year',
     features: [
-      '700 credits per year',
-      '100 bonus credits included',
-      'Save 20% vs monthly',
+      '600 credits per year',
+      '50 credits per month',
+      'Best value - save $31/year',
       'GPT Image 1 powered logo generation',
       'All style options',
       'Logo improvement & iteration',

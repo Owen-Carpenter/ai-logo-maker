@@ -111,7 +111,7 @@ export default function HomePage() {
     },
     {
       question: "How does the credit system work?",
-      answer: "Start with our Starter Pack at $5 for 25 credits—perfect for trying the service. Pro Monthly ($10/month) gives you 50 credits per month that roll over. Pro Yearly ($96/year) provides 700 credits upfront plus 100 bonus credits, saving you 20%. Logo generation costs 3 credits and creates multiple variations. Improvements cost 1 credit each."
+      answer: "Start with our Starter Pack at $10 for 25 credits—perfect for trying the service. Pro Monthly ($20/month) gives you 50 credits per month that roll over. Pro Yearly ($249/year) provides 600 credits (50 per month), billed annually at the same monthly rate. Logo generation costs 3 credits and creates multiple variations. Improvements cost 1 credit each."
     },
     {
       question: "Can I cancel anytime?",
@@ -848,7 +848,7 @@ export default function HomePage() {
             </ScrollAnimation>
             <ScrollAnimation delay={150}>
               <p className="text-xl text-neutral-600 mb-8 max-w-3xl mx-auto">
-                Start with just $5 to test the waters, or save 20% with our yearly plan. High-quality AI-powered logo creation using GPT Image 1 technology.
+                Start with just $10 to test the waters, or save with our yearly plan. High-quality AI-powered logo creation using GPT Image 1 technology.
             </p>
             </ScrollAnimation>
           </div>
@@ -869,7 +869,7 @@ export default function HomePage() {
                 <div className="text-center mb-8 mt-4">
                   <h3 className="text-2xl font-bold text-neutral-900 mb-2">Starter Pack</h3>
                   <div className="text-4xl font-bold text-neutral-900 mb-4">
-                    $5<span className="text-lg font-normal text-neutral-600"></span>
+                    $10<span className="text-lg font-normal text-neutral-600"></span>
                   </div>
                   <p className="text-neutral-600">&nbsp;</p>
                 </div>
@@ -936,7 +936,7 @@ export default function HomePage() {
                 <div className="text-center mb-8 mt-4">
                   <h3 className="text-2xl font-bold text-neutral-900 mb-2">Pro Monthly</h3>
                   <div className="text-4xl font-bold text-neutral-900 mb-4">
-                    $10<span className="text-lg font-normal text-neutral-600">/month</span>
+                    $20<span className="text-lg font-normal text-neutral-600">/month</span>
                   </div>
                   <p className="text-neutral-600">For regular creators</p>
                 </div>
@@ -1008,17 +1008,17 @@ export default function HomePage() {
                 {/* Best Value Badge */}
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                   <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-5 py-1.5 rounded-full text-xs font-bold shadow-lg whitespace-nowrap">
-                    Save 20% 🎉
+                    Best Value 💎
                   </div>
                 </div>
                 
                 <div className="text-center mb-8 mt-4">
                   <h3 className="text-2xl font-bold text-neutral-900 mb-2">Pro Yearly</h3>
                   <div className="text-4xl font-bold text-neutral-900 mb-2">
-                    $96<span className="text-lg font-normal text-neutral-600">/year</span>
+                    $249<span className="text-lg font-normal text-neutral-600">/year</span>
                   </div>
-                  <div className="text-sm text-neutral-500 line-through mb-2">$120/year at monthly rate</div>
-                  <p className="text-neutral-600">Save $24 + get bonus credits!</p>
+                  <div className="text-sm text-neutral-500 line-through mb-2">$240/year at monthly rate</div>
+                  <p className="text-neutral-600">Best value - same monthly rate, billed annually!</p>
                 </div>
 
                 <ul className="space-y-4 mb-8 flex-1">
@@ -1026,13 +1026,13 @@ export default function HomePage() {
                     <svg className="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <span className="font-semibold">700 credits per year</span>
+                    <span className="font-semibold">600 credits per year</span>
                   </li>
                   <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    100 bonus credits included 🎁
+                    50 credits per month
                   </li>
                   <li className="flex items-center text-neutral-600">
                     <svg className="w-5 h-5 text-purple-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
