@@ -396,15 +396,15 @@ function UsagePageContent() {
                   <ul className="space-y-3 text-neutral-600 text-sm">
                     <li className="flex items-start">
                       <span className="text-primary-600 mr-2">•</span>
-                      Starter Pack: 25 credits (one-time) for $5
+                      Starter Pack: 25 credits (one-time) for $10
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary-600 mr-2">•</span>
-                      Pro Monthly: 50 credits/month for $10
+                      Pro Monthly: 50 credits/month for $20
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary-600 mr-2">•</span>
-                      Pro Yearly: 700 credits/year for $96 (save 20%)
+                      Pro Yearly: 600 credits/year for $200 (save $40/year)
                     </li>
                     <li className="flex items-start">
                       <span className="text-primary-600 mr-2">•</span>
