@@ -133,7 +133,7 @@ export default function MarketingPageLayout({ h1Title, h2Subtitle }: MarketingPa
     },
     {
       question: "What happens to my unused credits?",
-      answer: "For Starter Pack purchases, credits never expire—use them whenever you need. For Pro Monthly subscriptions, unused credits roll over to the next month, so you never lose value. Pro Yearly subscribers get 600 credits (50 per month) that can be used throughout the year at their own pace."
+      answer: "For Starter Pack purchases, credits never expire—use them whenever you need. For Pro Monthly subscriptions, you get 50 fresh credits each month. Pro Yearly subscribers get 600 credits per year that can be used at their own pace. Starter pack refills persist permanently across all billing periods."
     },
     {
       question: "Is there a free trial or free tier?",

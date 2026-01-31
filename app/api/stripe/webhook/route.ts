@@ -282,10 +282,14 @@ async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
 
   if (!subscriptionId) return
 
+  // Get the full Stripe subscription to get updated billing periods
+  const stripeSubscription = await stripe.subscriptions.retrieve(subscriptionId)
+  const { start: newPeriodStart, end: newPeriodEnd } = extractStripePeriod(stripeSubscription as any)
+
   // Find user by subscription (using new database structure)
   const { data: subscription } = await supabase
     .from('subscriptions')
-    .select('id, user_id, plan_type, monthly_token_limit')
+    .select('id, user_id, plan_type, monthly_token_limit, current_period_start, current_period_end')
     .eq('stripe_subscription_id', subscriptionId)
     .single()
 
@@ -294,8 +298,45 @@ async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
     return
   }
 
-  // Note: Token reset is now handled automatically by the usage tracking system
-  // based on billing periods. No need to manually reset tokens here.
+  // Handle credit reset for recurring plans
+  // Credits reset to base each period, but refills are preserved
+  if (subscription.plan_type === 'proMonthly' || subscription.plan_type === 'proYearly') {
+    // Get base credits for the plan
+    const basePlanCredits = getCreditsForPlan(subscription.plan_type)
+    
+    // Calculate refill credits (anything above the base plan amount)
+    // These are from starter pack purchases and should be preserved
+    const refillCredits = Math.max(0, subscription.monthly_token_limit - basePlanCredits)
+    
+    // New limit = base credits + preserved refills
+    // Pro Monthly: 50 + refills (resets to 50 each month, plus any refills)
+    // Pro Yearly: 600 + refills (resets to 600 each year, plus any refills)
+    const newCreditLimit = basePlanCredits + refillCredits
+
+    console.log(`Credit reset for user ${subscription.user_id} (${subscription.plan_type}): previous limit=${subscription.monthly_token_limit}, base=${basePlanCredits}, refills=${refillCredits}, new limit=${newCreditLimit}`)
+
+    // Update subscription with new billing period and reset credits
+    await supabase
+      .from('subscriptions')
+      .update({
+        current_period_start: newPeriodStart,
+        current_period_end: newPeriodEnd,
+        monthly_token_limit: newCreditLimit,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', subscription.id)
+  } else {
+    // For starter pack (one-time purchase), just update billing periods if needed
+    // Credits never expire, so keep the same limit
+    await supabase
+      .from('subscriptions')
+      .update({
+        current_period_start: newPeriodStart,
+        current_period_end: newPeriodEnd,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', subscription.id)
+  }
 }
 
 async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {

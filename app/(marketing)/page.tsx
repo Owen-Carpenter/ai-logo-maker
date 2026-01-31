@@ -111,7 +111,7 @@ export default function HomePage() {
     },
     {
       question: "How does the credit system work?",
-      answer: "Start with our Starter Pack at $10 for 25 credits—perfect for trying the service. Pro Monthly ($20/month) gives you 50 credits per month that roll over. Pro Yearly ($200/year) provides 600 credits (50 per month), saving you $40/year vs monthly. Logo generation costs 3 credits and creates multiple variations. Improvements cost 1 credit each."
+      answer: "Start with our Starter Pack at $10 for 25 credits—perfect for trying the service. Pro Monthly ($20/month) gives you 50 fresh credits each month. Pro Yearly ($200/year) provides 600 credits per year, saving you $40/year vs monthly. Starter pack refills persist permanently. Logo generation costs 3 credits and creates multiple variations. Improvements cost 1 credit each."
     },
     {
       question: "Can I cancel anytime?",
