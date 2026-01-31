@@ -73,28 +73,8 @@ export async function GET(req: NextRequest) {
         existingUser = newUser
       }
 
-      // Create default free subscription if it doesn't exist
-      const { data: existingSubscription } = await supabase
-        .from('subscriptions')
-        .select('id')
-        .eq('user_id', user.id)
-        .single()
-
-      if (!existingSubscription) {
-        const { error: subscriptionError } = await supabase
-          .from('subscriptions')
-          .insert({
-            user_id: user.id,
-            plan_type: 'free',
-            status: 'active',
-            monthly_token_limit: 5
-          })
-
-        if (subscriptionError && subscriptionError.code !== '23505') {
-          console.error('Error creating subscription:', subscriptionError)
-          // Continue anyway - subscription creation can be retried
-        }
-      }
+      // Don't create a free subscription - users need to purchase a plan to get credits
+      // Subscription will be created when they purchase starter/proMonthly/proYearly
     }
 
     // Now fetch complete user data with subscription and usage info
@@ -123,7 +103,7 @@ export async function GET(req: NextRequest) {
         .eq('user_id', user.id)
 
       const totalUsed = usageData?.reduce((sum, record) => sum + (record.tokens_used || 0), 0) || 0
-      const monthlyLimit = subscription?.monthly_token_limit || 5
+      const monthlyLimit = subscription?.monthly_token_limit || 0
       const remaining = Math.max(0, monthlyLimit - totalUsed)
 
       // Build userData object
@@ -132,8 +112,8 @@ export async function GET(req: NextRequest) {
         user_created_at: existingUser?.created_at,
         user_updated_at: existingUser?.updated_at,
         subscription_id: subscription?.id || null,
-        plan_type: subscription?.plan_type || 'free',
-        subscription_status: subscription?.status || 'active',
+        plan_type: subscription?.plan_type || null,
+        subscription_status: subscription?.status || 'inactive',
         monthly_token_limit: monthlyLimit,
         current_period_start: subscription?.current_period_start || null,
         current_period_end: subscription?.current_period_end || null,
@@ -158,11 +138,11 @@ export async function GET(req: NextRequest) {
 
     // Check if user has active subscription using new structure
     const hasActiveSubscription = userData.subscription_status === 'active' && 
-      userData.plan_type && userData.plan_type !== 'free' &&
+      userData.plan_type &&
       (!userData.current_period_end || new Date(userData.current_period_end) > new Date())
 
     // Fallback: If view doesn't give us subscription data, check subscriptions table directly
-    if (!hasActiveSubscription && (!userData.plan_type || userData.plan_type === 'free')) {
+    if (!hasActiveSubscription && !userData.plan_type) {
       const { data: directSubscription } = await supabase
         .from('subscriptions')
         .select('plan_type, status, current_period_end')
@@ -173,7 +153,7 @@ export async function GET(req: NextRequest) {
       if (directSubscription) {
         // Override the result if we find an active subscription
         const directHasActive = directSubscription.status === 'active' && 
-          directSubscription.plan_type !== 'free' &&
+          directSubscription.plan_type &&
           (!directSubscription.current_period_end || new Date(directSubscription.current_period_end) > new Date());
         
         if (directHasActive) {
@@ -187,7 +167,7 @@ export async function GET(req: NextRequest) {
     
     // Recalculate after potential override
     const finalHasActiveSubscription = userData.subscription_status === 'active' && 
-      userData.plan_type && userData.plan_type !== 'free' &&
+      userData.plan_type &&
       (!userData.current_period_end || new Date(userData.current_period_end) > new Date());
 
     const responseData = {
@@ -216,7 +196,7 @@ export async function GET(req: NextRequest) {
         // Usage info
         usage: {
           tokens_used_this_month: userData.tokens_used_this_month || 0,
-          tokens_remaining: userData.tokens_remaining || userData.monthly_token_limit || 5,
+          tokens_remaining: userData.tokens_remaining || userData.monthly_token_limit || 0,
           total_generations: userData.total_generations || 0,
           successful_generations: userData.successful_generations || 0,
           usage_percentage: userData.usage_percentage || 0

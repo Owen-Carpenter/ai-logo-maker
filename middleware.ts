@@ -148,7 +148,7 @@ export async function middleware(req: NextRequest) {
       }
 
       const hasActiveSubscription = subscriptionData?.status === 'active' && 
-        subscriptionData?.plan_type !== 'free' &&
+        subscriptionData?.plan_type &&
         (!subscriptionData?.current_period_end || 
          new Date(subscriptionData.current_period_end) > new Date())
 

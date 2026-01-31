@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
       .eq('subscription_id', subscription?.id || null)
 
     const totalUsed = usageData?.reduce((sum, record) => sum + record.tokens_used, 0) || 0
-    const monthlyLimit = subscription?.monthly_token_limit || 5
+    const monthlyLimit = subscription?.monthly_token_limit || 0
     const remaining = Math.max(0, monthlyLimit - totalUsed)
     
     // Initial logo generation costs 3 credits, improvements cost 1 credit each
@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
           remaining_tokens: remaining,
           credits_needed: creditsNeeded,
           monthly_limit: monthlyLimit,
-          plan_type: subscription?.plan_type || 'free'
+          plan_type: subscription?.plan_type || null
         },
         { status: 403 }
       )

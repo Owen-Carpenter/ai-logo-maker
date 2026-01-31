@@ -82,7 +82,7 @@ function UsagePageContent() {
   const usagePercentage = user ? (userData?.usage?.usage_percentage || 0) : 0;
 
   // Calculate usage statistics
-  const planType = userData?.subscription?.plan_type || 'free';
+  const planType = userData?.subscription?.plan_type || null;
   const isUnlimited = false; // No unlimited plan in current pricing structure
   
   // Real usage statistics from icon creation dates
@@ -278,6 +278,7 @@ function UsagePageContent() {
                         if (planType === 'starter') return 'Starter Pack';
                         if (planType === 'proMonthly') return 'Pro Monthly';
                         if (planType === 'proYearly') return 'Pro Yearly';
+                        if (!planType) return 'No Plan';
                         // Fallback: capitalize first letter and add space before capital letters
                         return planType.replace(/([A-Z])/g, ' $1').trim().replace(/^./, str => str.toUpperCase());
                       })()}
