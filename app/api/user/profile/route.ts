@@ -96,11 +96,24 @@ export async function GET(req: NextRequest) {
         .eq('status', 'active')
         .single()
 
-      // Get usage data
-      const { data: usageData } = await supabase
+      // Get usage data respecting billing periods
+      let usageQuery = supabase
         .from('usage_tracking')
-        .select('tokens_used, generation_successful')
+        .select('tokens_used, generation_successful, created_at')
         .eq('user_id', user.id)
+      
+      // Filter by billing period for recurring subscriptions
+      if (subscription) {
+        if (subscription.current_period_start && subscription.current_period_end) {
+          // Recurring subscription: only count usage in current period
+          usageQuery = usageQuery
+            .gte('created_at', subscription.current_period_start)
+            .lt('created_at', subscription.current_period_end)
+        }
+        // For one-time purchases (starter pack with no billing periods), count all usage
+      }
+
+      const { data: usageData } = await usageQuery
 
       const totalUsed = usageData?.reduce((sum, record) => sum + (record.tokens_used || 0), 0) || 0
       const monthlyLimit = subscription?.monthly_token_limit || 0

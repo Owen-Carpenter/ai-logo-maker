@@ -87,7 +87,15 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
     return
   }
 
-  // Handle one-time payments (like starter pack) - always add credits as refill
+  // ============================================================================
+  // STARTER PACK (ONE-TIME PURCHASE) LOGIC
+  // ============================================================================
+  // Starter pack credits NEVER reset - they are permanent until used
+  // - If user has NO subscription: Create subscription with plan_type='starter', no billing periods
+  // - If user HAS subscription: Add credits to monthly_token_limit (works as refill)
+  // - Billing periods remain NULL for starter-only users (credits don't reset)
+  // - When user upgrades to proMonthly/proYearly, billing periods are set (recurring credits reset, refills preserved)
+  // ============================================================================
   if (!subscriptionId || planType === 'starter') {
     console.log('Processing starter pack refill purchase')
     try {
@@ -152,7 +160,15 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
     }
   }
 
-  // Handle subscription payments
+  // ============================================================================
+  // RECURRING SUBSCRIPTION (PROMONTHLY/PROYEARLY) LOGIC
+  // ============================================================================
+  // Recurring subscriptions reset credits each billing period:
+  // - proMonthly: 50 credits reset every month
+  // - proYearly: 600 credits reset every year
+  // - Billing periods are set from Stripe subscription
+  // - Refill credits from starter pack purchases are preserved across resets
+  // ============================================================================
   try {
     // Get subscription details
     const subscription = await stripe.subscriptions.retrieve(subscriptionId)
@@ -298,8 +314,17 @@ async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
     return
   }
 
-  // Handle credit reset for recurring plans
-  // Credits reset to base each period, but refills are preserved
+  // ============================================================================
+  // CREDIT RESET LOGIC FOR RECURRING SUBSCRIPTIONS
+  // ============================================================================
+  // When a recurring subscription renews (invoice.payment_succeeded):
+  // 1. Base credits reset to plan amount (50 for monthly, 600 for yearly)
+  // 2. Refill credits from starter pack purchases are preserved and added on top
+  // 3. Example: User has proMonthly (50) + bought 2 starter packs (50 refills)
+  //    - Total credits: 100 (50 base + 50 refills)
+  //    - After monthly renewal: 100 (50 new base + 50 preserved refills)
+  // 4. Starter-only users never hit this code path (no recurring invoices)
+  // ============================================================================
   if (subscription.plan_type === 'proMonthly' || subscription.plan_type === 'proYearly') {
     // Get base credits for the plan
     const basePlanCredits = getCreditsForPlan(subscription.plan_type)

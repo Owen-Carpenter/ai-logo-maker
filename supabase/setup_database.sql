@@ -573,6 +573,7 @@ BEGIN
 
     -- Calculate current usage ONLY within the current billing period
     -- This ensures credits reset properly for monthly/yearly subscriptions
+    -- For one-time purchases (starter pack with NULL billing periods), count all usage
     SELECT COALESCE(SUM(tokens_used), 0)
     INTO v_current_usage
     FROM usage_tracking ut
@@ -580,13 +581,13 @@ BEGIN
     WHERE ut.user_id = p_user_id
     AND ut.subscription_id = v_subscription_id
     AND (
-        -- Only count usage within the current billing period
-        s.current_period_start IS NULL 
-        OR ut.created_at >= s.current_period_start
-    )
-    AND (
-        s.current_period_end IS NULL 
-        OR ut.created_at < s.current_period_end
+        -- For one-time purchases (starter pack): No billing periods, count all usage
+        (s.current_period_start IS NULL AND s.current_period_end IS NULL)
+        OR
+        -- For recurring subscriptions: Only count usage within current billing period
+        (s.current_period_start IS NOT NULL AND s.current_period_end IS NOT NULL
+         AND ut.created_at >= s.current_period_start
+         AND ut.created_at < s.current_period_end)
     );
 
     v_remaining := v_monthly_limit - v_current_usage;
@@ -683,13 +684,19 @@ LEFT JOIN LATERAL (
     FROM usage_tracking ut
     WHERE ut.user_id = u.id
     AND (
-        -- For paid users: match subscription_id AND respect billing periods
-        -- This ensures credits reset properly for monthly/yearly subscriptions
+        -- For users WITH subscription: match subscription_id
         (s.id IS NOT NULL AND ut.subscription_id = s.id
-         AND (s.current_period_start IS NULL OR ut.created_at >= s.current_period_start)
-         AND (s.current_period_end IS NULL OR ut.created_at < s.current_period_end))
+         AND (
+            -- One-time purchase (starter pack): No billing periods, count all usage
+            (s.current_period_start IS NULL AND s.current_period_end IS NULL)
+            OR
+            -- Recurring subscription: Only count usage within current billing period
+            (s.current_period_start IS NOT NULL AND s.current_period_end IS NOT NULL
+             AND ut.created_at >= s.current_period_start
+             AND ut.created_at < s.current_period_end)
+         ))
         OR
-        -- For users without subscription: match NULL subscription_id and current month
+        -- For users WITHOUT subscription: match NULL subscription_id and current month
         (s.id IS NULL AND ut.subscription_id IS NULL 
          AND ut.created_at >= date_trunc('month', NOW())
          AND ut.created_at < date_trunc('month', NOW()) + INTERVAL '1 month')
