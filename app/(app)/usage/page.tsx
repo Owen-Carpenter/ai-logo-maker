@@ -201,72 +201,70 @@ function UsagePageContent() {
                 </h2>
               
               {isPaidPlan ? (
-                <div className="space-y-5">
+                <div className="space-y-4">
 
-                  {/* Subscription credits — only shown for recurring plans */}
-                  {!isStarterOnly && (
-                    <div>
-                      <div className="flex items-center justify-between mb-1.5">
-                        <span className="text-sm font-medium text-blue-700">Subscription Credits</span>
-                        <span className="text-sm font-semibold text-neutral-900">
+                  {/* ── Subscription Credits (monthly / yearly) ── */}
+                  {!isStarterOnly ? (
+                    <div className="rounded-lg border border-blue-200 bg-blue-50 p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm font-semibold text-blue-800">
+                          {planType === 'proYearly' ? 'Yearly' : 'Monthly'} Subscription Credits
+                        </span>
+                        <span className="text-sm font-bold text-blue-900">
                           {subCreditsUsed} / {subCreditLimit} used
                         </span>
                       </div>
-                      <div className="w-full bg-blue-100 rounded-full h-2.5">
+                      <div className="w-full bg-blue-200 rounded-full h-2.5 mb-2">
                         <div
                           className="bg-blue-500 h-2.5 rounded-full transition-all duration-500"
                           style={{ width: `${Math.min(usagePercentage, 100)}%` }}
                         />
                       </div>
-                      <div className="flex justify-between mt-1">
-                        <span className="text-xs text-neutral-500">{subCreditsRemaining} remaining</span>
-                        <span className="text-xs text-neutral-500">
+                      <div className="flex justify-between">
+                        <span className="text-xs font-medium text-blue-700">{subCreditsRemaining} remaining</span>
+                        <span className="text-xs text-blue-600">
                           Resets {userData?.subscription?.current_period_end
                             ? new Date(userData.subscription.current_period_end).toLocaleDateString()
                             : 'on renewal'}
                         </span>
                       </div>
                     </div>
-                  )}
+                  ) : null}
 
-                  {/* Bonus credits — always shown when > 0 */}
-                  {bonusCredits > 0 && (
-                    <div>
-                      <div className="flex items-center justify-between mb-1.5">
-                        <span className="text-sm font-medium text-amber-700">Bonus Credits</span>
-                        <span className="text-sm font-semibold text-neutral-900">{bonusCredits} available</span>
-                      </div>
-                      <div className="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
-                        <p className="text-xs text-amber-700">From starter pack purchases — spent first, never expire</p>
-                      </div>
+                  {/* ── Starter Pack Credits (one-time, never reset) — always visible ── */}
+                  <div className={`rounded-lg border p-4 ${bonusCredits > 0 ? 'border-amber-200 bg-amber-50' : 'border-neutral-200 bg-neutral-50'}`}>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className={`text-sm font-semibold ${bonusCredits > 0 ? 'text-amber-800' : 'text-neutral-500'}`}>
+                        Starter Pack Credits
+                      </span>
+                      <span className={`text-base font-bold ${bonusCredits > 0 ? 'text-amber-900' : 'text-neutral-400'}`}>
+                        {bonusCredits}
+                      </span>
                     </div>
-                  )}
+                    <p className={`text-xs ${bonusCredits > 0 ? 'text-amber-600' : 'text-neutral-400'}`}>
+                      {bonusCredits > 0
+                        ? 'One-time purchase credits — never expire, always spent first'
+                        : 'No starter pack credits — buy a Starter Pack anytime to top up'}
+                    </p>
+                  </div>
 
-                  {/* Starter-only: just bonus credits */}
-                  {isStarterOnly && bonusCredits === 0 && (
-                    <div className="bg-neutral-50 border border-neutral-200 rounded-lg p-4 text-center">
-                      <p className="text-neutral-600 text-sm">No credits remaining.</p>
-                      <p className="text-neutral-500 text-xs mt-1">Purchase a starter pack or subscribe to get more.</p>
-                    </div>
-                  )}
-
-                  {/* Total summary row */}
+                  {/* ── Total ── */}
                   {!isStarterOnly && (
-                    <div className="flex items-center justify-between pt-3 border-t border-neutral-200">
+                    <div className="flex items-center justify-between pt-2 border-t border-neutral-200">
                       <span className="text-neutral-700 font-medium">Total Available</span>
-                      <span className="text-xl font-bold text-neutral-900">{totalRemaining}</span>
+                      <span className="text-2xl font-bold text-neutral-900">{totalRemaining}</span>
                     </div>
                   )}
 
                   {usagePercentage > 80 && !isStarterOnly && (
-                    <div className="bg-primary-100 border border-primary-200 rounded-lg p-4">
-                      <div className="flex items-center mb-2">
+                    <div className="bg-primary-100 border border-primary-200 rounded-lg p-3">
+                      <div className="flex items-center mb-1">
                         <Crown className="h-4 w-4 text-primary-600 mr-2" />
-                        <span className="text-primary-600 font-semibold">Low Subscription Credits</span>
+                        <span className="text-primary-600 font-semibold text-sm">Low Subscription Credits</span>
                       </div>
-                      <p className="text-neutral-600 text-sm">
-                        You've used {Math.round(usagePercentage)}% of your subscription credits this period.
-                        {bonusCredits === 0 && ' Consider buying a starter pack refill.'}
+                      <p className="text-neutral-600 text-xs">
+                        {Math.round(usagePercentage)}% of subscription credits used.
+                        {bonusCredits === 0 && ' Buy a Starter Pack to add more credits anytime.'}
                       </p>
                     </div>
                   )}

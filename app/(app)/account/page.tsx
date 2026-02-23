@@ -194,67 +194,67 @@ function AccountPageContent() {
                   </span>
                 </div>
 
-                {/* Subscription credits (resets each period) */}
-                {isPaidPlan && userData?.subscription?.plan_type !== 'starter' && (
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm font-medium text-blue-800">Subscription Credits</span>
-                      <span className="text-sm font-bold text-blue-900">
-                        {userData?.usage?.subscription_credits_remaining ?? 0} / {userData?.subscription?.monthly_token_limit ?? 0}
-                      </span>
-                    </div>
-                    <div className="w-full bg-blue-100 rounded-full h-1.5">
-                      <div
-                        className="bg-blue-500 h-1.5 rounded-full transition-all"
-                        style={{ width: `${Math.min(userData?.usage?.usage_percentage ?? 0, 100)}%` }}
-                      />
-                    </div>
-                    <p className="text-xs text-blue-600 mt-1">
-                      Resets on {userData?.subscription?.current_period_end
-                        ? new Date(userData.subscription.current_period_end).toLocaleDateString()
-                        : 'renewal date'}
-                    </p>
-                  </div>
-                )}
+                {isPaidPlan && (() => {
+                  const plan = userData?.subscription?.plan_type;
+                  const subLimit    = userData?.subscription?.monthly_token_limit ?? 0;
+                  const subUsed     = (subLimit) - (userData?.usage?.subscription_credits_remaining ?? subLimit);
+                  const subRemain   = userData?.usage?.subscription_credits_remaining ?? 0;
+                  const bonusRemain = userData?.subscription?.bonus_token_balance ?? 0;
+                  const totalRemain = userData?.usage?.tokens_remaining ?? 0;
+                  const pct         = subLimit > 0 ? Math.min((subUsed / subLimit) * 100, 100) : 0;
+                  const renewDate   = userData?.subscription?.current_period_end
+                    ? new Date(userData.subscription.current_period_end).toLocaleDateString()
+                    : null;
 
-                {/* Bonus credits (one-time purchases, never reset) */}
-                {isPaidPlan && (userData?.subscription?.bonus_token_balance ?? 0) > 0 && (
-                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-amber-800">Bonus Credits</span>
-                      <span className="text-sm font-bold text-amber-900 flex items-center gap-1">
-                        <Logo width={16} height={16} />
-                        {userData?.subscription?.bonus_token_balance ?? 0}
-                      </span>
-                    </div>
-                    <p className="text-xs text-amber-600 mt-1">From starter pack purchases — never expire, used first</p>
-                  </div>
-                )}
+                  return (
+                    <div className="space-y-3">
+                      {/* Subscription credits row — proMonthly / proYearly */}
+                      {plan !== 'starter' && (
+                        <div className="rounded-lg border border-blue-200 bg-blue-50 p-3">
+                          <div className="flex items-center justify-between mb-1.5">
+                            <span className="text-sm font-semibold text-blue-800">
+                              {plan === 'proYearly' ? 'Yearly' : 'Monthly'} Subscription Credits
+                            </span>
+                            <span className="text-sm font-bold text-blue-900">{subRemain} / {subLimit}</span>
+                          </div>
+                          <div className="w-full bg-blue-100 rounded-full h-2">
+                            <div className="bg-blue-500 h-2 rounded-full transition-all" style={{ width: `${pct}%` }} />
+                          </div>
+                          <p className="text-xs text-blue-600 mt-1.5">
+                            {subUsed} used · resets {renewDate ? `on ${renewDate}` : 'on renewal'}
+                          </p>
+                        </div>
+                      )}
 
-                {/* Starter-only users: show bonus as their main credit pool */}
-                {isPaidPlan && userData?.subscription?.plan_type === 'starter' && (
-                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-amber-800">Credits Remaining</span>
-                      <span className="text-sm font-bold text-amber-900 flex items-center gap-1">
-                        <Logo width={16} height={16} />
-                        {userData?.subscription?.bonus_token_balance ?? 0}
-                      </span>
-                    </div>
-                    <p className="text-xs text-amber-600 mt-1">One-time credits — never expire</p>
-                  </div>
-                )}
+                      {/* Starter pack / bonus credits row — always visible */}
+                      <div className={`rounded-lg border p-3 ${bonusRemain > 0 ? 'border-amber-200 bg-amber-50' : 'border-neutral-200 bg-neutral-50'}`}>
+                        <div className="flex items-center justify-between">
+                          <span className={`text-sm font-semibold ${bonusRemain > 0 ? 'text-amber-800' : 'text-neutral-500'}`}>
+                            Starter Pack Credits
+                          </span>
+                          <span className={`text-sm font-bold flex items-center gap-1 ${bonusRemain > 0 ? 'text-amber-900' : 'text-neutral-400'}`}>
+                            <Logo width={15} height={15} />
+                            {bonusRemain}
+                          </span>
+                        </div>
+                        <p className={`text-xs mt-1 ${bonusRemain > 0 ? 'text-amber-600' : 'text-neutral-400'}`}>
+                          {bonusRemain > 0 ? 'From one-time purchases — never expire, spent before subscription credits' : 'No starter pack credits — buy a Starter Pack to top up anytime'}
+                        </p>
+                      </div>
 
-                {/* Total summary */}
-                {isPaidPlan && userData?.subscription?.plan_type !== 'starter' && (
-                  <div className="flex items-center justify-between pt-1 border-t border-neutral-200">
-                    <span className="text-neutral-600 font-medium">Total Available:</span>
-                    <span className="flex items-center text-neutral-900 font-bold">
-                      <Logo width={20} height={20} className="mr-1.5" />
-                      {userData?.usage?.tokens_remaining ?? 0}
-                    </span>
-                  </div>
-                )}
+                      {/* Total — only meaningful when both buckets exist */}
+                      {plan !== 'starter' && (
+                        <div className="flex items-center justify-between pt-1 border-t border-neutral-200">
+                          <span className="text-neutral-600 font-medium">Total Available:</span>
+                          <span className="flex items-center gap-1.5 text-neutral-900 font-bold text-lg">
+                            <Logo width={20} height={20} />
+                            {totalRemain}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
 
                 {userData?.usage?.total_generations !== undefined && (
                   <div className="flex items-center justify-between">
