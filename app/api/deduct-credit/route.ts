@@ -41,55 +41,11 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Get user's subscription to check limits
-    const { data: subscription } = await supabase
-      .from('subscriptions')
-      .select('*')
-      .eq('user_id', user.id)
-      .eq('status', 'active')
-      .single()
-
-    // Calculate current usage respecting billing periods (same logic as user profile API)
-    let usageQuery = supabase
-      .from('usage_tracking')
-      .select('tokens_used, generation_successful, created_at')
-      .eq('user_id', user.id)
-      .eq('subscription_id', subscription?.id || null)
-    
-    // Filter by billing period for recurring subscriptions
-    if (subscription) {
-      if (subscription.current_period_start && subscription.current_period_end) {
-        // Recurring subscription: only count usage in current period
-        usageQuery = usageQuery
-          .gte('created_at', subscription.current_period_start)
-          .lt('created_at', subscription.current_period_end)
-      }
-      // For one-time purchases (starter pack with no billing periods), count all usage
-    }
-
-    const { data: usageData } = await usageQuery
-
-    const totalUsed = usageData?.reduce((sum, record) => sum + record.tokens_used, 0) || 0
-    const monthlyLimit = subscription?.monthly_token_limit || 0
-    const remaining = Math.max(0, monthlyLimit - totalUsed)
-    
     // Initial logo generation costs 3 credits, improvements cost 1 credit each
     const creditsNeeded = isImprovement ? 1 : 3
-    
-    if (remaining < creditsNeeded) {
-      return NextResponse.json(
-        { 
-          error: 'Insufficient credits', 
-          remaining_tokens: remaining,
-          credits_needed: creditsNeeded,
-          monthly_limit: monthlyLimit,
-          plan_type: subscription?.plan_type || null
-        },
-        { status: 403 }
-      )
-    }
 
-    // Deduct credits using the database function
+    // use_tokens() handles everything: checks balance, deducts bonus first then subscription,
+    // records usage, and returns updated balances atomically.
     const { data: usageResult, error: usageError } = await supabase
       .rpc('use_tokens', {
         p_user_id: user.id,
@@ -99,9 +55,8 @@ export async function POST(request: NextRequest) {
         p_style_selected: style
       })
 
-
     if (usageError) {
-      console.error('Error recording token usage:', usageError)
+      console.error('Error in use_tokens:', usageError)
       return NextResponse.json(
         { error: 'Failed to process credit deduction' },
         { status: 500 }
@@ -109,29 +64,28 @@ export async function POST(request: NextRequest) {
     }
 
     const tokenUsage = usageResult?.[0]
-    
+
     if (!tokenUsage?.success) {
       return NextResponse.json(
-        { 
-          error: tokenUsage?.error_message || 'Failed to deduct credits',
-          remaining_tokens: tokenUsage?.remaining_tokens || 0
+        {
+          error: tokenUsage?.error_message || 'Insufficient credits',
+          remaining_tokens: tokenUsage?.remaining_tokens || 0,
+          subscription_credits_remaining: tokenUsage?.subscription_credits_remaining || 0,
+          bonus_credits_remaining: tokenUsage?.bonus_credits_remaining || 0
         },
         { status: 403 }
       )
     }
 
-    // Calculate final remaining tokens (after deduction)
-    const finalRemaining = Math.max(0, remaining - creditsNeeded)
-    
-    const response = {
+    return NextResponse.json({
       success: true,
-      remaining_tokens: finalRemaining,
+      remaining_tokens: tokenUsage.remaining_tokens,
+      subscription_credits_remaining: tokenUsage.subscription_credits_remaining,
+      bonus_credits_remaining: tokenUsage.bonus_credits_remaining,
       usage_id: tokenUsage.usage_id,
       credits_deducted: creditsNeeded,
-      message: `${creditsNeeded} credit${creditsNeeded > 1 ? 's' : ''} deducted successfully. ${finalRemaining} credits remaining.`
-    };
-    
-    return NextResponse.json(response)
+      message: `${creditsNeeded} credit${creditsNeeded > 1 ? 's' : ''} deducted. ${tokenUsage.remaining_tokens} remaining.`
+    })
 
   } catch (error) {
     console.error('Credit deduction API error:', error)

@@ -76,15 +76,19 @@ function UsagePageContent() {
   }
 
   const isPaidPlan = hasActiveSubscription;
-  const creditsUsed = user ? (userData?.usage?.tokens_used_this_month || 0) : 0;
-  const creditsRemaining = user ? (userData?.usage?.tokens_remaining || 0) : 0;
-  const totalCredits = user ? (userData?.subscription?.monthly_token_limit || 0) : 0;
+  // Subscription bucket (resets each period)
+  const subCreditsUsed      = user ? (userData?.usage?.tokens_used_this_period || 0) : 0;
+  const subCreditsRemaining = user ? (userData?.usage?.subscription_credits_remaining || 0) : 0;
+  const subCreditLimit      = user ? (userData?.subscription?.monthly_token_limit || 0) : 0;
+  // Bonus bucket (one-time purchases, never reset)
+  const bonusCredits        = user ? (userData?.subscription?.bonus_token_balance || 0) : 0;
+  // Totals
+  const totalRemaining  = user ? (userData?.usage?.tokens_remaining || 0) : 0;
   const usagePercentage = user ? (userData?.usage?.usage_percentage || 0) : 0;
+  const isStarterOnly   = userData?.subscription?.plan_type === 'starter';
 
-  // Calculate usage statistics
   const planType = userData?.subscription?.plan_type || null;
-  const isUnlimited = false; // No unlimited plan in current pricing structure
-  
+
   // Real usage statistics from icon creation dates
   const usageStats = {
     thisMonth: iconStats.thisMonth,
@@ -114,7 +118,7 @@ function UsagePageContent() {
 
             {/* Usage Overview Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              {/* Credits Remaining */}
+              {/* Total Credits Remaining */}
               <div className="bg-white border border-neutral-200 rounded-xl backdrop-blur-sm p-6 hover:shadow-xl hover:shadow-primary-500/10 transition-all duration-300 hover:scale-105 hover:border-primary-400">
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
@@ -123,10 +127,11 @@ function UsagePageContent() {
                   <span className="text-green-400 text-sm font-medium">Available</span>
                 </div>
                 <div className="space-y-1">
-                  <h3 className="text-2xl font-bold text-neutral-900">
-                    {isUnlimited ? '∞' : creditsRemaining}
-                  </h3>
-                  <p className="text-neutral-600 text-sm">Credits Remaining</p>
+                  <h3 className="text-2xl font-bold text-neutral-900">{totalRemaining}</h3>
+                  <p className="text-neutral-600 text-sm">Total Credits</p>
+                  {bonusCredits > 0 && !isStarterOnly && (
+                    <p className="text-xs text-amber-600">{subCreditsRemaining} sub + {bonusCredits} bonus</p>
+                  )}
                 </div>
               </div>
 
@@ -196,44 +201,72 @@ function UsagePageContent() {
                 </h2>
               
               {isPaidPlan ? (
-                <div className="space-y-6">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-neutral-600">Credits Used</span>
-                    <span className="text-neutral-900 font-semibold">
-                      {creditsUsed} / {isUnlimited ? '∞' : totalCredits}
-                    </span>
-                  </div>
-                  
-                  {!isUnlimited && (
-                    <div className="w-full bg-neutral-100 rounded-full h-3">
-                      <div
-                        className="bg-gradient-to-r from-primary-600 to-accent-500 h-3 rounded-full transition-all duration-500"
-                        style={{ width: `${Math.min(usagePercentage, 100)}%` }}
-                      ></div>
+                <div className="space-y-5">
+
+                  {/* Subscription credits — only shown for recurring plans */}
+                  {!isStarterOnly && (
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span className="text-sm font-medium text-blue-700">Subscription Credits</span>
+                        <span className="text-sm font-semibold text-neutral-900">
+                          {subCreditsUsed} / {subCreditLimit} used
+                        </span>
+                      </div>
+                      <div className="w-full bg-blue-100 rounded-full h-2.5">
+                        <div
+                          className="bg-blue-500 h-2.5 rounded-full transition-all duration-500"
+                          style={{ width: `${Math.min(usagePercentage, 100)}%` }}
+                        />
+                      </div>
+                      <div className="flex justify-between mt-1">
+                        <span className="text-xs text-neutral-500">{subCreditsRemaining} remaining</span>
+                        <span className="text-xs text-neutral-500">
+                          Resets {userData?.subscription?.current_period_end
+                            ? new Date(userData.subscription.current_period_end).toLocaleDateString()
+                            : 'on renewal'}
+                        </span>
+                      </div>
                     </div>
                   )}
-                  
-                  <div className="grid grid-cols-2 gap-4 pt-4">
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-neutral-900">{creditsUsed}</div>
-                      <div className="text-neutral-600 text-sm">Used</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-neutral-900">
-                        {isUnlimited ? '∞' : creditsRemaining}
-                      </div>
-                      <div className="text-neutral-600 text-sm">Remaining</div>
-                    </div>
-                  </div>
 
-                  {!isUnlimited && usagePercentage > 80 && (
+                  {/* Bonus credits — always shown when > 0 */}
+                  {bonusCredits > 0 && (
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span className="text-sm font-medium text-amber-700">Bonus Credits</span>
+                        <span className="text-sm font-semibold text-neutral-900">{bonusCredits} available</span>
+                      </div>
+                      <div className="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+                        <p className="text-xs text-amber-700">From starter pack purchases — spent first, never expire</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Starter-only: just bonus credits */}
+                  {isStarterOnly && bonusCredits === 0 && (
+                    <div className="bg-neutral-50 border border-neutral-200 rounded-lg p-4 text-center">
+                      <p className="text-neutral-600 text-sm">No credits remaining.</p>
+                      <p className="text-neutral-500 text-xs mt-1">Purchase a starter pack or subscribe to get more.</p>
+                    </div>
+                  )}
+
+                  {/* Total summary row */}
+                  {!isStarterOnly && (
+                    <div className="flex items-center justify-between pt-3 border-t border-neutral-200">
+                      <span className="text-neutral-700 font-medium">Total Available</span>
+                      <span className="text-xl font-bold text-neutral-900">{totalRemaining}</span>
+                    </div>
+                  )}
+
+                  {usagePercentage > 80 && !isStarterOnly && (
                     <div className="bg-primary-100 border border-primary-200 rounded-lg p-4">
                       <div className="flex items-center mb-2">
                         <Crown className="h-4 w-4 text-primary-600 mr-2" />
-                        <span className="text-primary-600 font-semibold">Usage Alert</span>
+                        <span className="text-primary-600 font-semibold">Low Subscription Credits</span>
                       </div>
                       <p className="text-neutral-600 text-sm">
-                        You've used {Math.round(usagePercentage)}% of your credits. Consider upgrading your plan for more logos.
+                        You've used {Math.round(usagePercentage)}% of your subscription credits this period.
+                        {bonusCredits === 0 && ' Consider buying a starter pack refill.'}
                       </p>
                     </div>
                   )}
@@ -287,14 +320,21 @@ function UsagePageContent() {
 
                   {isPaidPlan && (
                     <>
-                      <div className="flex items-center justify-between">
-                        <span className="text-neutral-600">Plan Features:</span>
-                        <span className="text-neutral-900">
-                          {isUnlimited ? 'Unlimited Logos' : `${totalCredits} Credits/Month`}
-                        </span>
-                      </div>
+                      {!isStarterOnly && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-neutral-600">Subscription Credits:</span>
+                          <span className="text-neutral-900">{subCreditLimit}/period</span>
+                        </div>
+                      )}
 
-                      {userData?.subscription?.current_period_end && (
+                      {bonusCredits > 0 && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-neutral-600">Bonus Credits:</span>
+                          <span className="text-neutral-900">{bonusCredits} (never expire)</span>
+                        </div>
+                      )}
+
+                      {!isStarterOnly && userData?.subscription?.current_period_end && (
                         <div className="flex items-center justify-between">
                           <span className="text-neutral-600">
                             {userData?.subscription?.cancel_at_period_end ? 'Expires:' : 'Renews:'}
@@ -308,10 +348,10 @@ function UsagePageContent() {
                       <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
                         <div className="flex items-center mb-2">
                           <CheckCircle className="h-4 w-4 text-green-400 mr-2" />
-                          <span className="text-green-400 font-semibold">Active Subscription</span>
+                          <span className="text-green-400 font-semibold">Active</span>
                         </div>
                         <p className="text-neutral-600 text-sm">
-                          Your subscription is active and you can generate {isUnlimited ? 'unlimited' : creditsRemaining} more logos.
+                          {totalRemaining} credit{totalRemaining !== 1 ? 's' : ''} available. Bonus credits are always spent first.
                         </p>
                       </div>
                     </>
@@ -322,16 +362,16 @@ function UsagePageContent() {
                       <div className="text-neutral-600 text-sm">Available Plans:</div>
                       <div className="space-y-2">
                         <div className="flex justify-between text-sm">
-                          <span className="text-neutral-600">Base</span>
-                          <span className="text-neutral-900">25 credits/month</span>
+                          <span className="text-neutral-600">Starter Pack</span>
+                          <span className="text-neutral-900">25 credits (one-time)</span>
                         </div>
                         <div className="flex justify-between text-sm">
-                          <span className="text-neutral-600">Pro</span>
-                          <span className="text-neutral-900">100 credits/month</span>
+                          <span className="text-neutral-600">Pro Monthly</span>
+                          <span className="text-neutral-900">50 credits/month</span>
                         </div>
                         <div className="flex justify-between text-sm">
-                          <span className="text-neutral-600">Pro+</span>
-                          <span className="text-neutral-900">200 credits/month</span>
+                          <span className="text-neutral-600">Pro Yearly</span>
+                          <span className="text-neutral-900">600 credits/year</span>
                         </div>
                       </div>
                     </div>

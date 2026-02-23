@@ -186,37 +186,72 @@ function AccountPageContent() {
                     {(() => {
                       const plan = userData?.subscription?.plan_type || null;
                       if (!isPaidPlan || !plan) return 'Subscription Required';
-                      if (plan === 'enterprise') return 'Enterprise';
                       if (plan === 'starter') return 'Starter Pack';
                       if (plan === 'proMonthly') return 'Pro Monthly';
                       if (plan === 'proYearly') return 'Pro Yearly';
-                      if (plan === 'base') return 'Base';
-                      if (plan === 'pro') return 'Pro';
-                      if (plan === 'proPlus') return 'Pro+';
-                      // Fallback: capitalize first letter and add space before capital letters
                       return plan.replace(/([A-Z])/g, ' $1').trim().replace(/^./, str => str.toUpperCase());
                     })()}
                   </span>
                 </div>
-                
-                <div className="flex items-center justify-between">
-                  <span className="text-neutral-600">Credits Remaining:</span>
-                  <span className="flex items-center text-neutral-900 font-semibold">
-                    <Logo width={24} height={24} className="mr-2" />
-                    {user ? (userData?.usage?.tokens_remaining ?? userData?.subscription?.monthly_token_limit ?? 0) : 0}
-                    {userData?.subscription?.plan_type === 'enterprise' && (
-                      <span className="ml-1 text-xs bg-purple-500/20 text-purple-700 px-2 py-0.5 rounded">
-                        Enterprise
-                      </span>
-                    )}
-                  </span>
-                </div>
 
-                {user && userData?.usage?.tokens_used_this_month !== undefined && (
-                  <div className="flex items-center justify-between">
-                    <span className="text-neutral-600">Credits Used:</span>
-                    <span className="text-neutral-900 font-semibold">
-                      {userData.usage.tokens_used_this_month} / {userData?.subscription?.monthly_token_limit ?? 0}
+                {/* Subscription credits (resets each period) */}
+                {isPaidPlan && userData?.subscription?.plan_type !== 'starter' && (
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm font-medium text-blue-800">Subscription Credits</span>
+                      <span className="text-sm font-bold text-blue-900">
+                        {userData?.usage?.subscription_credits_remaining ?? 0} / {userData?.subscription?.monthly_token_limit ?? 0}
+                      </span>
+                    </div>
+                    <div className="w-full bg-blue-100 rounded-full h-1.5">
+                      <div
+                        className="bg-blue-500 h-1.5 rounded-full transition-all"
+                        style={{ width: `${Math.min(userData?.usage?.usage_percentage ?? 0, 100)}%` }}
+                      />
+                    </div>
+                    <p className="text-xs text-blue-600 mt-1">
+                      Resets on {userData?.subscription?.current_period_end
+                        ? new Date(userData.subscription.current_period_end).toLocaleDateString()
+                        : 'renewal date'}
+                    </p>
+                  </div>
+                )}
+
+                {/* Bonus credits (one-time purchases, never reset) */}
+                {isPaidPlan && (userData?.subscription?.bonus_token_balance ?? 0) > 0 && (
+                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-amber-800">Bonus Credits</span>
+                      <span className="text-sm font-bold text-amber-900 flex items-center gap-1">
+                        <Logo width={16} height={16} />
+                        {userData?.subscription?.bonus_token_balance ?? 0}
+                      </span>
+                    </div>
+                    <p className="text-xs text-amber-600 mt-1">From starter pack purchases — never expire, used first</p>
+                  </div>
+                )}
+
+                {/* Starter-only users: show bonus as their main credit pool */}
+                {isPaidPlan && userData?.subscription?.plan_type === 'starter' && (
+                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-amber-800">Credits Remaining</span>
+                      <span className="text-sm font-bold text-amber-900 flex items-center gap-1">
+                        <Logo width={16} height={16} />
+                        {userData?.subscription?.bonus_token_balance ?? 0}
+                      </span>
+                    </div>
+                    <p className="text-xs text-amber-600 mt-1">One-time credits — never expire</p>
+                  </div>
+                )}
+
+                {/* Total summary */}
+                {isPaidPlan && userData?.subscription?.plan_type !== 'starter' && (
+                  <div className="flex items-center justify-between pt-1 border-t border-neutral-200">
+                    <span className="text-neutral-600 font-medium">Total Available:</span>
+                    <span className="flex items-center text-neutral-900 font-bold">
+                      <Logo width={20} height={20} className="mr-1.5" />
+                      {userData?.usage?.tokens_remaining ?? 0}
                     </span>
                   </div>
                 )}

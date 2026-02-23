@@ -20,19 +20,22 @@ interface UserData {
     id?: string
     plan_type: string
     status: string
-    monthly_token_limit: number
+    monthly_token_limit: number    // subscription base credits only (resets each period)
+    bonus_token_balance: number    // one-time purchase credits (never reset, spent first)
     current_period_start?: string
     current_period_end?: string
     cancel_at_period_end?: boolean
   }
-  
+
   // Usage info
   usage: {
-    tokens_used_this_month: number
-    tokens_remaining: number
+    tokens_used_this_period: number          // subscription credits used this period
+    subscription_credits_remaining: number   // subscription credits left this period
+    bonus_credits_remaining: number          // starter-pack credits remaining (never reset)
+    tokens_remaining: number                 // total = subscription + bonus
     total_generations: number
     successful_generations: number
-    usage_percentage: number
+    usage_percentage: number                 // % of subscription credits used
   }
 }
 

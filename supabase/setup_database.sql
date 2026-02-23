@@ -61,8 +61,13 @@ CREATE TABLE IF NOT EXISTS subscriptions (
     cancel_at_period_end BOOLEAN DEFAULT FALSE,
     canceled_at TIMESTAMPTZ,
     
-    -- Credit limits based on plan
+    -- Subscription credit limit (base plan only: 50 for proMonthly, 600 for proYearly, 0 for starter)
+    -- Resets each billing period. Does NOT include one-time purchase credits.
     monthly_token_limit INTEGER NOT NULL DEFAULT 0,
+
+    -- One-time purchase credits (starter pack refills). Never expire or reset.
+    -- Deducted before subscription credits.
+    bonus_token_balance INTEGER NOT NULL DEFAULT 0,
     
     -- Timestamps
     created_at TIMESTAMPTZ DEFAULT NOW(),
@@ -103,8 +108,11 @@ CREATE TABLE IF NOT EXISTS usage_tracking (
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     subscription_id UUID REFERENCES subscriptions(id) ON DELETE SET NULL,
     
-    -- Usage details
+    -- Total tokens consumed for this action (for display/history purposes)
     tokens_used INTEGER NOT NULL DEFAULT 1,
+    -- Tokens specifically drawn from the subscription bucket (for billing period calculations)
+    -- bonus credits used = tokens_used - subscription_tokens_used
+    subscription_tokens_used INTEGER NOT NULL DEFAULT 0,
     usage_type TEXT NOT NULL CHECK (usage_type IN ('logo_generation', 'logo_improvement', 'api_call')),
     
     -- Context information
@@ -331,58 +339,16 @@ SET search_path = public
 AS $$
 DECLARE
     v_monthly_limit integer;
-    v_existing_limit integer;
-    v_existing_plan_type text;
-    v_old_plan_base integer;
 BEGIN
-    -- Determine base monthly token limit for the new plan
+    -- monthly_token_limit is ONLY the subscription base credits (never includes bonus/starter credits)
+    -- bonus_token_balance is managed separately (see handleCheckoutSessionCompleted in webhook)
     v_monthly_limit := CASE p_plan_type
-        WHEN 'starter' THEN 25
         WHEN 'proMonthly' THEN 50
         WHEN 'proYearly' THEN 600
-        ELSE 0
+        ELSE 0  -- starter plan has no recurring subscription credits
     END;
 
-    -- Get existing subscription to preserve credits when upgrading/switching
-    SELECT monthly_token_limit, plan_type
-    INTO v_existing_limit, v_existing_plan_type
-    FROM subscriptions
-    WHERE user_id = p_user_id
-    LIMIT 1;
-
-    -- Preserve existing credits in all cases:
-    -- 1. If upgrading from starter to subscription plan → preserve starter credits and add new plan credits
-    -- 2. If user already has a subscription plan → preserve ALL existing credits (may include starter pack refills)
-    IF v_existing_limit IS NOT NULL THEN
-        IF v_existing_plan_type = 'starter' AND p_plan_type IN ('proMonthly', 'proYearly') THEN
-            -- Upgrading from starter: preserve starter credits and add new plan credits
-            v_monthly_limit := v_existing_limit + v_monthly_limit;
-        ELSIF v_existing_plan_type IN ('proMonthly', 'proYearly') AND p_plan_type IN ('proMonthly', 'proYearly') THEN
-            -- User already has a subscription plan and is switching/updating
-            -- ALWAYS preserve existing credits if they're higher than new plan base
-            -- This ensures starter pack refills are never lost when subscription updates occur
-            IF v_existing_limit >= v_monthly_limit THEN
-                -- User has same or more credits (may include refills) - preserve them
-                v_monthly_limit := v_existing_limit;
-            ELSE
-                -- New plan has higher base - check if user has refills to preserve
-                v_old_plan_base := CASE v_existing_plan_type
-                    WHEN 'proMonthly' THEN 50
-                    WHEN 'proYearly' THEN 600
-                    ELSE 0
-                END;
-                IF v_existing_limit > v_old_plan_base THEN
-                    -- User has refills - preserve them and add difference in base plans
-                    v_monthly_limit := v_existing_limit + (v_monthly_limit - v_old_plan_base);
-                ELSE
-                    -- Just base credits - use new plan's base
-                    v_monthly_limit := v_monthly_limit;
-                END IF;
-            END IF;
-        END IF;
-    END IF;
-
-    -- First, try to update any existing subscription that already has this Stripe customer ID
+    -- Try to update any existing subscription for this Stripe customer
     UPDATE subscriptions
     SET
         user_id = p_user_id,
@@ -397,7 +363,6 @@ BEGIN
     WHERE stripe_customer_id = p_stripe_customer_id;
 
     IF NOT FOUND THEN
-        -- If no row was updated, insert a new subscription (or update the existing row for this user)
         INSERT INTO subscriptions (
             user_id,
             stripe_customer_id,
@@ -405,6 +370,7 @@ BEGIN
             plan_type,
             status,
             monthly_token_limit,
+            bonus_token_balance,
             current_period_start,
             current_period_end,
             cancel_at_period_end
@@ -415,6 +381,7 @@ BEGIN
             p_plan_type,
             p_status,
             v_monthly_limit,
+            0,  -- bonus starts at 0; added separately via starter pack purchases
             p_current_period_start,
             p_current_period_end,
             p_cancel_at_period_end
@@ -425,20 +392,8 @@ BEGIN
             stripe_subscription_id = EXCLUDED.stripe_subscription_id,
             plan_type = EXCLUDED.plan_type,
             status = EXCLUDED.status,
-            monthly_token_limit = CASE
-                -- If upgrading from starter, preserve existing credits and add new plan credits
-                WHEN subscriptions.plan_type = 'starter' AND EXCLUDED.plan_type IN ('proMonthly', 'proYearly') 
-                THEN subscriptions.monthly_token_limit + EXCLUDED.monthly_token_limit
-                -- If user already has a subscription plan, preserve existing credits if they're higher
-                -- (they may have bought starter pack refills)
-                WHEN subscriptions.plan_type IN ('proMonthly', 'proYearly') AND EXCLUDED.plan_type IN ('proMonthly', 'proYearly')
-                THEN GREATEST(subscriptions.monthly_token_limit, EXCLUDED.monthly_token_limit)
-                -- If existing credits are higher than new plan base, preserve them (user has refills)
-                WHEN subscriptions.monthly_token_limit > EXCLUDED.monthly_token_limit
-                THEN subscriptions.monthly_token_limit
-                -- Otherwise use the new plan's limit
-                ELSE EXCLUDED.monthly_token_limit
-            END,
+            monthly_token_limit = EXCLUDED.monthly_token_limit,
+            -- bonus_token_balance is intentionally NOT updated here — it's managed separately
             current_period_start = EXCLUDED.current_period_start,
             current_period_end = EXCLUDED.current_period_end,
             cancel_at_period_end = EXCLUDED.cancel_at_period_end,
@@ -528,7 +483,10 @@ BEGIN
 END;
 $$;
 
--- Function to use tokens (combines check and record)
+-- Function to use tokens — deducts bonus credits first, then subscription credits.
+-- bonus_token_balance (starter pack purchases) is decremented directly on the subscription row.
+-- subscription credits are tracked via usage_tracking filtered by billing period.
+DROP FUNCTION IF EXISTS use_tokens(uuid, integer, text, text, text);
 CREATE OR REPLACE FUNCTION use_tokens(
     p_user_id uuid,
     p_tokens_needed integer,
@@ -539,6 +497,8 @@ CREATE OR REPLACE FUNCTION use_tokens(
 RETURNS TABLE(
     success boolean,
     remaining_tokens integer,
+    subscription_credits_remaining integer,
+    bonus_credits_remaining integer,
     usage_id uuid,
     error_message text
 )
@@ -549,64 +509,74 @@ AS $$
 DECLARE
     v_subscription_id uuid;
     v_monthly_limit integer;
-    v_current_usage integer;
-    v_remaining integer;
+    v_bonus_balance integer;
+    v_sub_usage integer;
+    v_sub_remaining integer;
+    v_total_available integer;
+    v_from_bonus integer;
+    v_from_sub integer;
     v_usage_id uuid;
 BEGIN
-    -- Get active subscription
-    SELECT id, monthly_token_limit 
-    INTO v_subscription_id, v_monthly_limit
+    -- Get active subscription (both subscription credits and bonus balance)
+    SELECT id, monthly_token_limit, bonus_token_balance
+    INTO v_subscription_id, v_monthly_limit, v_bonus_balance
     FROM subscriptions
-    WHERE user_id = p_user_id 
+    WHERE user_id = p_user_id
     AND status = 'active'
     LIMIT 1;
 
-    -- If no subscription found, user has no credits
     IF v_subscription_id IS NULL THEN
-        RETURN QUERY SELECT 
-            false,
-            0,
-            NULL::uuid,
+        RETURN QUERY SELECT false, 0, 0, 0, NULL::uuid,
             'No active subscription. Please purchase a plan.'::text;
         RETURN;
     END IF;
 
-    -- Calculate current usage ONLY within the current billing period
-    -- This ensures credits reset properly for monthly/yearly subscriptions
-    -- For one-time purchases (starter pack with NULL billing periods), count all usage
-    SELECT COALESCE(SUM(tokens_used), 0)
-    INTO v_current_usage
+    -- Calculate subscription credits used in the current billing period only.
+    -- We sum subscription_tokens_used (not total tokens_used) so bonus deductions
+    -- don't count against the subscription bucket.
+    SELECT COALESCE(SUM(ut.subscription_tokens_used), 0)
+    INTO v_sub_usage
     FROM usage_tracking ut
     INNER JOIN subscriptions s ON s.id = ut.subscription_id
     WHERE ut.user_id = p_user_id
     AND ut.subscription_id = v_subscription_id
     AND (
-        -- For one-time purchases (starter pack): No billing periods, count all usage
+        -- Starter-only (no billing periods): count all subscription usage
         (s.current_period_start IS NULL AND s.current_period_end IS NULL)
         OR
-        -- For recurring subscriptions: Only count usage within current billing period
+        -- Recurring subscription: only current period
         (s.current_period_start IS NOT NULL AND s.current_period_end IS NOT NULL
          AND ut.created_at >= s.current_period_start
          AND ut.created_at < s.current_period_end)
     );
 
-    v_remaining := v_monthly_limit - v_current_usage;
+    v_sub_remaining   := GREATEST(0, v_monthly_limit - v_sub_usage);
+    v_total_available := v_bonus_balance + v_sub_remaining;
 
-    -- Check if user has enough tokens
-    IF v_remaining < p_tokens_needed THEN
-        RETURN QUERY SELECT 
-            false,
-            v_remaining,
-            NULL::uuid,
-            'Insufficient credits'::text;
+    IF v_total_available < p_tokens_needed THEN
+        RETURN QUERY SELECT false, v_total_available, v_sub_remaining, v_bonus_balance,
+            NULL::uuid, 'Insufficient credits'::text;
         RETURN;
     END IF;
 
-    -- Record usage
+    -- Deduct bonus first, then subscription
+    v_from_bonus := LEAST(p_tokens_needed, v_bonus_balance);
+    v_from_sub   := p_tokens_needed - v_from_bonus;
+
+    -- Decrement bonus balance directly on subscription row
+    IF v_from_bonus > 0 THEN
+        UPDATE subscriptions
+        SET bonus_token_balance = bonus_token_balance - v_from_bonus,
+            updated_at = NOW()
+        WHERE id = v_subscription_id;
+    END IF;
+
+    -- Record usage in history (tokens_used = total, subscription_tokens_used = sub portion)
     INSERT INTO usage_tracking (
         user_id,
         subscription_id,
         tokens_used,
+        subscription_tokens_used,
         usage_type,
         prompt_text,
         style_selected,
@@ -615,6 +585,7 @@ BEGIN
         p_user_id,
         v_subscription_id,
         p_tokens_needed,
+        v_from_sub,
         p_usage_type,
         p_prompt_text,
         p_style_selected,
@@ -622,12 +593,15 @@ BEGIN
     )
     RETURNING id INTO v_usage_id;
 
-    -- Calculate new remaining
-    v_remaining := v_remaining - p_tokens_needed;
+    -- Return updated balances
+    v_bonus_balance   := v_bonus_balance - v_from_bonus;
+    v_sub_remaining   := v_sub_remaining - v_from_sub;
 
-    RETURN QUERY SELECT 
+    RETURN QUERY SELECT
         true,
-        v_remaining,
+        v_bonus_balance + v_sub_remaining,
+        v_sub_remaining,
+        v_bonus_balance,
         v_usage_id,
         NULL::text;
 END;
@@ -637,7 +611,10 @@ $$;
 -- VIEWS
 -- ============================================================================
 
--- Secure view combining user profile with current subscription and usage data
+-- Secure view combining user profile with current subscription and usage data.
+-- Credits are split into two independent buckets:
+--   subscription_credits  — resets each billing period (50/mo or 600/yr)
+--   bonus_credits         — one-time purchases (starter packs), never reset, spent first
 DROP VIEW IF EXISTS user_complete_profile;
 CREATE OR REPLACE VIEW user_complete_profile 
 WITH (security_invoker = true) AS
@@ -656,47 +633,49 @@ SELECT
     s.plan_type,
     s.status as subscription_status,
     COALESCE(s.monthly_token_limit, 0)::INTEGER as monthly_token_limit,
+    COALESCE(s.bonus_token_balance, 0)::INTEGER as bonus_token_balance,
     s.current_period_start,
     s.current_period_end,
     COALESCE(s.cancel_at_period_end, FALSE) as cancel_at_period_end,
     
-    -- Usage summary calculated directly from usage_tracking
-    COALESCE(usage_summary.tokens_used_this_month, 0)::INTEGER as tokens_used_this_month,
-    COALESCE(usage_summary.tokens_remaining, COALESCE(s.monthly_token_limit, 0))::INTEGER as tokens_remaining,
+    -- Subscription usage in current billing period (only subscription_tokens_used counts here)
+    COALESCE(usage_summary.sub_tokens_used, 0)::INTEGER as tokens_used_this_period,
+    -- Subscription credits remaining this period
+    GREATEST(0, COALESCE(s.monthly_token_limit, 0) - COALESCE(usage_summary.sub_tokens_used, 0))::INTEGER as subscription_credits_remaining,
+    -- Total remaining = subscription + bonus
+    (GREATEST(0, COALESCE(s.monthly_token_limit, 0) - COALESCE(usage_summary.sub_tokens_used, 0)) + COALESCE(s.bonus_token_balance, 0))::INTEGER as tokens_remaining,
+    -- All-time generation counts
     COALESCE(usage_summary.total_generations, 0)::INTEGER as total_generations,
     COALESCE(usage_summary.successful_generations, 0)::INTEGER as successful_generations,
-    COALESCE(usage_summary.usage_percentage, 0)::NUMERIC as usage_percentage
+    -- Subscription usage percentage
+    CASE 
+        WHEN COALESCE(s.monthly_token_limit, 0) > 0 
+        THEN ROUND((COALESCE(usage_summary.sub_tokens_used, 0)::NUMERIC / s.monthly_token_limit) * 100, 2)
+        ELSE 0
+    END::NUMERIC as usage_percentage
     
 FROM users u
 LEFT JOIN subscriptions s ON s.user_id = u.id AND s.status = 'active'
 LEFT JOIN LATERAL (
-    -- Calculate usage directly from usage_tracking table
     SELECT 
-        COALESCE(SUM(ut.tokens_used), 0) as tokens_used_this_month,
-        GREATEST(0, COALESCE(s.monthly_token_limit, 0) - COALESCE(SUM(ut.tokens_used), 0)) as tokens_remaining,
+        -- Only sum subscription_tokens_used for period-based billing calculations
+        COALESCE(SUM(ut.subscription_tokens_used), 0) as sub_tokens_used,
         COUNT(*) as total_generations,
-        SUM(CASE WHEN ut.generation_successful THEN 1 ELSE 0 END) as successful_generations,
-        CASE 
-            WHEN COALESCE(s.monthly_token_limit, 0) > 0 
-            THEN ROUND((COALESCE(SUM(ut.tokens_used), 0)::NUMERIC / s.monthly_token_limit) * 100, 2)
-            ELSE 0
-        END as usage_percentage
+        SUM(CASE WHEN ut.generation_successful THEN 1 ELSE 0 END) as successful_generations
     FROM usage_tracking ut
     WHERE ut.user_id = u.id
     AND (
-        -- For users WITH subscription: match subscription_id
         (s.id IS NOT NULL AND ut.subscription_id = s.id
          AND (
-            -- One-time purchase (starter pack): No billing periods, count all usage
+            -- Starter-only (no billing periods): count all subscription usage
             (s.current_period_start IS NULL AND s.current_period_end IS NULL)
             OR
-            -- Recurring subscription: Only count usage within current billing period
+            -- Recurring subscription: current period only
             (s.current_period_start IS NOT NULL AND s.current_period_end IS NOT NULL
              AND ut.created_at >= s.current_period_start
              AND ut.created_at < s.current_period_end)
          ))
         OR
-        -- For users WITHOUT subscription: match NULL subscription_id and current month
         (s.id IS NULL AND ut.subscription_id IS NULL 
          AND ut.created_at >= date_trunc('month', NOW())
          AND ut.created_at < date_trunc('month', NOW()) + INTERVAL '1 month')

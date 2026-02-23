@@ -96,28 +96,28 @@ export async function GET(req: NextRequest) {
         .eq('status', 'active')
         .single()
 
-      // Get usage data respecting billing periods
+      // Get subscription-bucket usage respecting billing periods
       let usageQuery = supabase
         .from('usage_tracking')
-        .select('tokens_used, generation_successful, created_at')
+        .select('tokens_used, subscription_tokens_used, generation_successful, created_at')
         .eq('user_id', user.id)
-      
-      // Filter by billing period for recurring subscriptions
+
       if (subscription) {
         if (subscription.current_period_start && subscription.current_period_end) {
-          // Recurring subscription: only count usage in current period
           usageQuery = usageQuery
             .gte('created_at', subscription.current_period_start)
             .lt('created_at', subscription.current_period_end)
         }
-        // For one-time purchases (starter pack with no billing periods), count all usage
       }
 
       const { data: usageData } = await usageQuery
 
-      const totalUsed = usageData?.reduce((sum, record) => sum + (record.tokens_used || 0), 0) || 0
+      // subscription_tokens_used tracks only the credits drawn from the sub bucket
+      const subTokensUsed = usageData?.reduce((sum, r) => sum + (r.subscription_tokens_used || 0), 0) || 0
       const monthlyLimit = subscription?.monthly_token_limit || 0
-      const remaining = Math.max(0, monthlyLimit - totalUsed)
+      const bonusBalance = subscription?.bonus_token_balance || 0
+      const subRemaining = Math.max(0, monthlyLimit - subTokensUsed)
+      const totalRemaining = subRemaining + bonusBalance
 
       // Build userData object
       userData = {
@@ -128,14 +128,16 @@ export async function GET(req: NextRequest) {
         plan_type: subscription?.plan_type || null,
         subscription_status: subscription?.status || 'inactive',
         monthly_token_limit: monthlyLimit,
+        bonus_token_balance: bonusBalance,
         current_period_start: subscription?.current_period_start || null,
         current_period_end: subscription?.current_period_end || null,
         cancel_at_period_end: subscription?.cancel_at_period_end || false,
-        tokens_used_this_month: totalUsed,
-        tokens_remaining: remaining,
+        tokens_used_this_period: subTokensUsed,
+        subscription_credits_remaining: subRemaining,
+        tokens_remaining: totalRemaining,
         total_generations: usageData?.length || 0,
         successful_generations: usageData?.filter(r => r.generation_successful).length || 0,
-        usage_percentage: monthlyLimit > 0 ? (totalUsed / monthlyLimit) * 100 : 0
+        usage_percentage: monthlyLimit > 0 ? (subTokensUsed / monthlyLimit) * 100 : 0
       }
     }
 
@@ -149,43 +151,45 @@ export async function GET(req: NextRequest) {
     }
       
 
-    // Check if user has active subscription using new structure
-    const hasActiveSubscription = userData.subscription_status === 'active' && 
+    // Check if user has active subscription
+    const hasActiveSubscription = userData.subscription_status === 'active' &&
       userData.plan_type &&
       (!userData.current_period_end || new Date(userData.current_period_end) > new Date())
 
-    // Fallback: If view doesn't give us subscription data, check subscriptions table directly
+    // Fallback: check subscriptions table directly if view didn't return subscription data
     if (!hasActiveSubscription && !userData.plan_type) {
       const { data: directSubscription } = await supabase
         .from('subscriptions')
-        .select('plan_type, status, current_period_end')
+        .select('plan_type, status, current_period_end, bonus_token_balance')
         .eq('user_id', user.id)
         .eq('status', 'active')
-        .single();
-      
+        .single()
+
       if (directSubscription) {
-        // Override the result if we find an active subscription
-        const directHasActive = directSubscription.status === 'active' && 
+        const directHasActive = directSubscription.status === 'active' &&
           directSubscription.plan_type &&
-          (!directSubscription.current_period_end || new Date(directSubscription.current_period_end) > new Date());
-        
+          (!directSubscription.current_period_end || new Date(directSubscription.current_period_end) > new Date())
+
         if (directHasActive) {
-          // Update the userData to reflect the correct subscription info
-          userData.subscription_status = directSubscription.status;
-          userData.plan_type = directSubscription.plan_type;
-          userData.current_period_end = directSubscription.current_period_end;
+          userData.subscription_status = directSubscription.status
+          userData.plan_type = directSubscription.plan_type
+          userData.current_period_end = directSubscription.current_period_end
+          userData.bonus_token_balance = directSubscription.bonus_token_balance || 0
         }
       }
     }
-    
-    // Recalculate after potential override
-    const finalHasActiveSubscription = userData.subscription_status === 'active' && 
+
+    const finalHasActiveSubscription = userData.subscription_status === 'active' &&
       userData.plan_type &&
-      (!userData.current_period_end || new Date(userData.current_period_end) > new Date());
+      (!userData.current_period_end || new Date(userData.current_period_end) > new Date())
+
+    // Normalize fields that may come from the view or the fallback path
+    const subRemaining = userData.subscription_credits_remaining ?? userData.tokens_remaining ?? 0
+    const bonusBalance = userData.bonus_token_balance ?? 0
+    const totalRemaining = subRemaining + bonusBalance
 
     const responseData = {
       user: {
-        // User profile
         id: userData.id,
         email: userData.email,
         full_name: userData.full_name,
@@ -194,22 +198,23 @@ export async function GET(req: NextRequest) {
         bio: userData.bio,
         created_at: userData.user_created_at,
         updated_at: userData.user_updated_at,
-        
-        // Subscription info
+
         subscription: {
           id: userData.subscription_id,
           plan_type: userData.plan_type,
           status: userData.subscription_status,
-          monthly_token_limit: userData.monthly_token_limit,
+          monthly_token_limit: userData.monthly_token_limit || 0,
+          bonus_token_balance: bonusBalance,
           current_period_start: userData.current_period_start,
           current_period_end: userData.current_period_end,
           cancel_at_period_end: userData.cancel_at_period_end
         },
-        
-        // Usage info
+
         usage: {
-          tokens_used_this_month: userData.tokens_used_this_month || 0,
-          tokens_remaining: userData.tokens_remaining || userData.monthly_token_limit || 0,
+          tokens_used_this_period: userData.tokens_used_this_period || 0,
+          subscription_credits_remaining: subRemaining,
+          bonus_credits_remaining: bonusBalance,
+          tokens_remaining: totalRemaining,
           total_generations: userData.total_generations || 0,
           successful_generations: userData.successful_generations || 0,
           usage_percentage: userData.usage_percentage || 0

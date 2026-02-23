@@ -90,67 +90,63 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
   // ============================================================================
   // STARTER PACK (ONE-TIME PURCHASE) LOGIC
   // ============================================================================
-  // Starter pack credits NEVER reset - they are permanent until used
-  // - If user has NO subscription: Create subscription with plan_type='starter', no billing periods
-  // - If user HAS subscription: Add credits to monthly_token_limit (works as refill)
-  // - Billing periods remain NULL for starter-only users (credits don't reset)
-  // - When user upgrades to proMonthly/proYearly, billing periods are set (recurring credits reset, refills preserved)
+  // Starter pack credits go into bonus_token_balance — a separate bucket that
+  // never resets and is always spent before subscription credits.
+  // - If user has NO subscription: create a starter subscription with bonus credits
+  // - If user HAS ANY subscription: just add to bonus_token_balance (works as refill)
+  // - monthly_token_limit is never touched here
   // ============================================================================
   if (!subscriptionId || planType === 'starter') {
-    console.log('Processing starter pack refill purchase')
+    console.log('Processing starter pack purchase — adding to bonus_token_balance')
     try {
-      // Add credits by increasing the subscription's monthly token limit
-      const creditsToAdd = 25 // Starter pack credits
-      
-      // Get existing subscription for the user (if any)
+      const creditsToAdd = 25
+
       const { data: existingSubscription, error: fetchError } = await supabase
         .from('subscriptions')
-        .select('id, monthly_token_limit, plan_type, status')
+        .select('id, plan_type, status')
         .eq('user_id', userId)
         .single()
-      
+
       if (fetchError && fetchError.code !== 'PGRST116') {
         console.error('Error fetching subscription:', fetchError)
         throw fetchError
       }
 
       if (existingSubscription) {
-        // User already has a subscription - add credits without changing plan_type
-        // This allows starter pack to work as a refill for any plan (proMonthly, proYearly, or previous starter)
+        // Fetch current bonus balance then increment (service role = no RLS issues)
+        const { data: current, error: readErr } = await supabase
+          .from('subscriptions')
+          .select('bonus_token_balance')
+          .eq('id', existingSubscription.id)
+          .single()
+        if (readErr) throw readErr
+
         const { error: updateError } = await supabase
           .from('subscriptions')
           .update({
-            monthly_token_limit: existingSubscription.monthly_token_limit + creditsToAdd,
+            bonus_token_balance: (current?.bonus_token_balance || 0) + creditsToAdd,
             stripe_customer_id: customerId,
             updated_at: new Date().toISOString()
-            // Note: We don't update plan_type - keep their existing plan (proMonthly, proYearly, etc.)
           })
           .eq('id', existingSubscription.id)
-        
-        if (updateError) {
-          console.error('Error updating subscription tokens:', updateError)
-          throw updateError
-        }
-        
-        console.log(`Successfully added ${creditsToAdd} credits to user ${userId} (existing plan: ${existingSubscription.plan_type})`)
+        if (updateError) throw updateError
+
+        console.log(`Added ${creditsToAdd} bonus credits to user ${userId} (plan: ${existingSubscription.plan_type})`)
       } else {
-        // User has no subscription - create one with starter plan
+        // No existing subscription — create a starter one with bonus credits
         const { error: insertError } = await supabase
           .from('subscriptions')
           .insert({
             user_id: userId,
             plan_type: 'starter',
             status: 'active',
-            monthly_token_limit: creditsToAdd, // Starter pack credits
+            monthly_token_limit: 0,       // starter has no recurring base
+            bonus_token_balance: creditsToAdd,
             stripe_customer_id: customerId
           })
-        
-        if (insertError) {
-          console.error('Error creating subscription with credits:', insertError)
-          throw insertError
-        }
-        
-        console.log(`Successfully created starter subscription with ${creditsToAdd} credits for user ${userId}`)
+
+        if (insertError) throw insertError
+        console.log(`Created starter subscription with ${creditsToAdd} bonus credits for user ${userId}`)
       }
 
       return
@@ -235,11 +231,9 @@ async function handleSubscriptionCreated(subscription: Stripe.Subscription) {
 }
 
 async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
-  
-  // Find subscription record directly
   const { data: existingSubscription } = await supabase
     .from('subscriptions')
-    .select('user_id, monthly_token_limit, plan_type')
+    .select('user_id, plan_type')
     .eq('stripe_subscription_id', subscription.id)
     .single()
 
@@ -248,20 +242,13 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
     return
   }
 
-  // Get plan type from price ID
   const priceId = subscription.items.data[0]?.price.id
   const planType = getPlanTypeFromPriceId(priceId)
-
   const { start: periodStart, end: periodEnd } = extractStripePeriod(subscription as any)
 
-  // Calculate new monthly limit - preserve existing credits if upgrading from starter
-  let newMonthlyLimit = getCreditsForPlan(planType)
-  if (existingSubscription.plan_type === 'starter' && (planType === 'proMonthly' || planType === 'proYearly')) {
-    // Preserve starter pack credits when upgrading
-    newMonthlyLimit = existingSubscription.monthly_token_limit + newMonthlyLimit
-  }
+  // monthly_token_limit = base subscription credits only (bonus_token_balance is untouched)
+  const newMonthlyLimit = getCreditsForPlan(planType)
 
-  // Update subscription directly
   await supabase
     .from('subscriptions')
     .update({
@@ -271,6 +258,7 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
       current_period_end: periodEnd,
       cancel_at_period_end: subscription.cancel_at_period_end || false,
       monthly_token_limit: newMonthlyLimit,
+      // bonus_token_balance intentionally not touched
       updated_at: new Date().toISOString()
     })
     .eq('stripe_subscription_id', subscription.id)
@@ -315,53 +303,32 @@ async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
   }
 
   // ============================================================================
-  // CREDIT RESET LOGIC FOR RECURRING SUBSCRIPTIONS
+  // CREDIT RESET FOR RECURRING SUBSCRIPTIONS (invoice.payment_succeeded)
   // ============================================================================
-  // When a recurring subscription renews (invoice.payment_succeeded):
-  // 1. Base credits reset to plan amount (50 for monthly, 600 for yearly)
-  // 2. Refill credits from starter pack purchases are preserved and added on top
-  // 3. Example: User has proMonthly (50) + bought 2 starter packs (50 refills)
-  //    - Total credits: 100 (50 base + 50 refills)
-  //    - After monthly renewal: 100 (50 new base + 50 preserved refills)
-  // 4. Starter-only users never hit this code path (no recurring invoices)
+  // Only recurring plans hit this path. When the billing period renews:
+  //   - Update current_period_start / current_period_end from Stripe
+  //   - Reset monthly_token_limit to the plan base (50 or 600)
+  //   - bonus_token_balance is NEVER touched — starter pack credits persist forever
+  // Usage records from the previous period remain in usage_tracking but will no
+  // longer be counted once current_period_start advances past them.
   // ============================================================================
   if (subscription.plan_type === 'proMonthly' || subscription.plan_type === 'proYearly') {
-    // Get base credits for the plan
     const basePlanCredits = getCreditsForPlan(subscription.plan_type)
-    
-    // Calculate refill credits (anything above the base plan amount)
-    // These are from starter pack purchases and should be preserved
-    const refillCredits = Math.max(0, subscription.monthly_token_limit - basePlanCredits)
-    
-    // New limit = base credits + preserved refills
-    // Pro Monthly: 50 + refills (resets to 50 each month, plus any refills)
-    // Pro Yearly: 600 + refills (resets to 600 each year, plus any refills)
-    const newCreditLimit = basePlanCredits + refillCredits
 
-    console.log(`Credit reset for user ${subscription.user_id} (${subscription.plan_type}): previous limit=${subscription.monthly_token_limit}, base=${basePlanCredits}, refills=${refillCredits}, new limit=${newCreditLimit}`)
+    console.log(`Billing period reset for user ${subscription.user_id} (${subscription.plan_type}): resetting to ${basePlanCredits} subscription credits`)
 
-    // Update subscription with new billing period and reset credits
     await supabase
       .from('subscriptions')
       .update({
         current_period_start: newPeriodStart,
         current_period_end: newPeriodEnd,
-        monthly_token_limit: newCreditLimit,
-        updated_at: new Date().toISOString()
-      })
-      .eq('id', subscription.id)
-  } else {
-    // For starter pack (one-time purchase), just update billing periods if needed
-    // Credits never expire, so keep the same limit
-    await supabase
-      .from('subscriptions')
-      .update({
-        current_period_start: newPeriodStart,
-        current_period_end: newPeriodEnd,
+        monthly_token_limit: basePlanCredits,
+        // bonus_token_balance intentionally untouched
         updated_at: new Date().toISOString()
       })
       .eq('id', subscription.id)
   }
+  // Starter-only users never get recurring invoices so no else branch needed
 }
 
 async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
