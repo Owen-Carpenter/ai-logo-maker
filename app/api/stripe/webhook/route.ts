@@ -159,25 +159,22 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
   // ============================================================================
   // RECURRING SUBSCRIPTION (PROMONTHLY/PROYEARLY) LOGIC
   // ============================================================================
-  // Recurring subscriptions reset credits each billing period:
-  // - proMonthly: 50 credits reset every month
-  // - proYearly: 600 credits reset every year
-  // - Billing periods are set from Stripe subscription
-  // - Refill credits from starter pack purchases are preserved across resets
-  // ============================================================================
   try {
-    // Get subscription details
     const subscription = await stripe.subscriptions.retrieve(subscriptionId)
-    
-    // Safely convert timestamps (supports both legacy and new Stripe API response shapes)
     const { start: periodStart, end: periodEnd } = extractStripePeriod(subscription as any)
-    
-    // Use our new webhook subscription upsert function
+
+    // Guard: if Stripe didn't return usable period dates, do not write NULL into the DB.
+    // NULL periods would disable the billing-period filter and break the credit reset.
+    if (!periodStart || !periodEnd) {
+      console.error(`extractStripePeriod returned null for subscription ${subscriptionId}. Aborting DB write to protect billing periods.`, { periodStart, periodEnd })
+      throw new Error(`Could not extract billing period from Stripe subscription ${subscriptionId}`)
+    }
+
     const { error } = await supabase.rpc('webhook_upsert_subscription', {
       p_user_id: userId,
       p_stripe_customer_id: customerId,
       p_stripe_subscription_id: subscriptionId,
-      p_plan_type: planType || 'starter',
+      p_plan_type: planType || 'proMonthly',
       p_status: subscription.status,
       p_current_period_start: periodStart,
       p_current_period_end: periodEnd,
@@ -189,6 +186,7 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
       throw error
     }
 
+    console.log(`Subscription activated for user ${userId} (${planType}): period ${periodStart} → ${periodEnd}`)
   } catch (error) {
     console.error('Error handling checkout session completed:', error)
     throw error
@@ -196,10 +194,8 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
 }
 
 async function handleSubscriptionCreated(subscription: Stripe.Subscription) {
-  
   const customerId = subscription.customer as string
-  
-  // Find user by customer ID in subscriptions table
+
   const { data: existingSubscription } = await supabase
     .from('subscriptions')
     .select('user_id')
@@ -211,13 +207,15 @@ async function handleSubscriptionCreated(subscription: Stripe.Subscription) {
     return
   }
 
-  // Get plan type from price ID
-  const priceId = subscription.items.data[0]?.price.id
+  const priceId  = subscription.items.data[0]?.price.id
   const planType = getPlanTypeFromPriceId(priceId)
-
   const { start: periodStart, end: periodEnd } = extractStripePeriod(subscription as any)
 
-  // Use our new webhook subscription upsert function
+  if (!periodStart || !periodEnd) {
+    console.error(`handleSubscriptionCreated: could not extract billing period for sub ${subscription.id}. Aborting to protect credit system.`)
+    return
+  }
+
   await supabase.rpc('webhook_upsert_subscription', {
     p_user_id: existingSubscription.user_id,
     p_stripe_customer_id: customerId,
@@ -228,12 +226,14 @@ async function handleSubscriptionCreated(subscription: Stripe.Subscription) {
     p_current_period_end: periodEnd,
     p_cancel_at_period_end: subscription.cancel_at_period_end || false
   })
+
+  console.log(`Subscription created for user ${existingSubscription.user_id} (${planType}): period ${periodStart} → ${periodEnd}`)
 }
 
 async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
   const { data: existingSubscription } = await supabase
     .from('subscriptions')
-    .select('user_id, plan_type')
+    .select('user_id, plan_type, current_period_start, current_period_end')
     .eq('stripe_subscription_id', subscription.id)
     .single()
 
@@ -246,6 +246,15 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
   const planType = getPlanTypeFromPriceId(priceId)
   const { start: periodStart, end: periodEnd } = extractStripePeriod(subscription as any)
 
+  // Guard: never overwrite valid billing periods with NULL.
+  // If extraction failed, keep the existing periods so the credit filter stays intact.
+  const safePeriodStart = periodStart ?? existingSubscription.current_period_start
+  const safePeriodEnd   = periodEnd   ?? existingSubscription.current_period_end
+
+  if (!periodStart || !periodEnd) {
+    console.warn(`extractStripePeriod returned null for subscription ${subscription.id} — keeping existing DB periods.`)
+  }
+
   // monthly_token_limit = base subscription credits only (bonus_token_balance is untouched)
   const newMonthlyLimit = getCreditsForPlan(planType)
 
@@ -254,14 +263,16 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
     .update({
       plan_type: planType,
       status: subscription.status,
-      current_period_start: periodStart,
-      current_period_end: periodEnd,
+      current_period_start: safePeriodStart,
+      current_period_end:   safePeriodEnd,
       cancel_at_period_end: subscription.cancel_at_period_end || false,
       monthly_token_limit: newMonthlyLimit,
       // bonus_token_balance intentionally not touched
       updated_at: new Date().toISOString()
     })
     .eq('stripe_subscription_id', subscription.id)
+
+  console.log(`Subscription updated for user ${existingSubscription.user_id} (${planType}): period ${safePeriodStart} → ${safePeriodEnd}`)
 }
 
 async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
@@ -280,55 +291,78 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
 }
 
 async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
-  
-  const customerId = invoice.customer as string
   const subscriptionId = (invoice as any).subscription as string
-
   if (!subscriptionId) return
 
-  // Get the full Stripe subscription to get updated billing periods
+  // Retrieve the full Stripe subscription so we have the updated billing period
   const stripeSubscription = await stripe.subscriptions.retrieve(subscriptionId)
   const { start: newPeriodStart, end: newPeriodEnd } = extractStripePeriod(stripeSubscription as any)
 
-  // Find user by subscription (using new database structure)
   const { data: subscription } = await supabase
     .from('subscriptions')
-    .select('id, user_id, plan_type, monthly_token_limit, current_period_start, current_period_end')
+    .select('id, user_id, plan_type, current_period_start, current_period_end')
     .eq('stripe_subscription_id', subscriptionId)
     .single()
 
   if (!subscription) {
-    console.error(`No subscription found for subscription ${subscriptionId}`)
+    console.error(`invoice.payment_succeeded: no DB subscription found for Stripe sub ${subscriptionId}`)
+    return
+  }
+
+  if (subscription.plan_type !== 'proMonthly' && subscription.plan_type !== 'proYearly') {
+    // Starter-only users never have recurring invoices — nothing to do
     return
   }
 
   // ============================================================================
-  // CREDIT RESET FOR RECURRING SUBSCRIPTIONS (invoice.payment_succeeded)
+  // CREDIT RESET — this is where monthly/yearly credits refresh.
+  //
+  // HOW IT WORKS:
+  //   monthly_token_limit stays at the plan base (50 or 600) — it never changes.
+  //   The "reset" is achieved by advancing current_period_start to the new period.
+  //   use_tokens() and user_complete_profile only COUNT subscription_tokens_used
+  //   records WHERE created_at >= current_period_start, so old usage is ignored.
+  //   bonus_token_balance is a completely separate bucket — never touched here.
   // ============================================================================
-  // Only recurring plans hit this path. When the billing period renews:
-  //   - Update current_period_start / current_period_end from Stripe
-  //   - Reset monthly_token_limit to the plan base (50 or 600)
-  //   - bonus_token_balance is NEVER touched — starter pack credits persist forever
-  // Usage records from the previous period remain in usage_tracking but will no
-  // longer be counted once current_period_start advances past them.
-  // ============================================================================
-  if (subscription.plan_type === 'proMonthly' || subscription.plan_type === 'proYearly') {
-    const basePlanCredits = getCreditsForPlan(subscription.plan_type)
 
-    console.log(`Billing period reset for user ${subscription.user_id} (${subscription.plan_type}): resetting to ${basePlanCredits} subscription credits`)
-
-    await supabase
-      .from('subscriptions')
-      .update({
-        current_period_start: newPeriodStart,
-        current_period_end: newPeriodEnd,
-        monthly_token_limit: basePlanCredits,
-        // bonus_token_balance intentionally untouched
-        updated_at: new Date().toISOString()
-      })
-      .eq('id', subscription.id)
+  // Guard: if Stripe didn't return usable period dates, keep the existing ones.
+  // Overwriting with NULL would break the billing-period filter permanently.
+  if (!newPeriodStart || !newPeriodEnd) {
+    console.error(
+      `invoice.payment_succeeded: extractStripePeriod returned null for sub ${subscriptionId}. ` +
+      `Keeping existing periods to protect credit reset. Stripe response:`,
+      JSON.stringify({ current_period_start: (stripeSubscription as any).current_period_start, current_period: (stripeSubscription as any).current_period })
+    )
+    return
   }
-  // Starter-only users never get recurring invoices so no else branch needed
+
+  // Skip if this is the same period we already have (idempotent — Stripe may retry)
+  if (subscription.current_period_start === newPeriodStart && subscription.current_period_end === newPeriodEnd) {
+    console.log(`invoice.payment_succeeded: period unchanged for sub ${subscriptionId}, skipping.`)
+    return
+  }
+
+  const basePlanCredits = getCreditsForPlan(subscription.plan_type)
+
+  const { error } = await supabase
+    .from('subscriptions')
+    .update({
+      current_period_start: newPeriodStart,
+      current_period_end:   newPeriodEnd,
+      monthly_token_limit:  basePlanCredits,  // confirm/reset to base (bonus untouched)
+      updated_at: new Date().toISOString()
+    })
+    .eq('id', subscription.id)
+
+  if (error) {
+    console.error(`invoice.payment_succeeded: DB update failed for sub ${subscriptionId}:`, error)
+    throw error
+  }
+
+  console.log(
+    `Credit reset: user ${subscription.user_id} (${subscription.plan_type}) ` +
+    `new period ${newPeriodStart} → ${newPeriodEnd}, limit reset to ${basePlanCredits}`
+  )
 }
 
 async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
