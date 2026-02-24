@@ -177,29 +177,28 @@ export async function generateIconsWithChatGPT(request: IconGenerationRequest): 
           // Convert the source image URL to a File object
           const imageFile = await urlToFile(sourceImageUrl, 'source-logo.png');
           
-          // Use environment variable for image size, default to 1024x1024
-          // Note: Edit endpoint supports different sizes than generate
+          // GPT Image 1.5 only supports: 1024x1024, 1536x1024, 1024x1536, auto. Use quality=low for cheapest.
           const imageSize = process.env.OPENAI_IMAGE_SIZE || "1024x1024";
+          const imageQuality = process.env.OPENAI_IMAGE_QUALITY || "low";
           
           response = await openai.images.edit({
-            model: "gpt-image-1.5", // Use GPT Image 1.5 model
+            model: "gpt-image-1.5",
             image: imageFile,
             prompt: imagePrompt,
             n: 1,
-            size: imageSize as "256x256" | "512x512" | "1024x1024" | "1536x1024" | "1024x1536" | "auto" | null | undefined
+            size: imageSize as "1024x1024" | "1536x1024" | "1024x1536" | "auto",
+            quality: imageQuality as "low" | "medium" | "high" | "auto"
           });
         } else {
-          // Use standard generation endpoint for new icons
-          // Use "high" quality for professional logo generation
-          // Supported values are: 'low', 'medium', 'high', and 'auto'
-          const imageQuality = process.env.OPENAI_IMAGE_QUALITY || "auto";
+          // GPT Image 1.5 only supports: 1024x1024, 1536x1024, 1024x1536, auto. quality=low is cheapest ($0.009/img).
+          const imageQuality = process.env.OPENAI_IMAGE_QUALITY || "low";
           const imageSize = process.env.OPENAI_IMAGE_SIZE || "1024x1024";
           
           response = await openai.images.generate({
-            model: "gpt-image-1.5", // Use GPT Image 1.5 model
+            model: "gpt-image-1.5",
             prompt: imagePrompt,
             n: 1,
-            size: imageSize as "256x256" | "512x512" | "1024x1024" | "1792x1024" | "1024x1792",
+            size: imageSize as "1024x1024" | "1536x1024" | "1024x1536" | "auto",
             quality: imageQuality as "low" | "medium" | "high" | "auto"
           });
         }
